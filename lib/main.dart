@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'package:todo_app/utils/logger.dart';
 
 void main() {
+  Logger.level = loggerLevel;
   runApp(const MyApp());
 }
 
