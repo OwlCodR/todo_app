@@ -1,16 +1,21 @@
-# todo_app
+# :iphone: Todo App
 
-A new Flutter project.
+> New Flutter app that helps people to track their tasks every day
 
-## Getting Started
+## :package: Stack
+- [freezed](https://pub.dev/packages/freezed)
+- [logger](https://pub.dev/packages/logger)
 
-This project is a starting point for a Flutter application.
+## :sparkles: Feature list
+**I phase:**
+- :bangbang: Up-to-date README.md
+- Logging using `logger`
 
-A few resources to get you started if this is your first Flutter project:
+**II phase:**
+- Using `freezed` for data-models
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## :video_game: Screenshots
+Don't forget to add screenshots here :)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## :link: Download
+Don't forget to add .apk link here :)
