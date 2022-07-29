@@ -10,6 +10,7 @@
 **I phase:**
 - :bangbang: Up-to-date README.md
 - Logging using `logger`
+- Internationalization using `intl`
 
 **II phase:**
 - Using `freezed` for data-models
