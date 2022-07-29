@@ -19,3 +19,7 @@ Don't forget to add screenshots here :)
 
 ## :link: Download
 Don't forget to add .apk link here :)
+
+### :memo: Other
+> Freezed
+`flutter pub run build_runner build`
