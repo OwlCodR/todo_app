@@ -11,6 +11,7 @@
 - :bangbang: Up-to-date README.md
 - Logging using `logger`
 - Internationalization using `intl`
+- Localized app name
 
 **II phase:**
 - Using `freezed` for data-models
