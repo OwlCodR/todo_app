@@ -5,6 +5,7 @@
 ## :package: Stack
 - [freezed](https://pub.dev/packages/freezed)
 - [logger](https://pub.dev/packages/logger)
+- [intl](https://pub.dev/packages/intl)
 
 ## :sparkles: Feature list
 **I phase:**
