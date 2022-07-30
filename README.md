@@ -5,12 +5,14 @@
 ## :package: Stack
 - [freezed](https://pub.dev/packages/freezed)
 - [logger](https://pub.dev/packages/logger)
+- [intl](https://pub.dev/packages/intl)
 
 ## :sparkles: Feature list
 **I phase:**
 - :bangbang: Up-to-date README.md
 - Logging using `logger`
 - Internationalization using `intl`
+- Localized app name
 
 **II phase:**
 - Using `freezed` for data-models
