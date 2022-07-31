@@ -1,10 +1,10 @@
 {
   "appName": "Сделано",
   "myTasks": "Мои дела",
-  "doneCounter": "Выполнено — {done_tasks_count}",
-  "@doneCounter": {
+  "completedTasksCounter": "Выполнено — {completed_tasks_count}",
+  "@completedTasksCounter": {
     "placeholders": {
-      "done_tasks_count": {
+      "completed_tasks_count": {
         "type": "int"
       }
     }

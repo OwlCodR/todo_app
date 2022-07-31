@@ -21,13 +21,13 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
       fit: StackFit.expand,
       children: [
         Material(
-          elevation: 4,
+          elevation: _getProgress(from: 4, to: 0),
           child: Container(
             color: Theme.of(context).primaryColor,
           ),
         ),
         Positioned(
-          top: _getProgress(from: 38, to: 105),
+          top: _getProgress(from: 14, to: 81),
           right: _getProgress(from: 19, to: 25),
           child: ClipOval(
             child: Material(
@@ -39,6 +39,12 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
                   icon: const Icon(Icons.visibility),
                   onPressed: () {
                     // TODO Add callback
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Show/Hide completed tasks'),
+                        duration: Duration(seconds: 1),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -46,7 +52,7 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
           ),
         ),
         Positioned(
-          top: _getProgress(from: 48, to: 82),
+          top: _getProgress(from: 24, to: 58),
           left: _getProgress(from: 16, to: 60),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +69,7 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
                 opacity: _getProgress(from: 0, to: 1),
                 child: Text(
                   // TODO Add counter
-                  AppLocalizations.of(context).doneCounter(0),
+                  AppLocalizations.of(context).completedTasksCounter(0),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),

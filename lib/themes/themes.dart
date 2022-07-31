@@ -22,12 +22,15 @@ class _AppTheme {
     required AppColorsTheme colors,
   }) {
     return parent.copyWith(
+      primaryColorLight: colors.green,
       primaryColor: colors.backPrimary,
       cardColor: colors.white,
       backgroundColor: colors.backPrimary,
       scaffoldBackgroundColor: colors.backPrimary,
       disabledColor: colors.labelDisable,
+      errorColor: colors.red,
       primaryIconTheme: IconThemeData(color: colors.blue),
+      cardTheme: CardTheme(color: colors.white),
       textTheme: textTheme,
     );
   }
