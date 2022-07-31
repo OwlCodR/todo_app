@@ -1,7 +1,12 @@
 {
   "appName": "Done",
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
+  "myTasks": "My tasks",
+  "doneCounter": "Done — {done_tasks_count}",
+  "@doneCounter": {
+    "placeholders": {
+      "done_tasks_count": {
+        "type": "int"
+      }
+    }
   }
 }

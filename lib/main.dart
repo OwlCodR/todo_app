@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logger/logger.dart';
+import 'package:todo_app/screens/tasks_list/tasks_screen.dart';
 import 'package:todo_app/themes/themes.dart';
 import 'package:todo_app/utils/logger.dart';
 
@@ -18,9 +19,10 @@ class MyApp extends StatelessWidget {
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
       theme: AppThemes.light,
       darkTheme: AppThemes.dark,
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const TasksScreen(),
     );
   }
 }
@@ -77,7 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(AppLocalizations.of(context).helloWorld),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,

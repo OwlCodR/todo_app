@@ -1,7 +1,12 @@
 {
   "appName": "Сделано",
-  "helloWorld": "Привет Мир!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
+  "myTasks": "Мои дела",
+  "doneCounter": "Выполнено — {done_tasks_count}",
+  "@doneCounter": {
+    "placeholders": {
+      "done_tasks_count": {
+        "type": "int"
+      }
+    }
   }
 }

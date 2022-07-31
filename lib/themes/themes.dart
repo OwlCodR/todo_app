@@ -27,6 +27,7 @@ class _AppTheme {
       backgroundColor: colors.backPrimary,
       scaffoldBackgroundColor: colors.backPrimary,
       disabledColor: colors.labelDisable,
+      primaryIconTheme: IconThemeData(color: colors.blue),
       textTheme: textTheme,
     );
   }
