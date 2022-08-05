@@ -29,7 +29,7 @@ class _NewTasksListItemState extends State<NewTasksListItem> {
   }
 
   void _onFocusChange() {
-    debugPrint("Focus: ${_focus.hasFocus.toString()}");
+    print("Focus: ${_focus.hasFocus.toString()}");
   }
 
   @override
@@ -61,6 +61,7 @@ class _NewTasksListItemState extends State<NewTasksListItem> {
                         showCommonSnackbar(context, 'Task has been added')
                     },
                     child: TextField(
+                      focusNode: _focus,
                       style: Theme.of(context).textTheme.bodyLarge,
                       decoration: InputDecoration(
                         hintStyle: Theme.of(context).textTheme.titleMedium,

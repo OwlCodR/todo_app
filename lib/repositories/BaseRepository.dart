@@ -1,11 +1,11 @@
-import 'package:todo_app/models/task.dart';
-import 'package:todo_app/models/tasks.dart';
+import 'package:todo_app/models/task_response.dart';
+import 'package:todo_app/models/tasks_response.dart';
 
 abstract class BaseRepository {
-  Tasks getList();
-  Tasks updateList(Tasks tasks);
-  Task getElement(String id);
-  Task updateElement(Task newElement);
-  void createElement(Task newElement);
+  TasksResponse getList();
+  TasksResponse updateList(TasksResponse tasks);
+  TaskResponse getElement(String id);
+  TaskResponse updateElement(TaskResponse newElement);
+  void createElement(TaskResponse newElement);
   void deleteElement(String id);
 }

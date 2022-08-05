@@ -1,10 +1,10 @@
-import 'package:todo_app/models/task.dart';
-import 'package:todo_app/models/tasks.dart';
+import 'package:todo_app/models/task_response.dart';
+import 'package:todo_app/models/tasks_response.dart';
 import 'package:todo_app/repositories/BaseRepository.dart';
 
 class ApiRepository implements BaseRepository {
   @override
-  void createElement(Task newElement) {
+  void createElement(TaskResponse newElement) {
     // TODO: implement createElement
   }
 
@@ -14,25 +14,25 @@ class ApiRepository implements BaseRepository {
   }
 
   @override
-  Task getElement(String id) {
+  TaskResponse getElement(String id) {
     // TODO: implement getElement
     throw UnimplementedError();
   }
 
   @override
-  Tasks getList() {
+  TasksResponse getList() {
     // TODO: implement getList
     throw UnimplementedError();
   }
 
   @override
-  Task updateElement(Task newElement) {
+  TaskResponse updateElement(TaskResponse newElement) {
     // TODO: implement updateElement
     throw UnimplementedError();
   }
 
   @override
-  Tasks updateList(Tasks tasks) {
+  TasksResponse updateList(TasksResponse tasks) {
     // TODO: implement updateList
     throw UnimplementedError();
   }

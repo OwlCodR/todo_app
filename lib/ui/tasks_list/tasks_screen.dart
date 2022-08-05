@@ -5,7 +5,7 @@ import 'package:todo_app/ui/common/fab.dart';
 import 'package:todo_app/ui/tasks_list/items/new_tasks_list_item.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../models/task_element.dart';
+import '../../models/task_element_response.dart';
 import '../common/no_glow_scroll_behavior.dart';
 import 'items/tasks_list_item.dart';
 import 'tasks_sliver_app_bar.dart';
@@ -60,7 +60,7 @@ class TasksScreen extends StatelessWidget {
           }
 
           return TasksListItem(
-            element: TaskElement(
+            element: TaskElementResponse(
               id: const Uuid().v4(),
               title: 'Купить что-то, где-то, зачем-то, но зачем не '
                   'очень понятно, но точно чтобы показать как '
