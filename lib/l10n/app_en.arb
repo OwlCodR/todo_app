@@ -1,6 +1,7 @@
 {
   "appName": "Done",
   "myTasks": "My tasks",
+  "newTask": "New",
   "completedTasksCounter": "Done — {completed_tasks_count}",
   "@completedTasksCounter": {
     "placeholders": {

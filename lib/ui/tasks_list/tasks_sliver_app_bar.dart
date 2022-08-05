@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../common/snackbar.dart';
+
 class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
   final double maxHeight;
   final double minHeight;
@@ -39,12 +41,7 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
                   icon: const Icon(Icons.visibility),
                   onPressed: () {
                     // TODO Add callback
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Show/Hide completed tasks'),
-                        duration: Duration(seconds: 1),
-                      ),
-                    );
+                    showCommonSnackbar(context, 'Show/Hide completed tasks');
                   },
                 ),
               ),

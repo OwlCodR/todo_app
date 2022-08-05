@@ -30,6 +30,7 @@ class _AppTheme {
       disabledColor: colors.labelDisable,
       errorColor: colors.red,
       primaryIconTheme: IconThemeData(color: colors.blue),
+      iconTheme: IconThemeData(color: colors.labelTertiary),
       cardTheme: CardTheme(color: colors.white),
       textTheme: textTheme,
     );

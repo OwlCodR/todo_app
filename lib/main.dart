@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logger/logger.dart';
-import 'package:todo_app/screens/tasks_list/tasks_screen.dart';
-import 'package:todo_app/themes/themes.dart';
-import 'package:todo_app/utils/logger.dart';
+
+import 'themes/themes.dart';
+import 'ui/tasks_list/tasks_screen.dart';
+import 'utils/logger.dart';
 
 void main() {
   Logger.level = loggerLevel;
