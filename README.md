@@ -5,6 +5,8 @@
 ## :package: Stack
 - [flutter_svg](https://pub.dev/packages/flutter_svg)
 - [freezed](https://pub.dev/packages/freezed)
+- [dio](https://pub.dev/packages/dio)
+- [hive](https://pub.dev/packages/hive)
 - [logger](https://pub.dev/packages/logger)
 - [intl](https://pub.dev/packages/intl)
 - [uuid](https://pub.dev/packages/uuid)
@@ -19,7 +21,12 @@
 - Internationalization using `intl`
 - Localized app name
 - Limitation of long texts in the task's title
-- Swipe on a list item using `flutter_slidable`
+- Swipe on item Done/Delete using `flutter_slidable`
+- Code formatting is present
+- The code is divided into features and layers
+- Added and works flutter_lints, there are no unreasonable rule ignores in the code
+- Working with asynchronous code is implemented uniformly: there is no incoherent mess of `.then` and `async`/`await`, the approach is logical
+- 
 
 **II phase:**
 - Using `freezed` for data-models
