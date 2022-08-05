@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logger/logger.dart';
 
 import 'themes/themes.dart';
 import 'ui/tasks_list/tasks_screen.dart';
 import 'utils/logger.dart';
 
-void main() {
+Future<void> main() async {
   Logger.level = loggerLevel;
+  await Hive.initFlutter();
   runApp(const MyApp());
 }
 

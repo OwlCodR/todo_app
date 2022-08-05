@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:todo_app/models/task_model.dart';
 
 part 'task_hive.g.dart';
 
@@ -15,6 +16,20 @@ class TaskHive extends HiveObject {
     this.deadlineTime,
     this.color,
   });
+
+  factory TaskHive.fromModel(TaskModel task) {
+    return TaskHive(
+      id: task.id,
+      isDone: task.isDone,
+      title: task.title,
+      priority: task.priority,
+      createdAt: task.createdAt,
+      changedAt: task.changedAt,
+      lastUpdatedBy: task.lastUpdatedBy,
+      deadlineTime: task.deadlineTime,
+      color: task.color,
+    );
+  }
 
   @HiveField(0)
   String id;
