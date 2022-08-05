@@ -10,7 +10,7 @@ _$_TasksResponse _$$_TasksResponseFromJson(Map<String, dynamic> json) =>
     _$_TasksResponse(
       status: json['status'] as String,
       tasks: (json['list'] as List<dynamic>)
-          .map((e) => TaskElementResponse.fromJson(e as Map<String, dynamic>))
+          .map((e) => TaskModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       revision: json['revision'] as int,
     );

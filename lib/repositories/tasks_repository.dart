@@ -37,8 +37,7 @@ class TaskRepository implements BaseRepository {
   }
 
   @override
-  TaskModel updateTask(TaskModel newTask) {
-    // TODO: implement updateTask
-    throw UnimplementedError();
+  void updateTask(TaskModel newTask) {
+    _local.updateTask(TaskHive.fromModel(newTask));
   }
 }

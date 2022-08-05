@@ -26,14 +26,12 @@ class ApiMockRepository implements BaseRepository {
   }
 
   @override
-  List<TaskModel> updateList(List<TaskModel> tasks) {
+  void updateList(List<TaskModel> tasks) {
     // TODO: implement updateList
-    throw UnimplementedError();
   }
 
   @override
-  TaskModel updateTask(TaskModel newTask) {
+  void updateTask(TaskModel newTask) {
     // TODO: implement updateTask
-    throw UnimplementedError();
   }
 }

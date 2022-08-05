@@ -46,6 +46,8 @@ dependencies:
   flutter_svg: ^1.1.1+1
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  dio: ^4.0.6
+  dio_logging_interceptor: ^1.0.1
 
 dev_dependencies:
   flutter_test:
