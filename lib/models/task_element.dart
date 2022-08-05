@@ -14,7 +14,7 @@ class TaskElement with _$TaskElement {
     @JsonKey(name: 'changed_at') required int changedAt,
     @JsonKey(name: 'last_updated_by') required String lastUpdatedBy,
     @JsonKey(name: 'deadline') int? deadlineTime,
-    String? color,
+    @JsonKey(name: 'color') String? color,
   }) = _TaskElement;
 
   factory TaskElement.fromJson(Map<String, Object?> json) =>
