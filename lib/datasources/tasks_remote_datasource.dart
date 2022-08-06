@@ -78,7 +78,11 @@ class TasksRemoteDatasource {
   }
 
   Future<void> updateList(TaskModel tasks) async {
-    await _dio.patch('$_baseUrl/list', data: tasks.toJson());
+    try {
+      await _dio.patch('$_baseUrl/list', data: tasks.toJson());
+    } on DioError catch (e) {
+      _handleResponseError(e);
+    }
   }
 
   void _handleResponseError(

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sliver_tools/sliver_tools.dart';
@@ -15,7 +17,7 @@ class TasksScreen extends StatelessWidget {
 
   final _appBarMinHeight = 64.0;
   final _appBarMaxHeight = 140.0;
-  final count = 4;
+  final count = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -60,18 +62,22 @@ class TasksScreen extends StatelessWidget {
           }
 
           return TasksListItem(
-            element: TaskModel(
+            task: TaskModel(
               id: const Uuid().v4(),
-              title: 'Купить что-то, где-то, зачем-то, но зачем не '
-                  'очень понятно, но точно чтобы показать как '
-                  'обрезаетсz $index Купить что-то, где-то, '
-                  'зачем-то, но зачем не очень понятно, но '
-                  'точно чтобы показать как обрезается ',
+              title: 'Купить что-то, где-то, зачем-то'
+                  'Купить что-то, где-то, зачем-то'
+                  'Купить что-то, где-то, зачем-то'
+                  'Купить что-то, где-то, зачем-то',
+              deadlineTime: DateTime.now().millisecondsSinceEpoch,
               createdAt: DateTime.now().millisecondsSinceEpoch,
               changedAt: DateTime.now().millisecondsSinceEpoch,
-              isDone: false,
+              isDone: Random().nextBool(),
               lastUpdatedBy: '99A4D301-53F5-11CB-8CA0-9CA39A9E1F01',
-              priority: 'basic',
+              priority: [
+                TaskModel.lowPriority,
+                TaskModel.basicPriority,
+                TaskModel.importantPriority
+              ].elementAt(Random().nextInt(3)),
             ),
           );
         },

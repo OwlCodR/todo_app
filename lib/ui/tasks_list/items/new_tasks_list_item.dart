@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'dart:async';
 
-import '../../common/snackbar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:todo_app/ui/common/snackbar.dart';
 
 class NewTasksListItem extends StatefulWidget {
   const NewTasksListItem({Key? key}) : super(key: key);
@@ -13,23 +14,32 @@ class NewTasksListItem extends StatefulWidget {
 
 class _NewTasksListItemState extends State<NewTasksListItem> {
   final _focus = FocusNode();
-  final _controller = TextEditingController();
+  late StreamSubscription<bool> keyboardSubscription;
+
+  void _onFocusChange() {
+    if (!_focus.hasFocus) {
+      showCommonSnackbar(context, 'Added new task');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _focus.addListener(_onFocusChange);
+
+    keyboardSubscription = KeyboardVisibilityController().onChange.listen(
+      (bool visible) {
+        if (!visible) _focus.unfocus();
+      },
+    );
   }
 
   @override
   void dispose() {
+    keyboardSubscription.cancel();
     _focus.removeListener(_onFocusChange);
     _focus.dispose();
     super.dispose();
-  }
-
-  void _onFocusChange() {
-    print("Focus: ${_focus.hasFocus.toString()}");
   }
 
   @override
@@ -53,24 +63,15 @@ class _NewTasksListItemState extends State<NewTasksListItem> {
               ),
               const SizedBox(width: 12),
               Flexible(
-                child: FocusScope(
-                  child: Focus(
-                    onFocusChange: (focus) => {
-                      // TODO Add Task
-                      if (!focus)
-                        showCommonSnackbar(context, 'Task has been added')
-                    },
-                    child: TextField(
-                      focusNode: _focus,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      decoration: InputDecoration(
-                        hintStyle: Theme.of(context).textTheme.titleMedium,
-                        hintText: AppLocalizations.of(context).newTask,
-                        border: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                      ),
-                    ),
+                child: TextField(
+                  focusNode: _focus,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  decoration: InputDecoration(
+                    hintStyle: Theme.of(context).textTheme.titleMedium,
+                    hintText: AppLocalizations.of(context).newTask,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
                   ),
                 ),
               ),

@@ -7,6 +7,10 @@ part 'task_model.g.dart'; // Makes class serializable
 
 @freezed
 class TaskModel with _$TaskModel {
+  static String lowPriority = 'low';
+  static String basicPriority = 'basic';
+  static String importantPriority = 'important';
+
   factory TaskModel({
     @JsonKey(name: 'id') required String id,
     @JsonKey(name: 'done') required bool isDone,

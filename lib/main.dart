@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
 
 import 'themes/themes.dart';
@@ -9,6 +11,7 @@ import 'utils/logger.dart';
 
 Future<void> main() async {
   Logger.level = loggerLevel;
+  Intl.systemLocale = await findSystemLocale();
   await Hive.initFlutter();
   runApp(const MyApp());
 }

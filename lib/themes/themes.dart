@@ -89,6 +89,15 @@ class _AppTextTheme {
         fontWeight: FontWeight.w400,
         color: colors.labelTertiary,
       ),
+      labelSmall: TextStyle(
+        fontFamily: 'Roboto',
+        fontSize: 16.0,
+        height: 20.0 / 16.0,
+        decoration: TextDecoration.lineThrough,
+        letterSpacing: 0,
+        fontWeight: FontWeight.w400,
+        color: colors.labelTertiary,
+      ),
     );
   }
 }
