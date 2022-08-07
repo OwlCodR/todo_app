@@ -38,8 +38,8 @@
 - Using `freezed` for data-models
 
 ## :video_game: Screenshots
-![Screen1](https://github.com/OwlCodR/todo_app/tree/feature/readme/screenshots/1.jpg)
-![Screen2](https://github.com/OwlCodR/todo_app/tree/feature/readme/screenshots/2.jpg)
+![Screen1](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/1.jpg?raw=true)
+![Screen2](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/2.jpg?raw=true)
 
 ## :link: Download
 https://disk.yandex.ru/d/QxJBJpDqMR2ILw
