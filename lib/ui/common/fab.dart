@@ -8,7 +8,9 @@ class CommonFab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () => showCommonSnackbar(context, 'Go to editor screen'),
+      onPressed: () {
+        showCommonSnackbar(context, 'Go to editor screen');
+      },
       child: Icon(
         Icons.add,
         color: Theme.of(context).cardColor,
