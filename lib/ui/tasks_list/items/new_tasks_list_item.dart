@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:todo_app/controllers/tasks_list_controller.dart';
 import 'package:uuid/uuid.dart';
 
@@ -34,19 +35,21 @@ class _NewTasksListItemState extends State<NewTasksListItem> {
   late StreamSubscription<bool> keyboardSubscription;
 
   void _createTask() {
-    final model = TaskModel(
-      id: const Uuid().v4(),
-      isDone: false,
-      title: _title,
-      priority: TaskModel.basicPriority,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      changedAt: DateTime.now().millisecondsSinceEpoch,
-      lastUpdatedBy: 'dsfsdfsdf', // TODO Set lastUpdatedBy
-    );
+    PlatformDeviceId.getDeviceId.then((deviceId) {
+      final model = TaskModel(
+        id: const Uuid().v4(),
+        isDone: false,
+        title: _title,
+        priority: TaskModel.basicPriority,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        changedAt: DateTime.now().millisecondsSinceEpoch,
+        lastUpdatedBy: deviceId ?? const Uuid().v4(),
+      );
 
-    log.d('Created model: $model');
-    widget.ref.read(widget.tasksProvider.notifier).addTask(model);
-    widget.ref.refresh(widget.visibleTasks);
+      log.d('Created model: $model');
+      widget.ref.read(widget.tasksProvider.notifier).addTask(model);
+      widget.ref.refresh(widget.visibleTasks);
+    });
   }
 
   void _onFocusChange() {
