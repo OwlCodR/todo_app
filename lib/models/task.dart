@@ -7,9 +7,9 @@ part 'task.g.dart'; // Makes TaskResponse serializable
 @freezed
 class Task with _$Task {
   factory Task({
-    required String status,
+    @JsonKey(name: 'status') required String status,
     @JsonKey(name: 'element') required TaskElement task,
-    required int revision,
+    @JsonKey(name: 'revision') required int revision,
   }) = _Task;
 
   factory Task.fromJson(Map<String, Object?> json) => _$TaskFromJson(json);
