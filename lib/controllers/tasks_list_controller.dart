@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:platform_device_id/platform_device_id.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/task_model.dart';
 import '../providers/repository_provider.dart';
@@ -24,6 +26,27 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
     state = repository.getList(ref);
 
     return state;
+  }
+
+  void addDefaultTask(String title) {
+    PlatformDeviceId.getDeviceId.then((deviceId) {
+      final task = TaskModel(
+        id: const Uuid().v4(),
+        isDone: false,
+        title: title,
+        priority: TaskModel.basicPriority,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        changedAt: DateTime.now().millisecondsSinceEpoch,
+        lastUpdatedBy: deviceId ?? const Uuid().v4(),
+      );
+
+      log.d('[TasksListController] addTask($task)');
+
+      final repository = ref.read(repositoryProvider);
+      repository.createTask(task);
+
+      state = [...state, task];
+    });
   }
 
   void addTask(TaskModel task) {
