@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../common/snackbar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
   final double maxHeight;
   final double minHeight;
+  final WidgetRef ref;
+  final StateProvider<bool> visibilityProvider;
   double currentShrinkOffset = 0.0;
 
-  TasksSliverAppBar({required this.minHeight, required this.maxHeight});
+  TasksSliverAppBar({
+    required this.ref,
+    required this.visibilityProvider,
+    required this.minHeight,
+    required this.maxHeight,
+  });
 
   @override
   Widget build(
@@ -38,10 +44,11 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
                 data: Theme.of(context).primaryIconTheme,
                 child: IconButton(
                   padding: EdgeInsets.zero,
-                  icon: const Icon(Icons.visibility),
+                  icon: ref.watch(visibilityProvider)
+                      ? const Icon(Icons.visibility_off)
+                      : const Icon(Icons.visibility),
                   onPressed: () {
-                    // TODO Add callback
-                    showCommonSnackbar(context, 'Show/Hide completed tasks');
+                    ref.read(visibilityProvider.notifier).update((state) => !state);
                   },
                 ),
               ),

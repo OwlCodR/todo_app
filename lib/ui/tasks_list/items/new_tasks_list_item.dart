@@ -3,10 +3,25 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:todo_app/ui/common/snackbar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app/controllers/tasks_list_controller.dart';
+import 'package:uuid/uuid.dart';
+
+import '../../../models/task_model.dart';
+import '../../../utils/logger.dart';
 
 class NewTasksListItem extends StatefulWidget {
-  const NewTasksListItem({Key? key}) : super(key: key);
+  const NewTasksListItem({
+    Key? key,
+    required this.ref,
+    required this.tasksProvider,
+    required this.visibleTasks,
+  }) : super(key: key);
+
+  final WidgetRef ref;
+  final StateNotifierProvider<TasksListController, List<TaskModel>>
+      tasksProvider;
+  final StateProvider<List<TaskModel>> visibleTasks;
 
   @override
   State<NewTasksListItem> createState() => _NewTasksListItemState();
@@ -14,11 +29,29 @@ class NewTasksListItem extends StatefulWidget {
 
 class _NewTasksListItemState extends State<NewTasksListItem> {
   final _focus = FocusNode();
+  String _title = '';
+
   late StreamSubscription<bool> keyboardSubscription;
+
+  void _createTask() {
+    final model = TaskModel(
+      id: const Uuid().v4(),
+      isDone: false,
+      title: _title,
+      priority: TaskModel.basicPriority,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      changedAt: DateTime.now().millisecondsSinceEpoch,
+      lastUpdatedBy: 'dsfsdfsdf', // TODO Set lastUpdatedBy
+    );
+
+    log.d('Created model: $model');
+    widget.ref.read(widget.tasksProvider.notifier).addTask(model);
+    widget.ref.refresh(widget.visibleTasks);
+  }
 
   void _onFocusChange() {
     if (!_focus.hasFocus) {
-      showCommonSnackbar(context, 'Added new task');
+      _createTask();
     }
   }
 
@@ -65,6 +98,7 @@ class _NewTasksListItemState extends State<NewTasksListItem> {
               Flexible(
                 child: TextField(
                   focusNode: _focus,
+                  onChanged: (title) => _title = title,
                   style: Theme.of(context).textTheme.bodyLarge,
                   decoration: InputDecoration(
                     hintStyle: Theme.of(context).textTheme.titleMedium,

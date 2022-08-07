@@ -8,7 +8,7 @@ class TokenInterceptors extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.headers.addAll({"Authorization ": "Bearer $_token"});
+    options.headers.addAll({"Authorization": "Bearer $_token"});
 
     log.d('REQUEST[${options.method}] => PATH: ${options.path}');
     return super.onRequest(options, handler);

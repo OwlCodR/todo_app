@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
 
+import 'datasources/tasks_local_datasource.dart';
+import 'models/task_hive.dart';
 import 'themes/themes.dart';
 import 'ui/tasks_list/tasks_screen.dart';
 import 'utils/logger.dart';
@@ -12,8 +15,14 @@ import 'utils/logger.dart';
 Future<void> main() async {
   Logger.level = loggerLevel;
   Intl.systemLocale = await findSystemLocale();
+  await initHive();
+  runApp(const ProviderScope(child: MyApp()));
+}
+
+Future<void> initHive() async {
   await Hive.initFlutter();
-  runApp(const MyApp());
+  Hive.registerAdapter(TaskHiveAdapter());
+  await Hive.openBox<TaskHive>(TasksLocalDatasource.tasksAppBox);
 }
 
 class MyApp extends StatelessWidget {

@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/controllers/tasks_list_controller.dart';
+import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
 
 import '../../../models/task_model.dart';
 import '../../common/snackbar.dart';
 
 class TasksListItem extends StatelessWidget {
-  const TasksListItem({Key? key, required this.task}) : super(key: key);
+  const TasksListItem({
+    Key? key,
+    required this.task,
+    required this.tasksProvider,
+    required this.ref,
+  }) : super(key: key);
 
+  final WidgetRef ref;
+  final StateNotifierProvider<TasksListController, List<TaskModel>>
+      tasksProvider;
   final TaskModel task;
 
   @override
@@ -78,24 +89,16 @@ class TasksListItem extends StatelessWidget {
   }
 
   Widget _itemInfoButton(BuildContext context) {
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: IconButton(
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-            onPressed: () {
-              // TODO Open editor
-              showCommonSnackbar(context, 'Open editor');
-            },
-            icon: SvgPicture.asset(
-              'assets/images/info.svg',
-              color: Theme.of(context).disabledColor,
-            ),
-          ),
-        ),
+    return IconButton(
+      padding: EdgeInsets.zero,
+      constraints: const BoxConstraints(),
+      onPressed: () {
+        // TODO Open editor
+        showCommonSnackbar(context, 'Open editor');
+      },
+      icon: SvgPicture.asset(
+        'assets/images/info.svg',
+        color: Theme.of(context).disabledColor,
       ),
     );
   }
@@ -146,35 +149,17 @@ class TasksListItem extends StatelessWidget {
     return SvgPicture.asset('assets/images/unchecked.svg');
   }
 
-  ActionPane _endActionPane(BuildContext context) {
-    return ActionPane(
-      dismissible: DismissiblePane(onDismissed: () {}),
-      motion: const ScrollMotion(),
-      children: [
-        Expanded(
-          child: Container(
-            color: Theme.of(context).errorColor,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24.0),
-                child: Icon(
-                  Icons.delete,
-                  color: Theme.of(context).cardColor,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   ActionPane? _startActionPane(BuildContext context) {
-    if (task.isDone) return null;
-
     return ActionPane(
-      dismissible: DismissiblePane(onDismissed: () {}),
+      // dragDismissible: !task.isDone,
+      dismissible: DismissiblePane(
+        onDismissed: () {
+          ref.read(tasksProvider.notifier).updateTask(
+                task.copyWith(isDone: !task.isDone),
+              );
+          ref.refresh(visibleTasksListProvider.notifier);
+        },
+      ),
       motion: const ScrollMotion(),
       children: [
         Expanded(
@@ -188,6 +173,32 @@ class TasksListItem extends StatelessWidget {
                   Icons.check,
                   color: Theme.of(context).cardColor,
                   size: 24,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  ActionPane _endActionPane(BuildContext context) {
+    return ActionPane(
+      dismissible: DismissiblePane(onDismissed: () {
+        ref.read(tasksProvider.notifier).removeTask(task.id);
+      }),
+      motion: const ScrollMotion(),
+      children: [
+        Expanded(
+          child: Container(
+            color: Theme.of(context).errorColor,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24.0),
+                child: Icon(
+                  Icons.delete,
+                  color: Theme.of(context).cardColor,
                 ),
               ),
             ),
