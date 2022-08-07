@@ -6,7 +6,7 @@ part 'task_element.g.dart'; // Makes TaskResponse serializable
 @freezed
 class TaskElement with _$TaskElement {
   factory TaskElement({
-    required String id,
+    @JsonKey(name: 'id') required String id,
     @JsonKey(name: 'done') required bool isDone,
     @JsonKey(name: 'text') required String title,
     @JsonKey(name: 'importance') required String priority,
