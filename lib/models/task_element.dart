@@ -6,7 +6,7 @@ part 'task_element.g.dart'; // Makes TaskResponse serializable
 @freezed
 class TaskElement with _$TaskElement {
   factory TaskElement({
-    required String id,
+    @JsonKey(name: 'id') required String id,
     @JsonKey(name: 'done') required bool isDone,
     @JsonKey(name: 'text') required String title,
     @JsonKey(name: 'importance') required String priority,
@@ -14,7 +14,7 @@ class TaskElement with _$TaskElement {
     @JsonKey(name: 'changed_at') required int changedAt,
     @JsonKey(name: 'last_updated_by') required String lastUpdatedBy,
     @JsonKey(name: 'deadline') int? deadlineTime,
-    String? color,
+    @JsonKey(name: 'color') String? color,
   }) = _TaskElement;
 
   factory TaskElement.fromJson(Map<String, Object?> json) =>
