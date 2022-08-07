@@ -14,7 +14,7 @@ class TaskRepository {
   final RevisionLocalDatasource _localRevision;
   final TasksRemoteDatasource _remoteTasks;
 
-  TaskRepository(
+  const TaskRepository(
     this._localTasks,
     this._localRevision,
     this._remoteTasks,
@@ -33,7 +33,11 @@ class TaskRepository {
   void deleteTask(String id) {
     log.d('[TaskRepository] deleteTask($id)');
     _localTasks.deleteTask(id);
-    _remoteTasks.deleteTask(id);
+
+    _localRevision.getRevision().then((revision) async {
+      await _localRevision.setRevision(revision + 1);
+      await _remoteTasks.deleteTask(id, revision);
+    });
   }
 
   List<TaskModel> getList(Ref ref) {

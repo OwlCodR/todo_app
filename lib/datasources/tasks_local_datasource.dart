@@ -5,17 +5,8 @@ import '../utils/logger.dart';
 
 class TasksLocalDatasource {
   static const tasksAppBox = 'TASKS_APP_BOX';
-  static TasksLocalDatasource? _instance;
 
-  TasksLocalDatasource._constructor();
-
-  final Box<TaskHive> _box = Hive.box(tasksAppBox);
-
-  static TasksLocalDatasource getInstance() {
-    // Making it Singleton
-    _instance ??= TasksLocalDatasource._constructor();
-    return _instance!;
-  }
+  final _box = Hive.box<TaskHive>(tasksAppBox);
 
   void createTask(TaskHive newTask) {
     log.d('[TasksLocalDatasource] createTask($newTask)');
@@ -24,7 +15,11 @@ class TasksLocalDatasource {
 
   void deleteTask(String id) {
     log.d('[TasksLocalDatasource] deleteTask($id)');
-    _box.delete(_box.values.where((task) => task.id == id).first);
+
+    final task = _getTaskById(id);
+    if (task == null) return;
+
+    _box.delete(task);
   }
 
   TaskHive getTask(String id) {
@@ -40,16 +35,24 @@ class TasksLocalDatasource {
   void updateTask(TaskHive newTask) {
     log.d('[TasksLocalDatasource] updateTask($newTask)');
 
-    final list = _box.values.where((task) => task.id == newTask.id);
-    if (list.isEmpty) return;
+    final task = _getTaskById(newTask.id);
+    if (task == null) return;
 
-    final oldTask = list.first;
-    _box.put(oldTask.key, newTask);
+    _box.put(task.key, newTask);
   }
 
   void updateList(List<TaskHive> tasks) {
     log.d('[TasksLocalDatasource] updateList($tasks)');
     _box.clear();
     _box.addAll(tasks);
+  }
+
+  TaskHive? _getTaskById(String id) {
+    final tasks = _box.values.where((task) => task.id == id);
+    if (tasks.isEmpty) {
+      return null;
+    } else {
+      return tasks.first;
+    }
   }
 }
