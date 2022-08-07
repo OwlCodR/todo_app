@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
-import 'package:todo_app/utils/logger.dart';
 
-void main() {
+import 'datasources/tasks_local_datasource.dart';
+import 'models/task_hive.dart';
+import 'themes/themes.dart';
+import 'ui/tasks_list/tasks_screen.dart';
+import 'utils/logger.dart';
+
+Future<void> main() async {
   Logger.level = loggerLevel;
-  runApp(const MyApp());
+  Intl.systemLocale = await findSystemLocale();
+  await initHive();
+  runApp(const ProviderScope(child: MyApp()));
+}
+
+Future<void> initHive() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(TaskHiveAdapter());
+  await Hive.openBox<TaskHive>(TasksLocalDatasource.tasksAppBox);
 }
 
 class MyApp extends StatelessWidget {
@@ -15,12 +32,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: AppThemes.light,
+      darkTheme: AppThemes.dark,
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const TasksScreen(),
     );
   }
 }
@@ -77,7 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(AppLocalizations.of(context).helloWorld),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,

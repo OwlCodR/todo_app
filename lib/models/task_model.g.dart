@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'task_element.dart';
+part of 'task_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TaskElement _$$_TaskElementFromJson(Map<String, dynamic> json) =>
-    _$_TaskElement(
+_$_TaskModel _$$_TaskModelFromJson(Map<String, dynamic> json) => _$_TaskModel(
       id: json['id'] as String,
       isDone: json['done'] as bool,
       title: json['text'] as String,
@@ -19,7 +18,7 @@ _$_TaskElement _$$_TaskElementFromJson(Map<String, dynamic> json) =>
       color: json['color'] as String?,
     );
 
-Map<String, dynamic> _$$_TaskElementToJson(_$_TaskElement instance) =>
+Map<String, dynamic> _$$_TaskModelToJson(_$_TaskModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'done': instance.isDone,
