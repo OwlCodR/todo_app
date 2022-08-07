@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
 
 import '../models/task_model.dart';
+import '../providers/repository_provider.dart';
 import '../utils/logger.dart';
 
 class TasksListController extends StateNotifier<List<TaskModel>> {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
+
+import '../../../providers/completed_task_counter_provider.dart';
 
 class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
   final double maxHeight;
