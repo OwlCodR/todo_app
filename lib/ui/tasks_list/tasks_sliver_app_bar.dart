@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
 
 class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
   final double maxHeight;
@@ -48,7 +49,9 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
                       ? const Icon(Icons.visibility_off)
                       : const Icon(Icons.visibility),
                   onPressed: () {
-                    ref.read(visibilityProvider.notifier).update((state) => !state);
+                    ref
+                        .read(visibilityProvider.notifier)
+                        .update((state) => !state);
                   },
                 ),
               ),
@@ -72,8 +75,9 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
               Opacity(
                 opacity: _getProgress(from: 0, to: 1),
                 child: Text(
-                  // TODO Add counter
-                  AppLocalizations.of(context).completedTasksCounter(0),
+                  AppLocalizations.of(context).completedTasksCounter(
+                    ref.watch(completedTaskCounterProvider),
+                  ),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),

@@ -60,6 +60,14 @@ final visibleTasksListProvider = StateProvider<List<TaskModel>>((ref) {
       .toList();
 });
 
+final completedTaskCounterProvider = StateProvider<int>((ref) {
+  return ref
+      .watch(tasksListController.notifier)
+      .getList()
+      .where((element) => element.isDone)
+      .length;
+});
+
 class TasksScreen extends ConsumerWidget {
   const TasksScreen({Key? key}) : super(key: key);
 
