@@ -4,57 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:platform_device_id/platform_device_id.dart';
-import 'package:todo_app/controllers/tasks_list_controller.dart';
-import 'package:uuid/uuid.dart';
+import 'package:todo_app/providers/tasks_list_provider.dart';
+import 'package:todo_app/providers/visible_tasks_list_provider.dart';
 
-import '../../../models/task_model.dart';
-import '../../../utils/logger.dart';
-
-class NewTasksListItem extends StatefulWidget {
-  const NewTasksListItem({
-    Key? key,
-    required this.ref,
-    required this.tasksProvider,
-    required this.visibleTasks,
-  }) : super(key: key);
-
-  final WidgetRef ref;
-  final StateNotifierProvider<TasksListController, List<TaskModel>>
-      tasksProvider;
-  final StateProvider<List<TaskModel>> visibleTasks;
+class NewTasksListItem extends ConsumerStatefulWidget {
+  const NewTasksListItem({Key? key}) : super(key: key);
 
   @override
-  State<NewTasksListItem> createState() => _NewTasksListItemState();
+  ConsumerState<NewTasksListItem> createState() => _NewTasksListItemState();
 }
 
-class _NewTasksListItemState extends State<NewTasksListItem> {
+class _NewTasksListItemState extends ConsumerState<NewTasksListItem> {
   final _focus = FocusNode();
-  String _title = '';
+  var _title = '';
 
   late StreamSubscription<bool> keyboardSubscription;
 
-  void _createTask() {
-    PlatformDeviceId.getDeviceId.then((deviceId) {
-      final model = TaskModel(
-        id: const Uuid().v4(),
-        isDone: false,
-        title: _title,
-        priority: TaskModel.basicPriority,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        changedAt: DateTime.now().millisecondsSinceEpoch,
-        lastUpdatedBy: deviceId ?? const Uuid().v4(),
-      );
-
-      log.d('Created model: $model');
-      widget.ref.read(widget.tasksProvider.notifier).addTask(model);
-      widget.ref.refresh(widget.visibleTasks);
-    });
-  }
-
   void _onFocusChange() {
     if (!_focus.hasFocus) {
-      _createTask();
+      ref.read(tasksListProvider.notifier).addDefaultTask(_title);
+      ref.refresh(visibleTasksListProvider);
     }
   }
 

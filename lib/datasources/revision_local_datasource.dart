@@ -3,15 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/logger.dart';
 
 class RevisionLocalDatasource {
-  static RevisionLocalDatasource? _instance;
   static const revisionKey = 'REVISION_KEY';
-
-  RevisionLocalDatasource._constructor();
-  static RevisionLocalDatasource getInstance() {
-    // Making it Singleton
-    _instance ??= RevisionLocalDatasource._constructor();
-    return _instance!;
-  }
 
   Future<void> setRevision(int revision) async {
     log.d('[RevisionLocalDatasource] setRevision($revision)');
