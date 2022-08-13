@@ -18,22 +18,25 @@ import 'themes/themes.dart';
 import 'ui/tasks_list/tasks_screen.dart';
 import 'utils/logger.dart';
 
-Future<void> main() async {
-  Logger.level = loggerLevel;
-  Intl.systemLocale = await findSystemLocale();
-  await dotenv.load();
-  await initHive();
+void main() {
+  runZonedGuarded<Future<void>>(() async {
+    Logger.level = loggerLevel;
+    Intl.systemLocale = await findSystemLocale();
+    await dotenv.load();
+    await initHive();
 
-  WidgetsFlutterBinding.ensureInitialized();
+    WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-  runApp(const ProviderScope(child: MyApp()));
+    runApp(const ProviderScope(child: MyApp()));
+  },
+      (error, stack) =>
+          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true));
 }
 
 Future<void> initHive() async {
