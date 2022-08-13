@@ -6,7 +6,8 @@ class RevisionLocalDatasource {
   static const revisionKey = 'REVISION_KEY';
 
   Future<void> setRevision(int revision) async {
-    log.d('[RevisionLocalDatasource] setRevision($revision)');
+    log.d('[$runtimeType] setRevision($revision)');
+
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt(revisionKey, revision);
   }
@@ -14,7 +15,8 @@ class RevisionLocalDatasource {
   Future<int> getRevision() async {
     final prefs = await SharedPreferences.getInstance();
     final revision = prefs.getInt(revisionKey) ?? 0;
-    log.d('[RevisionLocalDatasource] getRevision() = $revision');
+
+    log.d('[$runtimeType] getRevision() = $revision');
     return revision;
   }
 }

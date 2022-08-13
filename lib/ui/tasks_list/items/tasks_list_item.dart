@@ -8,8 +8,8 @@ import 'package:todo_app/ui/tasks_list/widgets/info_button.dart';
 import 'package:todo_app/ui/tasks_list/widgets/prefix_priority_icon.dart';
 import 'package:todo_app/ui/tasks_list/widgets/title_text.dart';
 
+import '../../../constants/app_paths.dart';
 import '../../../models/task_model.dart';
-import '../../../providers/visible_tasks_list_provider.dart';
 
 class TasksListItem extends ConsumerWidget {
   const TasksListItem({
@@ -21,12 +21,12 @@ class TasksListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Widget checkboxIcon = SvgPicture.asset('assets/images/unchecked.svg');
+    Widget checkboxIcon = SvgPicture.asset(AppPaths.unchecked);
 
     if (task.isDone) {
-      checkboxIcon = SvgPicture.asset('assets/images/checked.svg');
+      checkboxIcon = SvgPicture.asset(AppPaths.checked);
     } else if (task.priority == TaskModel.importantPriority) {
-      checkboxIcon = SvgPicture.asset('assets/images/unchecked_important.svg');
+      checkboxIcon = SvgPicture.asset(AppPaths.uncheckedImportant);
     }
 
     return Padding(
@@ -76,7 +76,6 @@ class TasksListItem extends ConsumerWidget {
           ref.read(tasksListProvider.notifier).updateTask(
                 task.copyWith(isDone: !task.isDone),
               );
-          ref.refresh(visibleTasksListProvider.notifier);
         },
       ),
       motion: const ScrollMotion(),

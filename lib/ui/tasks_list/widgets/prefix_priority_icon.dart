@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:todo_app/constants/app_paths.dart';
 import 'package:todo_app/models/task_model.dart';
 
 class PrefixPriorityIcon extends StatelessWidget {
@@ -13,11 +14,11 @@ class PrefixPriorityIcon extends StatelessWidget {
 
     if (!task.isDone) {
       if (task.priority == TaskModel.importantPriority) {
-        icon = SvgPicture.asset('assets/images/prefix_important_priority.svg');
+        icon = SvgPicture.asset(AppPaths.prefixImportnantPriority);
       }
 
       if (task.priority == TaskModel.lowPriority) {
-        icon = SvgPicture.asset('assets/images/prefix_low_priority.svg');
+        icon = SvgPicture.asset(AppPaths.prefixLowPriority);
       }
     }
 

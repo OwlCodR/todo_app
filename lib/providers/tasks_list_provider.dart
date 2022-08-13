@@ -7,7 +7,10 @@ import 'repository_provider.dart';
 final tasksListProvider =
     StateNotifierProvider<TasksListController, List<TaskModel>>(
   (ref) {
-    final repository = ref.read(repositoryProvider);
-    return TasksListController(tasks: repository.getList(ref), ref: ref);
+    final repository = ref.watch(repositoryProvider);
+    final controller = TasksListController(repository: repository);
+    controller.loadList();
+
+    return controller;
   },
 );

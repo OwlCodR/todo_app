@@ -28,11 +28,11 @@ class TasksScreen extends ConsumerWidget {
         child: CustomScrollView(
           scrollBehavior: NoGlowScrollBehavior(),
           slivers: <Widget>[
-            CustomSliverAppbar(ref: ref),
+            const CustomSliverAppbar(),
             SliverStack(
-              children: [
-                const SliverBackgroundCard(),
-                SliverListTasks(ref: ref),
+              children: const [
+                SliverBackgroundCard(),
+                SliverListTasks(),
               ],
             ),
           ],

@@ -5,12 +5,12 @@ import 'local_revision_datasource_provider.dart';
 import 'local_tasks_datasource_provider.dart';
 import 'remote_tasks_datasource_provider.dart';
 
-final repositoryProvider = Provider<TaskRepository>((ref) {
-  final localTasksDatasource = ref.read(localTasksDatasourceProvider);
-  final localRevisionDatasource = ref.read(localRevisionDatasourceProvider);
-  final remoteTasksDatasource = ref.read(remoteTasksDatasourceProvider);
+final repositoryProvider = Provider<TasksRepository>((ref) {
+  final localTasksDatasource = ref.watch(localTasksDatasourceProvider);
+  final localRevisionDatasource = ref.watch(localRevisionDatasourceProvider);
+  final remoteTasksDatasource = ref.watch(remoteTasksDatasourceProvider);
 
-  return TaskRepository(
+  return TasksRepository(
     localTasksDatasource,
     localRevisionDatasource,
     remoteTasksDatasource,

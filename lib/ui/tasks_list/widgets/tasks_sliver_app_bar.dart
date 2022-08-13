@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app/providers/completed_task_visibility_provider.dart';
 
 import '../../../providers/completed_task_counter_provider.dart';
 
@@ -8,12 +9,10 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
   final double maxHeight;
   final double minHeight;
   final WidgetRef ref;
-  final StateProvider<bool> visibilityProvider;
-  double currentShrinkOffset = 0.0;
+  var currentShrinkOffset = 0.0;
 
   TasksSliverAppBar({
     required this.ref,
-    required this.visibilityProvider,
     required this.minHeight,
     required this.maxHeight,
   });
@@ -46,12 +45,12 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
                 data: Theme.of(context).primaryIconTheme,
                 child: IconButton(
                   padding: EdgeInsets.zero,
-                  icon: ref.watch(visibilityProvider)
+                  icon: ref.watch(completedTaskVisibilityProvider)
                       ? const Icon(Icons.visibility_off)
                       : const Icon(Icons.visibility),
                   onPressed: () {
                     ref
-                        .read(visibilityProvider.notifier)
+                        .read(completedTaskVisibilityProvider.notifier)
                         .update((state) => !state);
                   },
                 ),
