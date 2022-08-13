@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -15,6 +16,7 @@ import 'utils/logger.dart';
 Future<void> main() async {
   Logger.level = loggerLevel;
   Intl.systemLocale = await findSystemLocale();
+  await dotenv.load();
   await initHive();
   runApp(const ProviderScope(child: MyApp()));
 }

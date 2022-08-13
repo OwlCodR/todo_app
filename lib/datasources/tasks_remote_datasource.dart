@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_logging_interceptor/dio_logging_interceptor.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:todo_app/constants/api_paths.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/models/task_response.dart';
@@ -15,10 +16,7 @@ class TasksRemoteDatasource {
   static final _dio = Dio(BaseOptions(baseUrl: ApiPaths.baseUrl));
   static const lastKnownRevisionHeader = 'X-Last-Known-Revision';
 
-  static const _token = String.fromEnvironment(
-    'TOKEN',
-    defaultValue: 'Zapus',
-  );
+  static final _token = dotenv.get('TOKEN');
 
   TasksRemoteDatasource() {
     _dio.interceptors
