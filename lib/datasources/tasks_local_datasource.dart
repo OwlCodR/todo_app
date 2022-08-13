@@ -9,12 +9,12 @@ class TasksLocalDatasource {
   final _box = Hive.box<TaskHive>(tasksAppBox);
 
   void createTask(TaskHive newTask) {
-    log.d('[TasksLocalDatasource] createTask($newTask)');
+    log.d('[$runtimeType] createTask($newTask)');
     _box.add(newTask);
   }
 
   void deleteTask(String id) {
-    log.d('[TasksLocalDatasource] deleteTask($id)');
+    log.d('[$runtimeType] deleteTask($id)');
 
     final task = _getTaskById(id);
     if (task == null) return;
@@ -23,17 +23,17 @@ class TasksLocalDatasource {
   }
 
   TaskHive getTask(String id) {
-    log.d('[TasksLocalDatasource] getTask($id)');
+    log.d('[$runtimeType] getTask($id)');
     return _box.values.where((task) => task.id == id).first;
   }
 
-  List<TaskHive> getList() {
-    log.d('[TasksLocalDatasource] getList()');
+  List<TaskHive> getTasks() {
+    log.d('[$runtimeType] getTasks()');
     return _box.values.toList();
   }
 
   void updateTask(TaskHive newTask) {
-    log.d('[TasksLocalDatasource] updateTask($newTask)');
+    log.d('[$runtimeType] updateTask($newTask)');
 
     final task = _getTaskById(newTask.id);
     if (task == null) return;
@@ -42,17 +42,13 @@ class TasksLocalDatasource {
   }
 
   void updateList(List<TaskHive> tasks) {
-    log.d('[TasksLocalDatasource] updateList($tasks)');
+    log.d('[$runtimeType] updateList($tasks)');
     _box.clear();
     _box.addAll(tasks);
   }
 
   TaskHive? _getTaskById(String id) {
     final tasks = _box.values.where((task) => task.id == id);
-    if (tasks.isEmpty) {
-      return null;
-    } else {
-      return tasks.first;
-    }
+    return tasks.isEmpty ? null : tasks.first;
   }
 }

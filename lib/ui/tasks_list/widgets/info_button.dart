@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:todo_app/constants/app_paths.dart';
 
 import '../../common/snackbar.dart';
 
@@ -17,7 +18,7 @@ class InfoButton extends StatelessWidget {
         showCommonSnackbar(context, AppLocalizations.of(context).goToEditor);
       },
       icon: SvgPicture.asset(
-        'assets/images/info.svg',
+        AppPaths.info,
         color: Theme.of(context).disabledColor,
       ),
     );
