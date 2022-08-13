@@ -92,7 +92,7 @@ class TasksRepository {
     final revision = await _localRevision.getRevision();
 
     _localTasks.updateTask(TaskHive.fromModel(newTask));
-    _remoteTasks.updateTask(newTask, revision);
+    await _remoteTasks.updateTask(newTask, revision);
 
     _incrementRevision(revision);
   }
