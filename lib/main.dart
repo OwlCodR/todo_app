@@ -30,6 +30,7 @@ void main() {
     );
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
 
     runApp(const ProviderScope(child: MyApp()));
   },
