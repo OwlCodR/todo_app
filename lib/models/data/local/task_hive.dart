@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/models/domain/task_model.dart';
 
 part 'task_hive.g.dart';
 
@@ -9,7 +9,7 @@ class TaskHive extends HiveObject {
     required this.id,
     required this.isDone,
     required this.title,
-    required this.priority,
+    required this.importance,
     required this.createdAt,
     required this.changedAt,
     required this.lastUpdatedBy,
@@ -22,7 +22,7 @@ class TaskHive extends HiveObject {
       id: task.id,
       isDone: task.isDone,
       title: task.title,
-      priority: task.priority,
+      importance: task.importance.value,
       createdAt: task.createdAt,
       changedAt: task.changedAt,
       lastUpdatedBy: task.lastUpdatedBy,
@@ -40,9 +40,6 @@ class TaskHive extends HiveObject {
   @HiveField(2)
   String title;
 
-  @HiveField(3)
-  String priority;
-
   @HiveField(4)
   int createdAt;
 
@@ -57,4 +54,7 @@ class TaskHive extends HiveObject {
 
   @HiveField(8)
   String? color;
+
+  @HiveField(9)
+  String importance;
 }

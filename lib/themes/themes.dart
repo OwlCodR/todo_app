@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/constants/colors.dart';
+import 'package:todo_app/constants/app_colors.dart';
 
 class AppThemes {
   static ThemeData light = _AppTheme.getTheme(
@@ -24,6 +24,7 @@ class _AppTheme {
     return parent.copyWith(
       primaryColorLight: colors.green,
       primaryColor: colors.backPrimary,
+      primaryColorDark: colors.separator,
       cardColor: colors.white,
       backgroundColor: colors.backPrimary,
       scaffoldBackgroundColor: colors.backPrimary,

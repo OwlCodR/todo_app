@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_app/providers/tasks_list_provider.dart';
+import 'package:todo_app/providers/tasks_list/tasks_list_provider.dart';
 import 'package:todo_app/ui/tasks_list/widgets/deadline_text.dart';
 import 'package:todo_app/ui/tasks_list/widgets/info_button.dart';
 import 'package:todo_app/ui/tasks_list/widgets/prefix_priority_icon.dart';
 import 'package:todo_app/ui/tasks_list/widgets/title_text.dart';
 
 import '../../../constants/app_paths.dart';
-import '../../../models/task_model.dart';
+import '../../../models/domain/task_model.dart';
+import '../../../utils/importance_enum.dart';
 
 class TasksListItem extends ConsumerWidget {
   const TasksListItem({
@@ -25,7 +26,7 @@ class TasksListItem extends ConsumerWidget {
 
     if (task.isDone) {
       checkboxIcon = SvgPicture.asset(AppPaths.checked);
-    } else if (task.priority == TaskModel.importantPriority) {
+    } else if (task.importance == Importance.important) {
       checkboxIcon = SvgPicture.asset(AppPaths.uncheckedImportant);
     }
 

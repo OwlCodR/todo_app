@@ -20,7 +20,7 @@ class TaskHiveAdapter extends TypeAdapter<TaskHive> {
       id: fields[0] as String,
       isDone: fields[1] as bool,
       title: fields[2] as String,
-      priority: fields[3] as String,
+      importance: fields[9] as String,
       createdAt: fields[4] as int,
       changedAt: fields[5] as int,
       lastUpdatedBy: fields[6] as String,
@@ -39,8 +39,6 @@ class TaskHiveAdapter extends TypeAdapter<TaskHive> {
       ..write(obj.isDone)
       ..writeByte(2)
       ..write(obj.title)
-      ..writeByte(3)
-      ..write(obj.priority)
       ..writeByte(4)
       ..write(obj.createdAt)
       ..writeByte(5)
@@ -50,7 +48,9 @@ class TaskHiveAdapter extends TypeAdapter<TaskHive> {
       ..writeByte(7)
       ..write(obj.deadlineTime)
       ..writeByte(8)
-      ..write(obj.color);
+      ..write(obj.color)
+      ..writeByte(9)
+      ..write(obj.importance);
   }
 
   @override

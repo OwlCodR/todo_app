@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_app/providers/completed_task_visibility_provider.dart';
+import 'package:todo_app/providers/tasks_list/completed_task_visibility_provider.dart';
 
-import '../../../providers/completed_task_counter_provider.dart';
+import '../../../providers/tasks_list/completed_task_counter_provider.dart';
 
-class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
+class TasksSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final double maxHeight;
   final double minHeight;
   final WidgetRef ref;
   var currentShrinkOffset = 0.0;
 
-  TasksSliverAppBar({
+  TasksSliverAppBarDelegate({
     required this.ref,
     required this.minHeight,
     required this.maxHeight,

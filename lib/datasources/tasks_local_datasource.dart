@@ -1,5 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_app/models/task_hive.dart';
+import 'package:todo_app/models/data/local/task_hive.dart';
 
 import '../utils/logger.dart';
 

@@ -1,18 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:platform_device_id/platform_device_id.dart';
+import 'package:todo_app/utils/importance_enum.dart';
 import 'package:uuid/uuid.dart';
 
-import '../models/task_model.dart';
+import '../models/domain/task_model.dart';
 import '../repositories/tasks_repository.dart';
 import '../utils/logger.dart';
 
 class TasksListController extends StateNotifier<List<TaskModel>> {
   TasksListController({
     required this.repository,
+    required this.deviceId,
   }) : super([]);
 
   TasksRepository repository;
+  String? deviceId;
 
   void loadList() {
     log.d('[$runtimeType] loadList()');
@@ -24,19 +26,17 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
   }
 
   void addDefaultTask(String title) {
-    PlatformDeviceId.getDeviceId.then((deviceId) {
-      final defaultTask = TaskModel(
+    addTask(
+      TaskModel(
         id: const Uuid().v4(),
         isDone: false,
         title: title,
-        priority: TaskModel.basicPriority,
+        importance: Importance.basic,
         createdAt: DateTime.now().millisecondsSinceEpoch,
         changedAt: DateTime.now().millisecondsSinceEpoch,
         lastUpdatedBy: deviceId ?? const Uuid().v4(),
-      );
-
-      addTask(defaultTask);
-    });
+      ),
+    );
   }
 
   void addTask(TaskModel task) {
@@ -90,7 +90,7 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
           task.copyWith(
             isDone: newTask.isDone,
             title: newTask.title,
-            priority: newTask.priority,
+            importance: newTask.importance,
             createdAt: newTask.createdAt,
             changedAt: newTask.changedAt,
             lastUpdatedBy: newTask.lastUpdatedBy,

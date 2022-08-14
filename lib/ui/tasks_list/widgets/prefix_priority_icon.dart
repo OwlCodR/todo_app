@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:todo_app/constants/app_paths.dart';
-import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/models/domain/task_model.dart';
+
+import '../../../utils/importance_enum.dart';
 
 class PrefixPriorityIcon extends StatelessWidget {
   const PrefixPriorityIcon({Key? key, required this.task}) : super(key: key);
@@ -13,11 +15,11 @@ class PrefixPriorityIcon extends StatelessWidget {
     Widget icon = Container();
 
     if (!task.isDone) {
-      if (task.priority == TaskModel.importantPriority) {
+      if (task.importance == Importance.important) {
         icon = SvgPicture.asset(AppPaths.prefixImportnantPriority);
       }
 
-      if (task.priority == TaskModel.lowPriority) {
+      if (task.importance == Importance.low) {
         icon = SvgPicture.asset(AppPaths.prefixLowPriority);
       }
     }

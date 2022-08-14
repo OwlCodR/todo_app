@@ -11,11 +11,11 @@ import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
 import 'package:todo_app/firebase_options.dart';
+import 'package:todo_app/ui/tasks_editor/tasks_editor_screen.dart';
 
 import 'datasources/tasks_local_datasource.dart';
-import 'models/task_hive.dart';
+import 'models/data/local/task_hive.dart';
 import 'themes/themes.dart';
-import 'ui/tasks_list/tasks_screen.dart';
 import 'utils/logger.dart';
 
 void main() {
@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const TasksScreen(),
+      home: const TasksEditorScreen(),
     );
   }
 }

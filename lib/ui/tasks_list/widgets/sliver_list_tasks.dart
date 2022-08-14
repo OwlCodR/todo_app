@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../providers/visible_tasks_list_provider.dart';
+import '../../../providers/tasks_list/visible_tasks_list_provider.dart';
 import '../../../utils/logger.dart';
 import '../items/new_tasks_list_item.dart';
 import '../items/tasks_list_item.dart';

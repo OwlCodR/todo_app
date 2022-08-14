@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import '../datasources/revision_local_datasource.dart';
 import '../datasources/tasks_local_datasource.dart';
 import '../datasources/tasks_remote_datasource.dart';
-import '../models/task_hive.dart';
-import '../models/task_model.dart';
+import '../models/data/local/task_hive.dart';
+import '../models/domain/task_model.dart';
 import '../utils/json_pretty_print.dart';
 import '../utils/logger.dart';
 
@@ -43,7 +43,9 @@ class TasksRepository {
 
     final localTasks = _getLocalTasks();
     final remoteTasksResponse = await _remoteTasks.getTasks();
-    final remoteTasks = remoteTasksResponse.tasks;
+    final remoteTasks = remoteTasksResponse.tasks
+        .map((e) => TaskModel.fromResponse(e))
+        .toList();
 
     log.d('[$runtimeType] Loaded remote tasks:');
     log.d(prettyString(remoteTasks));
@@ -59,7 +61,7 @@ class TasksRepository {
     log.d('[$runtimeType] getTask($id)');
 
     final remoteTaskResponse = await _remoteTasks.getTask(id);
-    final remoteTask = remoteTaskResponse.task;
+    final remoteTask = TaskModel.fromResponse(remoteTaskResponse.task);
 
     log.d('[$runtimeType] Loaded remoteTaskResponse:');
     log.d(prettyString(remoteTaskResponse));
@@ -74,7 +76,9 @@ class TasksRepository {
     _localTasks.updateList(tasks.map((e) => TaskHive.fromModel(e)).toList());
 
     final mergedTasksResponse = await _remoteTasks.updateList(tasks, revision);
-    final mergedTasks = mergedTasksResponse.tasks;
+    final mergedTasks = mergedTasksResponse.tasks
+        .map((e) => TaskModel.fromResponse(e))
+        .toList();
 
     log.d('[$runtimeType] Loaded mergedTasksResponse:');
     log.d(prettyString(mergedTasksResponse));

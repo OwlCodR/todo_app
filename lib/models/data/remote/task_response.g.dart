@@ -9,7 +9,7 @@ part of 'task_response.dart';
 _$_TaskResponse _$$_TaskResponseFromJson(Map<String, dynamic> json) =>
     _$_TaskResponse(
       status: json['status'] as String,
-      task: TaskModel.fromJson(json['element'] as Map<String, dynamic>),
+      task: ElementResponse.fromJson(json['element'] as Map<String, dynamic>),
       revision: json['revision'] as int,
     );
 
