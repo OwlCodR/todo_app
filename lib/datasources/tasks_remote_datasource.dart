@@ -9,6 +9,8 @@ import 'package:todo_app/models/task_response.dart';
 import 'package:todo_app/models/tasks_response.dart';
 
 import '../interceptors/token_interceptor.dart';
+import '../models/task_request.dart';
+import '../models/tasks_request.dart';
 import '../utils/json_pretty_print.dart';
 import '../utils/logger.dart';
 
@@ -28,9 +30,11 @@ class TasksRemoteDatasource {
     log.d('[$runtimeType] createTask(${prettyString(newTask)})');
     await _dio.post(
       ApiPaths.list,
-      data: jsonEncode(TaskResponse.fromModel(newTask).toJson()),
+      data: jsonEncode(TaskRequest.fromModel(newTask).toJson()),
       options: Options(
-        headers: {lastKnownRevisionHeader: lastKnownRevision},
+        headers: {
+          lastKnownRevisionHeader: lastKnownRevision,
+        },
       ),
     );
   }
@@ -40,7 +44,9 @@ class TasksRemoteDatasource {
     await _dio.delete(
       '${ApiPaths.list}/$id',
       options: Options(
-        headers: {lastKnownRevisionHeader: lastKnownRevision},
+        headers: {
+          lastKnownRevisionHeader: lastKnownRevision,
+        },
       ),
     );
   }
@@ -64,9 +70,11 @@ class TasksRemoteDatasource {
     log.d('[$runtimeType] updateTask(${prettyString(newTask)})');
     await _dio.put(
       '${ApiPaths.list}/${newTask.id}',
-      data: jsonEncode(TaskResponse.fromModel(newTask).toJson()),
+      data: jsonEncode(TaskRequest.fromModel(newTask).toJson()),
       options: Options(
-        headers: {lastKnownRevisionHeader: lastKnownRevision},
+        headers: {
+          lastKnownRevisionHeader: lastKnownRevision,
+        },
       ),
     );
   }
@@ -78,9 +86,11 @@ class TasksRemoteDatasource {
     log.d('[$runtimeType] updateList(${prettyString(tasks)})');
     final response = await _dio.patch(
       ApiPaths.list,
-      data: jsonEncode(TasksResponse.fromModel(tasks).toJson()),
+      data: jsonEncode(TasksRequest.fromModel(tasks).toJson()),
       options: Options(
-        headers: {lastKnownRevisionHeader: lastKnownRevision},
+        headers: {
+          lastKnownRevisionHeader: lastKnownRevision,
+        },
       ),
     );
     return TasksResponse.fromJson(response.data);

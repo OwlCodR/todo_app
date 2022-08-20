@@ -14,7 +14,7 @@ class NewTasksListItem extends ConsumerStatefulWidget {
 }
 
 class _NewTasksListItemState extends ConsumerState<NewTasksListItem> {
-  final _focus = FocusNode();
+  late final _focus = FocusNode();
   var _title = '';
 
   late StreamSubscription<bool> keyboardSubscription;
