@@ -26,9 +26,9 @@ class TasksRemoteDatasource {
       ..add(DioLoggingInterceptor(level: Level.body));
   }
 
-  Future<void> createTask(TaskModel newTask, int lastKnownRevision) async {
+  Future<void> createTask(TaskModel newTask, int lastKnownRevision) {
     log.d('[$runtimeType] createTask(${prettyString(newTask)})');
-    await _dio.post(
+    return _dio.post(
       ApiPaths.list,
       data: jsonEncode(TaskRequest.fromModel(newTask).toJson()),
       options: Options(
@@ -39,9 +39,9 @@ class TasksRemoteDatasource {
     );
   }
 
-  Future<void> deleteTask(String id, int lastKnownRevision) async {
+  Future<void> deleteTask(String id, int lastKnownRevision) {
     log.d('[$runtimeType] deleteTask($id)');
-    await _dio.delete(
+    return _dio.delete(
       '${ApiPaths.list}/$id',
       options: Options(
         headers: {
@@ -66,9 +66,9 @@ class TasksRemoteDatasource {
   Future<void> updateTask(
     TaskModel newTask,
     int lastKnownRevision,
-  ) async {
+  ) {
     log.d('[$runtimeType] updateTask(${prettyString(newTask)})');
-    await _dio.put(
+    return _dio.put(
       '${ApiPaths.list}/${newTask.id}',
       data: jsonEncode(TaskRequest.fromModel(newTask).toJson()),
       options: Options(
