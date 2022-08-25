@@ -8,7 +8,7 @@ final _deviceIdFutureProvider = FutureProvider((ref) {
   return PlatformDeviceId.getDeviceId;
 });
 
-final deviceIdProvider = Provider<String>((ref) {
+final deviceIdProvider = Provider((ref) {
   final asyncDeviceId = ref.watch(_deviceIdFutureProvider);
   String deviceId = const Uuid().v4();
 

@@ -1,3 +1,3 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final dateTimeProvider = StateProvider<DateTime>((ref) => DateTime.now());
+final dateTimeProvider = StateProvider((ref) => DateTime.now());

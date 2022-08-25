@@ -18,6 +18,7 @@ class InfoButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       constraints: const BoxConstraints(),
       onPressed: () {
+        // TODO Use Navigator 2.0
         Navigator.push(
           context,
           MaterialPageRoute(
