@@ -1,19 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'task.dart';
+part of 'tasks_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Task _$$_TaskFromJson(Map<String, dynamic> json) => _$_Task(
+_$_TasksResponse _$$_TasksResponseFromJson(Map<String, dynamic> json) =>
+    _$_TasksResponse(
       status: json['status'] as String,
-      task: TaskElement.fromJson(json['element'] as Map<String, dynamic>),
+      tasks: (json['list'] as List<dynamic>)
+          .map((e) => TaskModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       revision: json['revision'] as int,
     );
 
-Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
+Map<String, dynamic> _$$_TasksResponseToJson(_$_TasksResponse instance) =>
+    <String, dynamic>{
       'status': instance.status,
-      'element': instance.task,
+      'list': instance.tasks,
       'revision': instance.revision,
     };
