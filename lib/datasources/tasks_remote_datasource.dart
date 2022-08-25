@@ -7,6 +7,8 @@ import 'package:todo_app/constants/api_paths.dart';
 import 'package:todo_app/models/domain/task_model.dart';
 
 import '../interceptors/token_interceptor.dart';
+import '../models/data/remote/task_response.dart';
+import '../models/data/remote/tasks_response.dart';
 import '../models/task_request.dart';
 import '../models/tasks_request.dart';
 import '../utils/json_pretty_print.dart';
@@ -84,7 +86,7 @@ class TasksRemoteDatasource {
     log.d('[$runtimeType] updateList(${prettyString(tasks)})');
     final response = await _dio.patch(
       ApiPaths.list,
-      data: jsonEncode(TasksRequest.fromModel(tasks).toJson()),
+      data: jsonEncode(TasksRequest.fromModels(tasks).toJson()),
       options: Options(
         headers: {
           lastKnownRevisionHeader: lastKnownRevision,

@@ -6,9 +6,9 @@ import 'tasks_list_provider.dart';
 
 final visibleTasksListProvider = Provider<List<TaskModel>>((ref) {
   final areCompletedTasksVisible = ref.watch(completedTaskVisibilityProvider);
-  final tasksList = ref.watch(tasksListProvider);
+  final tasksListController = ref.watch(tasksListControllerProvider);
 
-  return tasksList
+  return tasksListController
       .where(
         (element) =>
             !element.isDone || element.isDone == areCompletedTasksVisible,

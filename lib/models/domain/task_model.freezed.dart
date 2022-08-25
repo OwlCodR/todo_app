@@ -20,14 +20,23 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TaskModel {
+  @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'done')
   bool get isDone => throw _privateConstructorUsedError;
+  @JsonKey(name: 'text')
   String get title => throw _privateConstructorUsedError;
+  @JsonKey(name: 'importance')
   Importance get importance => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
   int get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'changed_at')
   int get changedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'last_updated_by')
   String get lastUpdatedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: 'deadline')
   int? get deadlineTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'color')
   String? get color => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,15 +50,15 @@ abstract class $TaskModelCopyWith<$Res> {
   factory $TaskModelCopyWith(TaskModel value, $Res Function(TaskModel) then) =
       _$TaskModelCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      bool isDone,
-      String title,
-      Importance importance,
-      int createdAt,
-      int changedAt,
-      String lastUpdatedBy,
-      int? deadlineTime,
-      String? color});
+      {@JsonKey(name: 'id') String id,
+      @JsonKey(name: 'done') bool isDone,
+      @JsonKey(name: 'text') String title,
+      @JsonKey(name: 'importance') Importance importance,
+      @JsonKey(name: 'created_at') int createdAt,
+      @JsonKey(name: 'changed_at') int changedAt,
+      @JsonKey(name: 'last_updated_by') String lastUpdatedBy,
+      @JsonKey(name: 'deadline') int? deadlineTime,
+      @JsonKey(name: 'color') String? color});
 }
 
 /// @nodoc
@@ -120,15 +129,15 @@ abstract class _$$_TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
       __$$_TaskModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      bool isDone,
-      String title,
-      Importance importance,
-      int createdAt,
-      int changedAt,
-      String lastUpdatedBy,
-      int? deadlineTime,
-      String? color});
+      {@JsonKey(name: 'id') String id,
+      @JsonKey(name: 'done') bool isDone,
+      @JsonKey(name: 'text') String title,
+      @JsonKey(name: 'importance') Importance importance,
+      @JsonKey(name: 'created_at') int createdAt,
+      @JsonKey(name: 'changed_at') int changedAt,
+      @JsonKey(name: 'last_updated_by') String lastUpdatedBy,
+      @JsonKey(name: 'deadline') int? deadlineTime,
+      @JsonKey(name: 'color') String? color});
 }
 
 /// @nodoc
@@ -198,36 +207,45 @@ class __$$_TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_TaskModel implements _TaskModel {
   _$_TaskModel(
-      {required this.id,
-      required this.isDone,
-      required this.title,
-      required this.importance,
-      required this.createdAt,
-      required this.changedAt,
-      required this.lastUpdatedBy,
-      this.deadlineTime,
-      this.color});
+      {@JsonKey(name: 'id') required this.id,
+      @JsonKey(name: 'done') required this.isDone,
+      @JsonKey(name: 'text') required this.title,
+      @JsonKey(name: 'importance') required this.importance,
+      @JsonKey(name: 'created_at') required this.createdAt,
+      @JsonKey(name: 'changed_at') required this.changedAt,
+      @JsonKey(name: 'last_updated_by') required this.lastUpdatedBy,
+      @JsonKey(name: 'deadline') this.deadlineTime,
+      @JsonKey(name: 'color') this.color});
 
   factory _$_TaskModel.fromJson(Map<String, dynamic> json) =>
       _$$_TaskModelFromJson(json);
 
   @override
+  @JsonKey(name: 'id')
   final String id;
   @override
+  @JsonKey(name: 'done')
   final bool isDone;
   @override
+  @JsonKey(name: 'text')
   final String title;
   @override
+  @JsonKey(name: 'importance')
   final Importance importance;
   @override
+  @JsonKey(name: 'created_at')
   final int createdAt;
   @override
+  @JsonKey(name: 'changed_at')
   final int changedAt;
   @override
+  @JsonKey(name: 'last_updated_by')
   final String lastUpdatedBy;
   @override
+  @JsonKey(name: 'deadline')
   final int? deadlineTime;
   @override
+  @JsonKey(name: 'color')
   final String? color;
 
   @override
@@ -281,36 +299,45 @@ class _$_TaskModel implements _TaskModel {
 
 abstract class _TaskModel implements TaskModel {
   factory _TaskModel(
-      {required final String id,
-      required final bool isDone,
-      required final String title,
-      required final Importance importance,
-      required final int createdAt,
-      required final int changedAt,
-      required final String lastUpdatedBy,
-      final int? deadlineTime,
-      final String? color}) = _$_TaskModel;
+      {@JsonKey(name: 'id') required final String id,
+      @JsonKey(name: 'done') required final bool isDone,
+      @JsonKey(name: 'text') required final String title,
+      @JsonKey(name: 'importance') required final Importance importance,
+      @JsonKey(name: 'created_at') required final int createdAt,
+      @JsonKey(name: 'changed_at') required final int changedAt,
+      @JsonKey(name: 'last_updated_by') required final String lastUpdatedBy,
+      @JsonKey(name: 'deadline') final int? deadlineTime,
+      @JsonKey(name: 'color') final String? color}) = _$_TaskModel;
 
   factory _TaskModel.fromJson(Map<String, dynamic> json) =
       _$_TaskModel.fromJson;
 
   @override
+  @JsonKey(name: 'id')
   String get id;
   @override
+  @JsonKey(name: 'done')
   bool get isDone;
   @override
+  @JsonKey(name: 'text')
   String get title;
   @override
+  @JsonKey(name: 'importance')
   Importance get importance;
   @override
+  @JsonKey(name: 'created_at')
   int get createdAt;
   @override
+  @JsonKey(name: 'changed_at')
   int get changedAt;
   @override
+  @JsonKey(name: 'last_updated_by')
   String get lastUpdatedBy;
   @override
+  @JsonKey(name: 'deadline')
   int? get deadlineTime;
   @override
+  @JsonKey(name: 'color')
   String? get color;
   @override
   @JsonKey(ignore: true)

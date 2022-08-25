@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../providers/tasks_list/completed_task_visibility_provider.dart';
+import '../../../providers/tasks_list/tasks_list_provider.dart';
 import 'sliver_app_bar_delegate.dart';
-import '../../../providers/completed_task_visibility_provider.dart';
-import '../../../providers/tasks_list_provider.dart';
-import 'tasks_sliver_app_bar.dart';
 
 class TasksSliverAppBar extends ConsumerWidget {
   const TasksSliverAppBar({Key? key}) : super(key: key);
@@ -19,7 +18,7 @@ class TasksSliverAppBar extends ConsumerWidget {
       delegate: TasksSliverAppBarDelegate(
         completedTasksCount: ref
             .watch(
-              tasksListProvider.select(
+              tasksListControllerProvider.select(
                 (list) => list.where((element) => element.isDone),
               ),
             )

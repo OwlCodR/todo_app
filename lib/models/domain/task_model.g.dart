@@ -8,26 +8,26 @@ part of 'task_model.dart';
 
 _$_TaskModel _$$_TaskModelFromJson(Map<String, dynamic> json) => _$_TaskModel(
       id: json['id'] as String,
-      isDone: json['isDone'] as bool,
-      title: json['title'] as String,
+      isDone: json['done'] as bool,
+      title: json['text'] as String,
       importance: $enumDecode(_$ImportanceEnumMap, json['importance']),
-      createdAt: json['createdAt'] as int,
-      changedAt: json['changedAt'] as int,
-      lastUpdatedBy: json['lastUpdatedBy'] as String,
-      deadlineTime: json['deadlineTime'] as int?,
+      createdAt: json['created_at'] as int,
+      changedAt: json['changed_at'] as int,
+      lastUpdatedBy: json['last_updated_by'] as String,
+      deadlineTime: json['deadline'] as int?,
       color: json['color'] as String?,
     );
 
 Map<String, dynamic> _$$_TaskModelToJson(_$_TaskModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'isDone': instance.isDone,
-      'title': instance.title,
+      'done': instance.isDone,
+      'text': instance.title,
       'importance': _$ImportanceEnumMap[instance.importance]!,
-      'createdAt': instance.createdAt,
-      'changedAt': instance.changedAt,
-      'lastUpdatedBy': instance.lastUpdatedBy,
-      'deadlineTime': instance.deadlineTime,
+      'created_at': instance.createdAt,
+      'changed_at': instance.changedAt,
+      'last_updated_by': instance.lastUpdatedBy,
+      'deadline': instance.deadlineTime,
       'color': instance.color,
     };
 

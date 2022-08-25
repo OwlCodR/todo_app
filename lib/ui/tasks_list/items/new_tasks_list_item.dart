@@ -21,7 +21,7 @@ class _NewTasksListItemState extends ConsumerState<NewTasksListItem> {
 
   void _onFocusChange() {
     if (!_focus.hasFocus) {
-      ref.read(tasksListProvider.notifier).addDefaultTask(_title);
+      ref.read(tasksListControllerProvider.notifier).addDefaultTask(_title);
     }
   }
 
