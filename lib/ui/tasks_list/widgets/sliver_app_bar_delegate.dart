@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_app/providers/tasks_list/completed_task_visibility_provider.dart';
-
-import '../../../providers/tasks_list/completed_task_counter_provider.dart';
 
 class TasksSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  final double maxHeight;
-  final double minHeight;
-  final WidgetRef ref;
-  var currentShrinkOffset = 0.0;
-
   TasksSliverAppBarDelegate({
-    required this.ref,
+    required this.areCompletedTasksVisible,
+    required this.onVisibilityButtonPressed,
+    required this.completedTasksCount,
     required this.minHeight,
     required this.maxHeight,
   });
+
+  final double maxHeight;
+  final double minHeight;
+  final bool areCompletedTasksVisible;
+  final Function() onVisibilityButtonPressed;
+  final int completedTasksCount;
+
+  var currentShrinkOffset = 0.0;
 
   @override
   Widget build(
@@ -45,14 +46,10 @@ class TasksSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                 data: Theme.of(context).primaryIconTheme,
                 child: IconButton(
                   padding: EdgeInsets.zero,
-                  icon: ref.watch(completedTaskVisibilityProvider)
+                  icon: areCompletedTasksVisible
                       ? const Icon(Icons.visibility_off)
                       : const Icon(Icons.visibility),
-                  onPressed: () {
-                    ref
-                        .read(completedTaskVisibilityProvider.notifier)
-                        .update((state) => !state);
-                  },
+                  onPressed: onVisibilityButtonPressed,
                 ),
               ),
             ),
@@ -76,7 +73,7 @@ class TasksSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                 opacity: _getProgress(from: 0, to: 1),
                 child: Text(
                   AppLocalizations.of(context).completedTasksCounter(
-                    ref.watch(completedTaskCounterProvider),
+                    completedTasksCount,
                   ),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),

@@ -16,12 +16,4 @@ class TaskResponse with _$TaskResponse {
 
   factory TaskResponse.fromJson(Map<String, Object?> json) =>
       _$TaskResponseFromJson(json);
-
-  factory TaskResponse.fromModel(TaskModel task) {
-    return TaskResponse(
-      status: '200',
-      task: ElementResponse.fromModel(task),
-      revision: 0,
-    );
-  }
 }

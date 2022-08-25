@@ -11,7 +11,9 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
   TasksListController({
     required this.repository,
     required this.deviceId,
-  }) : super([]);
+  }) : super([]) {
+    loadList();
+  }
 
   TasksRepository repository;
   String? deviceId;
