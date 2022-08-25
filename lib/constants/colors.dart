@@ -39,21 +39,21 @@ class AppColors {
 }
 
 class AppColorsTheme {
-  Color backPrimary;
-  Color backSecondary;
-  Color backElevated;
-  Color lightGray;
-  Color gray;
-  Color white;
-  Color blue;
-  Color green;
-  Color red;
-  Color labelPrimary;
-  Color labelSecondary;
-  Color labelTertiary;
-  Color labelDisable;
-  Color separator;
-  Color overlay;
+  final Color backPrimary;
+  final Color backSecondary;
+  final Color backElevated;
+  final Color lightGray;
+  final Color gray;
+  final Color white;
+  final Color blue;
+  final Color green;
+  final Color red;
+  final Color labelPrimary;
+  final Color labelSecondary;
+  final Color labelTertiary;
+  final Color labelDisable;
+  final Color separator;
+  final Color overlay;
 
   AppColorsTheme({
     required this.backPrimary,

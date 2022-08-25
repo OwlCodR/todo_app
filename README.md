@@ -6,6 +6,8 @@
 - [flutter_svg](https://pub.dev/packages/flutter_svg)
 - [freezed](https://pub.dev/packages/freezed)
 - [riverpod](https://pub.dev/packages/riverpod)
+- [firebase_core](https://pub.dev/packages/firebase_core)
+- [firebase_crashlytics](https://pub.dev/packages/firebase_crashlytics)
 - [dio](https://pub.dev/packages/dio)
 - [hive](https://pub.dev/packages/hive)
 - [logger](https://pub.dev/packages/logger)
@@ -14,6 +16,7 @@
 - [flutter_slidable](https://pub.dev/packages/flutter_slidable)
 - [sliver_tools](https://pub.dev/packages/sliver_tools)
 - [platform_device_id](https://pub.dev/packages/platform_device_id)
+- [flutter_dotenv](https://pub.dev/packages/flutter_dotenv)
 
 ## :sparkles: Feature list
 **I phase:**
@@ -33,6 +36,7 @@
 - :sparkles: The work is selected in a separate layer (`Repository`/`Datasource`)
 - `Riverpod` is used for state management
 - DI using `Riverpod`
+- Firebase Crashlytics is connected to the project using `firebase_core` & `firebase_crashlytics`
 
 **II phase:**
 - Using `freezed` for data-models

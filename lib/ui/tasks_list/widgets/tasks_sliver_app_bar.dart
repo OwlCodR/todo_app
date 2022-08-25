@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
 
 class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
-  final double maxHeight;
-  final double minHeight;
-  final WidgetRef ref;
-  final StateProvider<bool> visibilityProvider;
-  double currentShrinkOffset = 0.0;
-
   TasksSliverAppBar({
-    required this.ref,
-    required this.visibilityProvider,
+    required this.areCompletedTasksVisible,
+    required this.onVisibilityButtonPressed,
+    required this.completedTasksCount,
     required this.minHeight,
     required this.maxHeight,
   });
+
+  final double maxHeight;
+  final double minHeight;
+  final bool areCompletedTasksVisible;
+  final Function() onVisibilityButtonPressed;
+  final int completedTasksCount;
+
+  var currentShrinkOffset = 0.0;
 
   @override
   Widget build(
@@ -45,14 +46,10 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
                 data: Theme.of(context).primaryIconTheme,
                 child: IconButton(
                   padding: EdgeInsets.zero,
-                  icon: ref.watch(visibilityProvider)
+                  icon: areCompletedTasksVisible
                       ? const Icon(Icons.visibility_off)
                       : const Icon(Icons.visibility),
-                  onPressed: () {
-                    ref
-                        .read(visibilityProvider.notifier)
-                        .update((state) => !state);
-                  },
+                  onPressed: onVisibilityButtonPressed,
                 ),
               ),
             ),
@@ -76,7 +73,7 @@ class TasksSliverAppBar extends SliverPersistentHeaderDelegate {
                 opacity: _getProgress(from: 0, to: 1),
                 child: Text(
                   AppLocalizations.of(context).completedTasksCounter(
-                    ref.watch(completedTaskCounterProvider),
+                    completedTasksCount,
                   ),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),

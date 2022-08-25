@@ -2,6 +2,7 @@
   "appName": "Сделано",
   "myTasks": "Мои дела",
   "newTask": "Новое",
+  "goToEditor": "Переход в экран редактирования",
   "completedTasksCounter": "Выполнено — {completed_tasks_count}",
   "@completedTasksCounter": {
     "placeholders": {
