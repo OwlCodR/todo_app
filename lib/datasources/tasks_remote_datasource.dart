@@ -30,7 +30,7 @@ class TasksRemoteDatasource {
     log.d('[$runtimeType] createTask(${prettyString(newTask)})');
     return _dio.post(
       ApiPaths.list,
-      data: jsonEncode(TaskRequest.fromModel(newTask).toJson()),
+      data: jsonEncode(TaskRequest(task: newTask).toJson()),
       options: Options(
         headers: {
           lastKnownRevisionHeader: lastKnownRevision,
@@ -70,7 +70,7 @@ class TasksRemoteDatasource {
     log.d('[$runtimeType] updateTask(${prettyString(newTask)})');
     return _dio.put(
       '${ApiPaths.list}/${newTask.id}',
-      data: jsonEncode(TaskRequest.fromModel(newTask).toJson()),
+      data: jsonEncode(TaskRequest(task: newTask).toJson()),
       options: Options(
         headers: {
           lastKnownRevisionHeader: lastKnownRevision,
@@ -86,7 +86,7 @@ class TasksRemoteDatasource {
     log.d('[$runtimeType] updateList(${prettyString(tasks)})');
     final response = await _dio.patch(
       ApiPaths.list,
-      data: jsonEncode(TasksRequest.fromModels(tasks).toJson()),
+      data: jsonEncode(TasksRequest(tasks: tasks).toJson()),
       options: Options(
         headers: {
           lastKnownRevisionHeader: lastKnownRevision,

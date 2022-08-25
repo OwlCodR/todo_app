@@ -13,7 +13,4 @@ class TasksRequest with _$TasksRequest {
 
   factory TasksRequest.fromJson(Map<String, Object?> json) =>
       _$TasksRequestFromJson(json);
-
-  factory TasksRequest.fromModels(List<TaskModel> tasks) =>
-      TasksRequest(tasks: tasks);
 }
