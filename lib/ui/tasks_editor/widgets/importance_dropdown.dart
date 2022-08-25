@@ -7,10 +7,14 @@ import '../../../providers/tasks_editor/editor_importance_provider.dart';
 import '../../../utils/importance_enum.dart';
 
 class TasksEditorImportanceDropdown extends ConsumerWidget {
-  const TasksEditorImportanceDropdown({Key? key}) : super(key: key);
+  const TasksEditorImportanceDropdown({Key? key, this.importance})
+      : super(key: key);
+
+  final Importance? importance; // TODO Do I really need it?
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // TODO Make it better
     final currentImportance = ref.watch(importanceProvider);
     var currentImportanceText = AppLocalizations.of(context).basic;
 

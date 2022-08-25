@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TasksEditorCardTextInput extends StatelessWidget {
-  const TasksEditorCardTextInput({Key? key}) : super(key: key);
+  const TasksEditorCardTextInput({
+    Key? key,
+    this.title,
+  }) : super(key: key);
+
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class TasksEditorCardTextInput extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: TextField(
               maxLines: null,
-              onChanged: (value) {},
+              controller: TextEditingController(text: title),
               style: Theme.of(context).textTheme.bodyLarge,
               decoration: InputDecoration(
                 hintStyle: Theme.of(context).textTheme.titleMedium,

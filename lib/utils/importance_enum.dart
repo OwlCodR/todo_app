@@ -3,12 +3,12 @@ enum Importance {
   basic('basic'),
   low('low');
 
-  const Importance(this.value);
-  final String value;
+  const Importance(this.string);
+  final String string;
 
   static Importance fromString(String s) {
-    if (Importance.important.value == s) return Importance.important;
-    if (Importance.low.value == s) return Importance.low;
+    if (Importance.important.string == s) return Importance.important;
+    if (Importance.low.string == s) return Importance.low;
     return Importance.basic;
   }
 }

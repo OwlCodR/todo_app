@@ -38,7 +38,7 @@ class TasksListSlidableContent extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const InfoButton(),
+                InfoButton(editingTask: task),
               ],
             ),
           ],

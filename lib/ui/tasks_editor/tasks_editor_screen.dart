@@ -14,11 +14,11 @@ import 'widgets/importance_dropdown.dart';
 class TasksEditorScreen extends ConsumerWidget {
   const TasksEditorScreen({
     Key? key,
-    this.editingTask,
+    this.task,
   }) : super(key: key);
 
   static const _infoRowHeight = 72.0;
-  final TaskModel? editingTask;
+  final TaskModel? task;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,7 +39,7 @@ class TasksEditorScreen extends ConsumerWidget {
             SliverList(
               delegate: SliverChildListDelegate(
                 <Widget>[
-                  const TasksEditorCardTextInput(),
+                  TasksEditorCardTextInput(title: task?.title),
                   const SizedBox(height: 12),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -48,7 +48,9 @@ class TasksEditorScreen extends ConsumerWidget {
                         Container(
                           constraints:
                               const BoxConstraints(minHeight: _infoRowHeight),
-                          child: const TasksEditorImportanceDropdown(),
+                          child: TasksEditorImportanceDropdown(
+                            importance: task?.importance,
+                          ),
                         ),
                         const CommonDivider(),
                         Container(
@@ -65,7 +67,7 @@ class TasksEditorScreen extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: TasksEditorDeleteTask(
-                      editingTask: editingTask,
+                      editingTask: task,
                     ),
                   ),
                 ],

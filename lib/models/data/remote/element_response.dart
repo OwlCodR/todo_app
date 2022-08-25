@@ -27,7 +27,7 @@ class ElementResponse with _$ElementResponse {
       id: task.id,
       isDone: task.isDone,
       title: task.title,
-      importance: task.importance.value,
+      importance: task.importance.string,
       createdAt: task.createdAt,
       changedAt: task.changedAt,
       lastUpdatedBy: task.lastUpdatedBy,

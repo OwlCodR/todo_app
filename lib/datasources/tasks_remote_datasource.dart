@@ -59,11 +59,12 @@ class TasksRemoteDatasource {
 
   Future<TasksResponse> getTasks() async {
     log.d('[$runtimeType] getTasks()');
+
     final response = await _dio.get(ApiPaths.list);
     return TasksResponse.fromJson(response.data);
   }
 
-  Future<void> updateTask(
+  Future<void> setTask(
     TaskModel newTask,
     int lastKnownRevision,
   ) {
@@ -79,7 +80,7 @@ class TasksRemoteDatasource {
     );
   }
 
-  Future<TasksResponse> updateList(
+  Future<TasksResponse> getMergedTasks(
     List<TaskModel> tasks,
     int lastKnownRevision,
   ) async {

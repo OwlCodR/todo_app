@@ -32,7 +32,7 @@ class TasksEditorSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             padding: EdgeInsets.zero,
             icon: const Icon(Icons.close),
             onPressed: () {
-              // TODO onPressed
+              Navigator.pop(context);
             },
           ),
         ),
