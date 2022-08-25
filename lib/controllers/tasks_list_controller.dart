@@ -10,7 +10,9 @@ import '../utils/logger.dart';
 class TasksListController extends StateNotifier<List<TaskModel>> {
   TasksListController({
     required this.repository,
-  }) : super([]);
+  }) : super([]) {
+    loadList();
+  }
 
   TasksRepository repository;
 

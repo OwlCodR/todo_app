@@ -9,6 +9,8 @@ import 'package:todo_app/models/task_response.dart';
 import 'package:todo_app/models/tasks_response.dart';
 
 import '../interceptors/token_interceptor.dart';
+import '../models/task_request.dart';
+import '../models/tasks_request.dart';
 import '../utils/json_pretty_print.dart';
 import '../utils/logger.dart';
 
@@ -24,23 +26,27 @@ class TasksRemoteDatasource {
       ..add(DioLoggingInterceptor(level: Level.body));
   }
 
-  Future<void> createTask(TaskModel newTask, int lastKnownRevision) async {
+  Future<void> createTask(TaskModel newTask, int lastKnownRevision) {
     log.d('[$runtimeType] createTask(${prettyString(newTask)})');
-    await _dio.post(
+    return _dio.post(
       ApiPaths.list,
-      data: jsonEncode(TaskResponse.fromModel(newTask).toJson()),
+      data: jsonEncode(TaskRequest.fromModel(newTask).toJson()),
       options: Options(
-        headers: {lastKnownRevisionHeader: lastKnownRevision},
+        headers: {
+          lastKnownRevisionHeader: lastKnownRevision,
+        },
       ),
     );
   }
 
-  Future<void> deleteTask(String id, int lastKnownRevision) async {
+  Future<void> deleteTask(String id, int lastKnownRevision) {
     log.d('[$runtimeType] deleteTask($id)');
-    await _dio.delete(
+    return _dio.delete(
       '${ApiPaths.list}/$id',
       options: Options(
-        headers: {lastKnownRevisionHeader: lastKnownRevision},
+        headers: {
+          lastKnownRevisionHeader: lastKnownRevision,
+        },
       ),
     );
   }
@@ -60,13 +66,15 @@ class TasksRemoteDatasource {
   Future<void> updateTask(
     TaskModel newTask,
     int lastKnownRevision,
-  ) async {
+  ) {
     log.d('[$runtimeType] updateTask(${prettyString(newTask)})');
-    await _dio.put(
+    return _dio.put(
       '${ApiPaths.list}/${newTask.id}',
-      data: jsonEncode(TaskResponse.fromModel(newTask).toJson()),
+      data: jsonEncode(TaskRequest.fromModel(newTask).toJson()),
       options: Options(
-        headers: {lastKnownRevisionHeader: lastKnownRevision},
+        headers: {
+          lastKnownRevisionHeader: lastKnownRevision,
+        },
       ),
     );
   }
@@ -78,9 +86,11 @@ class TasksRemoteDatasource {
     log.d('[$runtimeType] updateList(${prettyString(tasks)})');
     final response = await _dio.patch(
       ApiPaths.list,
-      data: jsonEncode(TasksResponse.fromModel(tasks).toJson()),
+      data: jsonEncode(TasksRequest.fromModel(tasks).toJson()),
       options: Options(
-        headers: {lastKnownRevisionHeader: lastKnownRevision},
+        headers: {
+          lastKnownRevisionHeader: lastKnownRevision,
+        },
       ),
     );
     return TasksResponse.fromJson(response.data);

@@ -9,7 +9,6 @@ final tasksListProvider =
   (ref) {
     final repository = ref.watch(repositoryProvider);
     final controller = TasksListController(repository: repository);
-    controller.loadList();
 
     return controller;
   },
