@@ -42,10 +42,11 @@
 - Using `freezed` for data-models
 
 ## :video_game: Screenshots
-Don't forget to add screenshots here :)
+![Screen1](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/1.jpg?raw=true)
+![Screen2](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/2.jpg?raw=true)
 
 ## :link: Download
-Don't forget to add .apk link here :)
+https://disk.yandex.ru/d/QxJBJpDqMR2ILw
 
 ### :memo: Other
 > Freezed
