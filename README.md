@@ -16,6 +16,7 @@
 - [flutter_slidable](https://pub.dev/packages/flutter_slidable)
 - [sliver_tools](https://pub.dev/packages/sliver_tools)
 - [platform_device_id](https://pub.dev/packages/platform_device_id)
+- [flutter_dotenv](https://pub.dev/packages/flutter_dotenv)
 
 ## :sparkles: Feature list
 **I phase:**

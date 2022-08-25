@@ -5,51 +5,50 @@ import '../utils/logger.dart';
 
 class TasksLocalDatasource {
   static const tasksAppBox = 'TASKS_APP_BOX';
-  static TasksLocalDatasource? _instance;
 
-  TasksLocalDatasource._constructor();
-
-  final Box<TaskHive> _box = Hive.box(tasksAppBox);
-
-  static TasksLocalDatasource getInstance() {
-    // Making it Singleton
-    _instance ??= TasksLocalDatasource._constructor();
-    return _instance!;
-  }
+  final _box = Hive.box<TaskHive>(tasksAppBox);
 
   void createTask(TaskHive newTask) {
-    log.d('[TasksLocalDatasource] createTask($newTask)');
+    log.d('[$runtimeType] createTask($newTask)');
     _box.add(newTask);
   }
 
   void deleteTask(String id) {
-    log.d('[TasksLocalDatasource] deleteTask($id)');
-    _box.delete(_box.values.where((task) => task.id == id).first);
+    log.d('[$runtimeType] deleteTask($id)');
+
+    final task = _getTaskById(id);
+    if (task == null) return;
+
+    _box.delete(task);
   }
 
   TaskHive getTask(String id) {
-    log.d('[TasksLocalDatasource] getTask($id)');
+    log.d('[$runtimeType] getTask($id)');
     return _box.values.where((task) => task.id == id).first;
   }
 
-  List<TaskHive> getList() {
-    log.d('[TasksLocalDatasource] getList()');
+  List<TaskHive> getTasks() {
+    log.d('[$runtimeType] getTasks()');
     return _box.values.toList();
   }
 
   void updateTask(TaskHive newTask) {
-    log.d('[TasksLocalDatasource] updateTask($newTask)');
+    log.d('[$runtimeType] updateTask($newTask)');
 
-    final list = _box.values.where((task) => task.id == newTask.id);
-    if (list.isEmpty) return;
+    final task = _getTaskById(newTask.id);
+    if (task == null) return;
 
-    final oldTask = list.first;
-    _box.put(oldTask.key, newTask);
+    _box.put(task.key, newTask);
   }
 
   void updateList(List<TaskHive> tasks) {
-    log.d('[TasksLocalDatasource] updateList($tasks)');
+    log.d('[$runtimeType] updateList($tasks)');
     _box.clear();
     _box.addAll(tasks);
+  }
+
+  TaskHive? _getTaskById(String id) {
+    final tasks = _box.values.where((task) => task.id == id);
+    return tasks.isEmpty ? null : tasks.first;
   }
 }
