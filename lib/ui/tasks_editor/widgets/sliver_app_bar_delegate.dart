@@ -7,7 +7,6 @@ class TasksEditorSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   });
 
   final double height;
-  final double height;
 
   @override
   Widget build(
