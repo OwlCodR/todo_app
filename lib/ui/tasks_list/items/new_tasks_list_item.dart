@@ -55,14 +55,9 @@ class _NewTasksListItemState extends ConsumerState<NewTasksListItem> {
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Row(
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.center,
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  onPressed: () {},
-                  icon: const Icon(Icons.add),
-                ),
+                child: Icon(Icons.add),
               ),
               const SizedBox(width: 12),
               Flexible(
