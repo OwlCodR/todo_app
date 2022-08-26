@@ -7,7 +7,7 @@ import '../../../providers/tasks_editor/editor_importance_locale_provider.dart';
 import '../../../providers/tasks_editor/editor_importance_provider.dart';
 import '../../../utils/importance_enum.dart';
 
-class TasksEditorImportanceDropdown extends ConsumerStatefulWidget {
+class TasksEditorImportanceDropdown extends ConsumerWidget {
   const TasksEditorImportanceDropdown({
     Key? key,
     this.importance,
@@ -16,24 +16,7 @@ class TasksEditorImportanceDropdown extends ConsumerStatefulWidget {
   final Importance? importance;
 
   @override
-  ConsumerState<TasksEditorImportanceDropdown> createState() =>
-      _TasksEditorImportanceDropdownState();
-}
-
-class _TasksEditorImportanceDropdownState
-    extends ConsumerState<TasksEditorImportanceDropdown> {
-  @override
-  void initState() {
-    super.initState();
-
-    final importance = widget.importance;
-    if (importance != null) {
-      ref.read(importanceProvider.notifier).update((state) => importance);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Wrap(
@@ -50,10 +33,10 @@ class _TasksEditorImportanceDropdownState
               dropdownWidth: 164,
               itemHeight: 48,
               isExpanded: true,
-              onChanged: (importance) {
+              onChanged: (value) {
                 ref
-                    .read(importanceProvider.notifier)
-                    .update((state) => importance as Importance);
+                    .read(importanceProvider(importance).notifier)
+                    .update((state) => value as Importance);
               },
               hint: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +49,12 @@ class _TasksEditorImportanceDropdownState
                         ),
                   ),
                   Text(
-                    ref.watch(importanceLocaleProvider(context)),
+                    ref.watch(
+                      importanceLocaleProvider([
+                        AppLocalizations.of(context),
+                        ref.watch(importanceProvider(importance))
+                      ]),
+                    ),
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ],

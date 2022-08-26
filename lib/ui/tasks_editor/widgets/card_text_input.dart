@@ -3,9 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../providers/tasks_editor/editor_title_provider.dart';
-import '../../../utils/logger.dart';
 
-class TasksEditorCardTextInput extends ConsumerStatefulWidget {
+class TasksEditorCardTextInput extends ConsumerWidget {
   const TasksEditorCardTextInput({
     Key? key,
     this.title,
@@ -14,22 +13,7 @@ class TasksEditorCardTextInput extends ConsumerStatefulWidget {
   final String? title;
 
   @override
-  ConsumerState<TasksEditorCardTextInput> createState() =>
-      _TasksEditorCardTextInputState();
-}
-
-class _TasksEditorCardTextInputState
-    extends ConsumerState<TasksEditorCardTextInput> {
-  @override
-  void initState() {
-    super.initState();
-
-    final title = widget.title ?? '';
-    ref.read(editorTitleProvider.notifier).update((state) => title);
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: ConstrainedBox(
@@ -44,11 +28,12 @@ class _TasksEditorCardTextInputState
             child: TextField(
               maxLines: null,
               onChanged: (title) {
-                log.d('[$runtimeType] initState title: $title');
-                ref.read(editorTitleProvider.notifier).update((state) => title);
+                ref
+                    .read(editorTitleProvider(title).notifier)
+                    .update((state) => title);
               },
               controller: TextEditingController(
-                text: ref.read(editorTitleProvider),
+                text: ref.read(editorTitleProvider(title)),
               ),
               style: Theme.of(context).textTheme.bodyLarge,
               decoration: InputDecoration(
