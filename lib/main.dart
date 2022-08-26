@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,42 +13,32 @@ import 'package:logger/logger.dart';
 import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
 
 import 'datasources/tasks_local_datasource.dart';
+import 'firebase_options.dart';
 import 'models/data/local/task_hive.dart';
 import 'themes/themes.dart';
 import 'utils/logger.dart';
 
-Future<void> main() async {
-  Logger.level = loggerLevel;
-  Intl.systemLocale = await findSystemLocale();
-  await dotenv.load();
-  await initHive();
+void main() {
+  runZonedGuarded<Future<void>>(() async {
+    Logger.level = loggerLevel;
+    Intl.systemLocale = await findSystemLocale();
+    await dotenv.load();
+    await initHive();
 
-  WidgetsFlutterBinding.ensureInitialized();
+    WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const ProviderScope(child: MyApp()));
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+
+    runApp(const ProviderScope(child: MyApp()));
+  },
+      (error, stack) =>
+          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true));
 }
-
-// void main() {
-//   runZonedGuarded<Future<void>>(() async {
-//     Logger.level = loggerLevel;
-//     Intl.systemLocale = await findSystemLocale();
-//     await dotenv.load();
-//     await initHive();
-//
-//     WidgetsFlutterBinding.ensureInitialized();
-//
-//     await Firebase.initializeApp(
-//       options: DefaultFirebaseOptions.currentPlatform,
-//     );
-//
-//     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-//     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-//
-//     runApp(const ProviderScope(child: MyApp()));
-//   },
-//       (error, stack) =>
-//           FirebaseCrashlytics.instance.recordError(error, stack, fatal: true));
-// }
 
 Future<void> initHive() async {
   await Hive.initFlutter();
