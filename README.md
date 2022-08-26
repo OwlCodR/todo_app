@@ -39,6 +39,24 @@
 - Firebase Crashlytics is connected to the project using `firebase_core` & `firebase_crashlytics`
 
 **II phase:**
+> Cleanliness of the code and the overall structure of the project
+- :bangbang: Up-to-date README.md
+- Added and works `flutter_lints`, there are no unreasonable rule ignores in the code
+- Code formatting is present
+- The code is divided into layers (layer-first)
+> Receiving and storing data
+- Implemented handling of server and other errors where they can often shoot
+- The application works properly without the Internet
+- :sparkles: Offline-first: work without the Internet is fully possible, at the next start it will send what could not leave in the previous session due to errors / lack of network
+> Navigation, UI, animations
+- The text of long notes is cut to fit the layout
+- Implemented support for landscape orientation
+- Implemented support for large screens (tablets)
+> Architecture
+- Working with data is organized in a separate entity, a repository, encapsulating in one place the receipt and updating / adding of data to disk
+- State-management is implemented using `Riverpod`
+- DI using `Riverpod`
+> Additionally
 - Using `freezed` for data-models
 
 ## :video_game: Screenshots
