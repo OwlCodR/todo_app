@@ -22,6 +22,7 @@ class _AppTheme {
     required AppColorsTheme colors,
   }) {
     return parent.copyWith(
+      focusColor: colors.blue,
       primaryColorLight: colors.green,
       primaryColor: colors.backPrimary,
       primaryColorDark: colors.separator,
@@ -31,6 +32,7 @@ class _AppTheme {
       disabledColor: colors.labelDisable,
       errorColor: colors.red,
       primaryIconTheme: IconThemeData(color: colors.blue),
+      indicatorColor: colors.blue,
       iconTheme: IconThemeData(color: colors.labelTertiary),
       cardTheme: CardTheme(color: colors.white),
       textTheme: textTheme,

@@ -4,9 +4,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class TasksEditorSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   TasksEditorSliverAppBarDelegate({
     required this.height,
+    required this.onBackPressed,
+    required this.onSavePressed,
   });
 
   final double height;
+  final Function() onBackPressed;
+  final Function() onSavePressed;
 
   @override
   Widget build(
@@ -31,21 +35,21 @@ class TasksEditorSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             constraints: const BoxConstraints(),
             padding: EdgeInsets.zero,
             icon: const Icon(Icons.close),
-            onPressed: () {
-              // TODO Use Navigator 2.0
-              Navigator.pop(context);
-            },
+            onPressed: onBackPressed,
           ),
         ),
         Positioned(
-          top: 16,
+          top: 4,
           right: 16,
           child: TextButton(
-            onPressed: () {},
+            onPressed: onSavePressed,
+            style: TextButton.styleFrom(
+              padding: EdgeInsets.zero,
+            ),
             child: Text(
               AppLocalizations.of(context).save,
               style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    color: Theme.of(context).secondaryHeaderColor,
+                    color: Theme.of(context).indicatorColor,
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                     height: 24 / 14,

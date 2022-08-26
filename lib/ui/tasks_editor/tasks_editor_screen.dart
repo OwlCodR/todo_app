@@ -35,28 +35,36 @@ class TasksEditorScreen extends ConsumerWidget {
         child: CustomScrollView(
           scrollBehavior: NoGlowScrollBehavior(),
           slivers: <Widget>[
-            const TasksEditorSliverAppBar(),
+            TasksEditorSliverAppBar(task: task),
             SliverList(
               delegate: SliverChildListDelegate(
                 <Widget>[
-                  TasksEditorCardTextInput(title: task?.title),
+                  TasksEditorCardTextInput(
+                    title: task?.title,
+                  ),
                   const SizedBox(height: 12),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                    ),
                     child: Column(
                       children: [
                         Container(
-                          constraints:
-                              const BoxConstraints(minHeight: _infoRowHeight),
+                          constraints: const BoxConstraints(
+                            minHeight: _infoRowHeight,
+                          ),
                           child: TasksEditorImportanceDropdown(
                             importance: task?.importance,
                           ),
                         ),
                         const CommonDivider(),
                         Container(
-                          constraints:
-                              const BoxConstraints(minHeight: _infoRowHeight),
-                          child: const TasksEditorDatePicker(),
+                          constraints: const BoxConstraints(
+                            minHeight: _infoRowHeight,
+                          ),
+                          child: TasksEditorDatePicker(
+                            deadlineTime: task?.deadlineTime,
+                          ),
                         ),
                       ],
                     ),
@@ -64,11 +72,8 @@ class TasksEditorScreen extends ConsumerWidget {
                   const SizedBox(height: 24),
                   const CommonDivider(),
                   const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: TasksEditorDeleteTask(
-                      editingTask: task,
-                    ),
+                  TasksEditorDeleteTask(
+                    taskId: task?.id,
                   ),
                 ],
               ),

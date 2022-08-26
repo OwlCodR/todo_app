@@ -3,27 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../providers/tasks_editor/editor_importance_locale_provider.dart';
 import '../../../providers/tasks_editor/editor_importance_provider.dart';
 import '../../../utils/importance_enum.dart';
 
-class TasksEditorImportanceDropdown extends ConsumerWidget {
-  const TasksEditorImportanceDropdown({Key? key, this.importance})
-      : super(key: key);
+class TasksEditorImportanceDropdown extends ConsumerStatefulWidget {
+  const TasksEditorImportanceDropdown({
+    Key? key,
+    this.importance,
+  }) : super(key: key);
 
-  final Importance? importance; // TODO Do I really need it?
+  final Importance? importance;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // TODO Make it better
-    final currentImportance = ref.watch(importanceProvider);
-    var currentImportanceText = AppLocalizations.of(context).basic;
+  ConsumerState<TasksEditorImportanceDropdown> createState() =>
+      _TasksEditorImportanceDropdownState();
+}
 
-    if (currentImportance == Importance.important) {
-      currentImportanceText = AppLocalizations.of(context).important;
-    } else if (currentImportance == Importance.low) {
-      currentImportanceText = AppLocalizations.of(context).low;
+class _TasksEditorImportanceDropdownState
+    extends ConsumerState<TasksEditorImportanceDropdown> {
+  @override
+  void initState() {
+    super.initState();
+
+    final importance = widget.importance;
+    if (importance != null) {
+      ref.read(importanceProvider.notifier).update((state) => importance);
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Wrap(
@@ -56,7 +66,7 @@ class TasksEditorImportanceDropdown extends ConsumerWidget {
                         ),
                   ),
                   Text(
-                    currentImportanceText,
+                    ref.watch(importanceLocaleProvider(context)),
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ],

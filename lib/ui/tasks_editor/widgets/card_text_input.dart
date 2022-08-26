@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TasksEditorCardTextInput extends StatelessWidget {
+import '../../../providers/tasks_editor/editor_title_provider.dart';
+import '../../../utils/logger.dart';
+
+class TasksEditorCardTextInput extends ConsumerStatefulWidget {
   const TasksEditorCardTextInput({
     Key? key,
     this.title,
   }) : super(key: key);
 
   final String? title;
+
+  @override
+  ConsumerState<TasksEditorCardTextInput> createState() =>
+      _TasksEditorCardTextInputState();
+}
+
+class _TasksEditorCardTextInputState
+    extends ConsumerState<TasksEditorCardTextInput> {
+  @override
+  void initState() {
+    super.initState();
+
+    final title = widget.title ?? '';
+    ref.read(editorTitleProvider.notifier).update((state) => title);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +43,13 @@ class TasksEditorCardTextInput extends StatelessWidget {
             alignment: Alignment.topLeft,
             child: TextField(
               maxLines: null,
-              controller: TextEditingController(text: title),
+              onChanged: (title) {
+                log.d('[$runtimeType] initState title: $title');
+                ref.read(editorTitleProvider.notifier).update((state) => title);
+              },
+              controller: TextEditingController(
+                text: ref.read(editorTitleProvider),
+              ),
               style: Theme.of(context).textTheme.bodyLarge,
               decoration: InputDecoration(
                 hintStyle: Theme.of(context).textTheme.titleMedium,

@@ -6,11 +6,38 @@ import 'package:intl/intl.dart';
 import '../../../providers/tasks_editor/editor_date_time_provider.dart';
 import '../../../providers/tasks_editor/editor_switch_state_provider.dart';
 
-class TasksEditorDatePicker extends ConsumerWidget {
-  const TasksEditorDatePicker({Key? key}) : super(key: key);
+class TasksEditorDatePicker extends ConsumerStatefulWidget {
+  const TasksEditorDatePicker({
+    Key? key,
+    this.deadlineTime,
+  }) : super(key: key);
+
+  final int? deadlineTime;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TasksEditorDatePicker> createState() =>
+      _TasksEditorDatePickerState();
+}
+
+class _TasksEditorDatePickerState extends ConsumerState<TasksEditorDatePicker> {
+  @override
+  void initState() {
+    super.initState();
+
+    final deadline = widget.deadlineTime;
+    final isDeadline = deadline != null;
+
+    ref.read(switchStateProvider.notifier).update((state) => isDeadline);
+
+    if (isDeadline) {
+      ref
+          .read(dateTimeProvider.notifier)
+          .update((state) => DateTime.fromMillisecondsSinceEpoch(deadline));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -23,10 +50,16 @@ class TasksEditorDatePicker extends ConsumerWidget {
                     height: 18.75 / 16,
                   ),
             ),
+            const SizedBox(height: 4),
             Visibility(
               visible: ref.watch(switchStateProvider),
               child: Text(
-                DateFormat('d MMMM yyyy').format(ref.watch(dateTimeProvider)),
+                DateFormat('d MMMM yyyy').format(
+                  ref.watch(dateTimeProvider),
+                ),
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                      color: Theme.of(context).indicatorColor,
+                    ),
               ),
             ),
           ],
@@ -45,9 +78,10 @@ class TasksEditorDatePicker extends ConsumerWidget {
                 helpText: '',
               );
 
-              if (picked != null && picked != ref.read(dateTimeProvider)) {
-                ref.read(dateTimeProvider.notifier).update((state) => picked);
-              }
+              if (picked == null) return;
+              if (picked == ref.read(dateTimeProvider)) return;
+
+              ref.read(dateTimeProvider.notifier).update((state) => picked);
             }
           },
         )
