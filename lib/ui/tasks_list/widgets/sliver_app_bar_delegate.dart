@@ -38,7 +38,7 @@ class TasksSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         ),
         Positioned(
           top: _getProgress(from: 14, to: 81),
-          right: _getProgress(from: 19, to: 25),
+          right: _getProgress(from: 6, to: 12),
           child: ClipOval(
             child: Material(
               color: Colors.transparent,

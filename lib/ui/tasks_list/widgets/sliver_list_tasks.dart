@@ -15,6 +15,7 @@ class SliverListTasks extends ConsumerWidget {
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(
+        childCount: elementsCount,
         (context, index) {
           if (index == 0 || index == elementsCount - 1) {
             return const SizedBox(height: 8);
@@ -26,7 +27,6 @@ class SliverListTasks extends ConsumerWidget {
 
           return TasksListItem(task: tasks.elementAt(index - 1));
         },
-        childCount: elementsCount,
       ),
     );
   }

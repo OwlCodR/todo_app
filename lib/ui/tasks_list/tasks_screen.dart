@@ -34,11 +34,14 @@ class TasksScreen extends ConsumerWidget {
           scrollBehavior: NoGlowScrollBehavior(),
           slivers: <Widget>[
             const TasksSliverAppBar(),
-            SliverStack(
-              children: const [
-                SliverBackgroundCard(),
-                SliverListTasks(),
-              ],
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              sliver: SliverStack(
+                children: const [
+                  SliverBackgroundCard(),
+                  SliverListTasks(),
+                ],
+              ),
             ),
           ],
         ),
