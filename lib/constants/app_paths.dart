@@ -7,9 +7,12 @@ enum AppPaths {
   uncheckedImportant('assets/images/unchecked_important.svg'),
   uncheckedImportantDark('assets/images/unchecked_important_dark.svg'),
   prefixImportnantPriority('assets/images/prefix_important_priority.svg'),
-  prefixImportnantPriorityDark('assets/images/prefix_important_priority_dark.svg'),
+  prefixImportnantPriorityDark(
+    'assets/images/prefix_important_priority_dark.svg',
+  ),
   prefixLowPriority('assets/images/prefix_low_priority.svg');
 
   const AppPaths(this.path);
+
   final String path;
 }
