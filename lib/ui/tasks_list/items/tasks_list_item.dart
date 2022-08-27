@@ -18,41 +18,38 @@ class TasksListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: ClipRect(
-        child: Slidable(
-          key: UniqueKey(),
-          startActionPane: ActionPane(
-            extentRatio: 0.2,
-            openThreshold: 0.9,
-            closeThreshold: 0.9,
-            dismissible: DismissiblePane(
-              onDismissed: () {
-                ref.read(tasksListControllerProvider.notifier).updateTask(
-                      task.copyWith(isDone: !task.isDone),
-                    );
-              },
-            ),
-            motion: const ScrollMotion(),
-            children: const [StartActionPaneContent()],
+    return ClipRect(
+      child: Slidable(
+        key: UniqueKey(),
+        startActionPane: ActionPane(
+          extentRatio: 0.2,
+          openThreshold: 0.9,
+          closeThreshold: 0.9,
+          dismissible: DismissiblePane(
+            onDismissed: () {
+              ref.read(tasksListControllerProvider.notifier).updateTask(
+                    task.copyWith(isDone: !task.isDone),
+                  );
+            },
           ),
-          endActionPane: ActionPane(
-            extentRatio: 0.2,
-            openThreshold: 0.9,
-            closeThreshold: 0.9,
-            dismissible: DismissiblePane(
-              onDismissed: () {
-                ref
-                    .read(tasksListControllerProvider.notifier)
-                    .removeTask(task.id);
-              },
-            ),
-            motion: const ScrollMotion(),
-            children: const [EndActionPaneContent()],
-          ),
-          child: TasksListSlidableContent(task: task),
+          motion: const ScrollMotion(),
+          children: const [StartActionPaneContent()],
         ),
+        endActionPane: ActionPane(
+          extentRatio: 0.2,
+          openThreshold: 0.9,
+          closeThreshold: 0.9,
+          dismissible: DismissiblePane(
+            onDismissed: () {
+              ref
+                  .read(tasksListControllerProvider.notifier)
+                  .removeTask(task.id);
+            },
+          ),
+          motion: const ScrollMotion(),
+          children: const [EndActionPaneContent()],
+        ),
+        child: TasksListSlidableContent(task: task),
       ),
     );
   }

@@ -56,35 +56,38 @@ class _NewTasksListItemState extends ConsumerState<NewTasksListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: 48, maxHeight: 84),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          child: Row(
-            children: [
-              const Align(
-                alignment: Alignment.center,
-                child: Icon(Icons.add),
-              ),
-              const SizedBox(width: 12),
-              Flexible(
-                child: TextField(
-                  focusNode: _focus,
-                  onChanged: (title) => _title = title,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  decoration: InputDecoration(
-                    hintStyle: Theme.of(context).textTheme.titleMedium,
-                    hintText: AppLocalizations.of(context).newTask,
-                    border: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                  ),
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        minHeight: 48,
+        maxHeight: 84,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        child: Row(
+          children: [
+            const Align(
+              alignment: Alignment.center,
+              child: Icon(Icons.add),
+            ),
+            const SizedBox(width: 12),
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 144,
+              child: TextField(
+                maxLines: 1,
+                focusNode: _focus,
+                onChanged: (title) => _title = title,
+                style: Theme.of(context).textTheme.bodyLarge,
+                decoration: InputDecoration(
+                  isDense: true,
+                  hintStyle: Theme.of(context).textTheme.titleMedium,
+                  hintText: AppLocalizations.of(context).newTask,
+                  border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
