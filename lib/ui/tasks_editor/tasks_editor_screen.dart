@@ -6,6 +6,7 @@ import 'package:todo_app/ui/tasks_editor/widgets/date_picker.dart';
 import 'package:todo_app/ui/tasks_editor/widgets/sliver_app_bar.dart';
 
 import '../../models/domain/task_model.dart';
+import '../../providers/is_dark_mode_provider.dart';
 import '../common/divider.dart';
 import '../common/no_glow_scroll_behavior.dart';
 import 'widgets/delete_task.dart';
@@ -25,8 +26,12 @@ class TasksEditorScreen extends ConsumerWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Theme.of(context).primaryColor,
-        statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-        statusBarBrightness: Brightness.light, // For iOS (dark icons)
+        statusBarIconBrightness: ref.watch(isDarkModeProvider)
+            ? Brightness.light
+            : Brightness.dark, // For Android (dark icons)
+        statusBarBrightness: ref.watch(isDarkModeProvider)
+            ? Brightness.dark
+            : Brightness.light, // For iOS (dark icons)
       ),
     );
 
