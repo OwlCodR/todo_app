@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_app/providers/tasks_list_provider.dart';
+import 'package:todo_app/providers/tasks_list/tasks_list_provider.dart';
 
-import '../../../models/task_model.dart';
+import '../../../models/domain/task_model.dart';
 import '../widgets/end_action_pane_content.dart';
 import '../widgets/start_action_pane_content.dart';
 import '../widgets/tasks_list_slidable_content.dart';
@@ -24,9 +24,12 @@ class TasksListItem extends ConsumerWidget {
         child: Slidable(
           key: UniqueKey(),
           startActionPane: ActionPane(
+            extentRatio: 0.2,
+            openThreshold: 0.9,
+            closeThreshold: 0.9,
             dismissible: DismissiblePane(
               onDismissed: () {
-                ref.read(tasksListProvider.notifier).updateTask(
+                ref.read(tasksListControllerProvider.notifier).updateTask(
                       task.copyWith(isDone: !task.isDone),
                     );
               },
@@ -35,9 +38,16 @@ class TasksListItem extends ConsumerWidget {
             children: const [StartActionPaneContent()],
           ),
           endActionPane: ActionPane(
-            dismissible: DismissiblePane(onDismissed: () {
-              ref.read(tasksListProvider.notifier).removeTask(task.id);
-            }),
+            extentRatio: 0.2,
+            openThreshold: 0.9,
+            closeThreshold: 0.9,
+            dismissible: DismissiblePane(
+              onDismissed: () {
+                ref
+                    .read(tasksListControllerProvider.notifier)
+                    .removeTask(task.id);
+              },
+            ),
             motion: const ScrollMotion(),
             children: const [EndActionPaneContent()],
           ),

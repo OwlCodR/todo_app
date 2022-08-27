@@ -6,7 +6,7 @@ import 'package:todo_app/ui/common/fab.dart';
 import 'package:todo_app/ui/tasks_list/widgets/sliver_list_tasks.dart';
 
 import '../common/no_glow_scroll_behavior.dart';
-import 'widgets/sliver_appbar.dart';
+import 'widgets/sliver_app_bar.dart';
 import 'widgets/sliver_background_card.dart';
 
 class TasksScreen extends ConsumerWidget {
@@ -28,7 +28,7 @@ class TasksScreen extends ConsumerWidget {
         child: CustomScrollView(
           scrollBehavior: NoGlowScrollBehavior(),
           slivers: <Widget>[
-            const CustomSliverAppbar(),
+            const TasksSliverAppBar(),
             SliverStack(
               children: const [
                 SliverBackgroundCard(),

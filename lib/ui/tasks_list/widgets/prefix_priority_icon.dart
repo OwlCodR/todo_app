@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:todo_app/models/task_model.dart';
+
+import '../../../models/domain/task_model.dart';
 
 class PrefixPriorityIcon extends StatelessWidget {
   const PrefixPriorityIcon({Key? key, required this.task}) : super(key: key);

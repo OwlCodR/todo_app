@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'snackbar.dart';
+import '../tasks_editor/tasks_editor_screen.dart';
 
 class CommonFab extends StatelessWidget {
   const CommonFab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // TODO Use Navigator 2.0
     return FloatingActionButton(
-      onPressed: () =>
-          showCommonSnackbar(context, AppLocalizations.of(context).goToEditor),
+      onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const TasksEditorScreen(),
+        ),
+      ),
       child: Icon(
         Icons.add,
         color: Theme.of(context).cardColor,

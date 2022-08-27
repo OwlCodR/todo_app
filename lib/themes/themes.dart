@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/constants/colors.dart';
+import 'package:todo_app/constants/app_colors.dart';
 
 class AppThemes {
   static ThemeData light = _AppTheme.getTheme(
@@ -22,14 +22,17 @@ class _AppTheme {
     required AppColorsTheme colors,
   }) {
     return parent.copyWith(
+      focusColor: colors.blue,
       primaryColorLight: colors.green,
       primaryColor: colors.backPrimary,
+      primaryColorDark: colors.separator,
       cardColor: colors.white,
       backgroundColor: colors.backPrimary,
       scaffoldBackgroundColor: colors.backPrimary,
       disabledColor: colors.labelDisable,
       errorColor: colors.red,
       primaryIconTheme: IconThemeData(color: colors.blue),
+      indicatorColor: colors.blue,
       iconTheme: IconThemeData(color: colors.labelTertiary),
       cardTheme: CardTheme(color: colors.white),
       textTheme: textTheme,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_app/models/task_model.dart';
 
+import '../../../models/domain/task_model.dart';
 import 'deadline_text.dart';
 import 'info_button.dart';
 import 'prefix_priority_icon.dart';
@@ -38,7 +38,7 @@ class TasksListSlidableContent extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const InfoButton(),
+                InfoButton(editingTask: task),
               ],
             ),
           ],

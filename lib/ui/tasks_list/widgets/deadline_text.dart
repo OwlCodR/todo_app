@@ -8,7 +8,7 @@ class DeadlineText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (deadline == null) return SizedBox.shrink();
+    if (deadline == null) return const SizedBox.shrink();
     final dateTime = DateTime.fromMillisecondsSinceEpoch(deadline!);
 
     return Align(

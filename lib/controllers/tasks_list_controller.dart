@@ -1,72 +1,92 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:platform_device_id/platform_device_id.dart';
+import 'package:todo_app/utils/importance_enum.dart';
+import 'package:todo_app/utils/status_enum.dart';
 import 'package:uuid/uuid.dart';
 
-import '../models/task_model.dart';
+import '../models/domain/task_model.dart';
 import '../repositories/tasks_repository.dart';
 import '../utils/logger.dart';
 
 class TasksListController extends StateNotifier<List<TaskModel>> {
   TasksListController({
     required this.repository,
+    required this.deviceId,
   }) : super([]) {
     loadList();
   }
 
   TasksRepository repository;
+  String? deviceId;
 
-  void loadList() {
+  void loadList() async {
     log.d('[$runtimeType] loadList()');
-    repository.getTasks().then((list) => state = list).catchError(
-      (error) {
-        _handleRemoteError(error: error);
-      },
-    );
+
+    try {
+      state = repository.getLocalTasks();
+      state = await repository.getActualTasks(localTasks: state);
+    } on DioError catch (e) {
+      _handleDioError(
+        error: e,
+        onConnectionError: () {
+          // TODO Show message
+        },
+      );
+    } catch (e) {
+      _doNothing(error: e.toString());
+    }
   }
 
   void addDefaultTask(String title) {
-    PlatformDeviceId.getDeviceId.then((deviceId) {
-      final defaultTask = TaskModel(
+    addTask(
+      TaskModel(
         id: const Uuid().v4(),
         isDone: false,
         title: title,
-        priority: TaskModel.basicPriority,
+        importance: Importance.basic,
         createdAt: DateTime.now().millisecondsSinceEpoch,
         changedAt: DateTime.now().millisecondsSinceEpoch,
         lastUpdatedBy: deviceId ?? const Uuid().v4(),
-      );
-
-      addTask(defaultTask);
-    });
+      ),
+    );
   }
 
-  void addTask(TaskModel task) {
+  Future<void> addTask(TaskModel task) async {
     log.d('[$runtimeType] addTask($task)');
 
-    repository.createTask(task).catchError(
-      (error) {
-        _handleRemoteError(
-          error: error,
-          onUnsynchronized: _synchronizeTasks,
-        );
-      },
-    );
+    try {
+      await repository.createTask(task);
+    } on DioError catch (e) {
+      _handleDioError(
+        error: e,
+        onUnsynchronized: _synchronizeTasks,
+        onConnectionError: () {
+          // TODO Show message
+        },
+      );
+    } catch (e) {
+      _doNothing(error: e.toString());
+    }
 
     state = [...state, task];
   }
 
-  void removeTask(String id) {
+  Future<void> removeTask(String id) async {
     log.d('[$runtimeType] removeTask($id)');
 
-    repository.deleteTask(id).catchError(
-      (error) {
-        _handleRemoteError(
-          error: error,
-          onUnsynchronized: _synchronizeTasks,
-        );
-      },
-    );
+    try {
+      await repository.deleteTask(id);
+    } on DioError catch (e) {
+      _handleDioError(
+        error: e,
+        onUnsynchronized: _synchronizeTasks,
+        onConnectionError: () {
+          // TODO Show message
+        },
+      );
+    } catch (e) {
+      _doNothing(error: e.toString());
+    }
 
     state = [
       for (final task in state)
@@ -74,17 +94,22 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
     ];
   }
 
-  void updateTask(TaskModel newTask) {
+  Future<void> updateTask(TaskModel newTask) async {
     log.d('[$runtimeType] updateTask($newTask)');
 
-    repository.updateTask(newTask).catchError(
-      (error) {
-        _handleRemoteError(
-          error: error,
-          onUnsynchronized: _synchronizeTasks,
-        );
-      },
-    );
+    try {
+      await repository.setTask(newTask);
+    } on DioError catch (e) {
+      _handleDioError(
+        error: e,
+        onUnsynchronized: _synchronizeTasks,
+        onConnectionError: () {
+          // TODO Show message
+        },
+      );
+    } catch (e) {
+      _doNothing(error: e.toString());
+    }
 
     state = [
       for (final task in state)
@@ -92,7 +117,7 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
           task.copyWith(
             isDone: newTask.isDone,
             title: newTask.title,
-            priority: newTask.priority,
+            importance: newTask.importance,
             createdAt: newTask.createdAt,
             changedAt: newTask.changedAt,
             lastUpdatedBy: newTask.lastUpdatedBy,
@@ -105,17 +130,27 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
   }
 
   Future<void> _synchronizeTasks() async {
-    log.d('[$runtimeType] _synchronizeLocalTasks()');
-    await repository.updateList(state);
+    try {
+      await repository.mergeTasks();
+    } on DioError catch (e) {
+      _handleDioError(
+        error: e,
+        onConnectionError: () {
+          // TODO Show message
+        },
+      );
+    } catch (e) {
+      _doNothing(error: e.toString());
+    }
   }
 
-  static void _doNothing() {
-    log.w('[TasksListController] Unhandled exception');
+  static void _doNothing({String? error}) {
+    log.w('[TasksListController] Unhandled exception: $error');
   }
 
-  void _handleRemoteError({
+  void _handleDioError({
     required DioError error,
-    Function onSettingsError = _doNothing,
+    Function onConnectionError = _doNothing,
     Function onServerError = _doNothing,
     Function onWrongId = _doNothing,
     Function onWrongToken = _doNothing,
@@ -125,11 +160,8 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
     final response = error.response;
 
     if (response == null) {
-      log.e('[$runtimeType] Something happend with settings:');
-      log.e('Options: ${error.requestOptions.data}');
-      log.e('Error: ${error.message}');
-
-      onSettingsError();
+      log.e('[$runtimeType] Connection error.');
+      onConnectionError();
       return;
     }
 
@@ -150,7 +182,7 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
         if (response.data == null) {
           log.e('[$runtimeType] Wrong body.');
           onWrongBody();
-        } else if (response.data as String == 'unsynchronized data') {
+        } else if (response.data.toString() == Status.unsynchronized.string) {
           log.w('[$runtimeType] Unsynchronized data.');
           onUnsynchronized();
         }

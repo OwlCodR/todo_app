@@ -1,11 +1,11 @@
-class AppPaths {
-  static const assets = 'assets';
-  static const images = '$assets/images';
-  static const checked = '$images/checked.svg';
-  static const unchecked = '$images/unchecked.svg';
-  static const info = '$images/info.svg';
-  static const uncheckedImportant = '$images/unchecked_important.svg';
-  static const prefixImportnantPriority =
-      '$images/prefix_important_priority.svg';
-  static const prefixLowPriority = '$images/prefix_low_priority.svg';
+enum AppPaths {
+  checked('assets/images/checked.svg'),
+  unchecked('assets/images/unchecked.svg'),
+  info('assets/images/info.svg'),
+  uncheckedImportant('assets/images/unchecked_important.svg'),
+  prefixImportnantPriority('assets/images/prefix_important_priority.svg'),
+  prefixLowPriority('assets/images/prefix_low_priority.svg');
+
+  const AppPaths(this.path);
+  final String path;
 }

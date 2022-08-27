@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/constants/app_paths.dart';
-
-import '../../common/snackbar.dart';
+import 'package:todo_app/models/domain/task_model.dart';
+import 'package:todo_app/ui/tasks_editor/tasks_editor_screen.dart';
 
 class InfoButton extends StatelessWidget {
-  const InfoButton({Key? key}) : super(key: key);
+  const InfoButton({
+    Key? key,
+    required this.editingTask,
+  }) : super(key: key);
+
+  final TaskModel editingTask;
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +18,18 @@ class InfoButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       constraints: const BoxConstraints(),
       onPressed: () {
-        // TODO Open editor
-        showCommonSnackbar(context, AppLocalizations.of(context).goToEditor);
+        // TODO Use Navigator 2.0
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => TasksEditorScreen(
+              task: editingTask,
+            ),
+          ),
+        );
       },
       icon: SvgPicture.asset(
-        AppPaths.info,
+        AppPaths.info.path,
         color: Theme.of(context).disabledColor,
       ),
     );
