@@ -11,6 +11,7 @@
   "doBefore": "Сделать до",
   "delete": "Удалить",
   "goToEditor": "Переход в экран редактирования",
+  "emptyTitle": "Заголовок не может быть пустым!",
   "completedTasksCounter": "Выполнено — {completed_tasks_count}",
   "@completedTasksCounter": {
     "placeholders": {

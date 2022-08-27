@@ -11,6 +11,7 @@
   "doBefore": "Do before",
   "delete": "Delete",
   "goToEditor": "Go to editor screen",
+  "emptyTitle": "Title should not be empty!",
   "completedTasksCounter": "Done — {completed_tasks_count}",
   "@completedTasksCounter": {
     "placeholders": {
