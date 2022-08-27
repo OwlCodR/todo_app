@@ -4,6 +4,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,9 +81,14 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
-    ShakeDetector.autoStart(onPhoneShake: () {
-      ref.read(isDarkModeProvider.notifier).update((state) => !state);
-    });
+    ShakeDetector.autoStart(
+      minimumShakeCount: 1,
+      shakeSlopTimeMS: 3000,
+      onPhoneShake: () {
+        ref.read(isDarkModeProvider.notifier).update((state) => !state);
+        HapticFeedback.mediumImpact();
+      },
+    );
     FirebaseAnalytics.instance.logAppOpen();
   }
 
