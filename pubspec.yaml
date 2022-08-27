@@ -58,6 +58,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   dropdown_button2: ^1.7.2
   firebase_analytics: ^9.3.3
+  shake: ^2.1.0
 
 dev_dependencies:
   flutter_test:

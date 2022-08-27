@@ -12,6 +12,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
+import 'package:shake/shake.dart';
+import 'package:todo_app/providers/is_dark_mode_provider.dart';
 import 'package:todo_app/constants/app_paths.dart';
 import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
 
@@ -67,17 +69,20 @@ Future<void> initHive() async {
   await Hive.openBox<TaskHive>(TasksLocalDatasource.tasksAppBox);
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  ConsumerState<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
+    ShakeDetector.autoStart(onPhoneShake: () {
+      ref.read(isDarkModeProvider.notifier).update((state) => !state);
+    });
     FirebaseAnalytics.instance.logAppOpen();
   }
 
@@ -90,6 +95,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      themeMode:
+          ref.watch(isDarkModeProvider) ? ThemeMode.dark : ThemeMode.light,
       home: const TasksScreen(),
     );
   }
