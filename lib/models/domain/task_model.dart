@@ -57,11 +57,11 @@ class TaskModel with _$TaskModel {
 extension TaskModelExtesion on TaskModel {
   String? get prefixPath {
     if (!isDone && importance == Importance.important) {
-      return AppPaths.prefixImportnantPriority;
+      return AppPaths.prefixImportnantPriority.path;
     }
 
     if (!isDone && importance == Importance.low) {
-      return AppPaths.prefixLowPriority;
+      return AppPaths.prefixLowPriority.path;
     }
 
     return null;
@@ -69,11 +69,11 @@ extension TaskModelExtesion on TaskModel {
 
   String get checkboxPath {
     if (isDone) {
-      return AppPaths.checked;
+      return AppPaths.checked.path;
     } else if (importance == Importance.important) {
-      return AppPaths.uncheckedImportant;
+      return AppPaths.uncheckedImportant.path;
     }
 
-    return AppPaths.unchecked;
+    return AppPaths.unchecked.path;
   }
 }

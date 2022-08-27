@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
+import 'package:todo_app/constants/app_paths.dart';
 import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
 
 import 'datasources/tasks_local_datasource.dart';
@@ -24,6 +26,7 @@ void main() {
     Intl.systemLocale = await findSystemLocale();
     await dotenv.load();
     await initHive();
+    await initSvgPitcures();
 
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -38,6 +41,23 @@ void main() {
   },
       (error, stack) =>
           FirebaseCrashlytics.instance.recordError(error, stack, fatal: true));
+}
+
+Future<void> initSvgPitcures() {
+  return Future.wait(getPreCacheFutures());
+}
+
+List<Future> getPreCacheFutures() {
+  return [
+    for (final appPath in AppPaths.values)
+      precachePicture(
+        ExactAssetPicture(
+          SvgPicture.svgStringDecoderBuilder,
+          appPath.path,
+        ),
+        null,
+      )
+  ];
 }
 
 Future<void> initHive() async {
