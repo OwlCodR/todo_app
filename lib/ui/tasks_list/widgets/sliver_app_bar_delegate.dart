@@ -49,7 +49,7 @@ class TasksSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                   icon: areCompletedTasksVisible
                       ? const Icon(Icons.visibility_off)
                       : const Icon(Icons.visibility),
-                  onPressed: () => onVisibilityButtonPressed(),
+                  onPressed: onVisibilityButtonPressed,
                 ),
               ),
             ),
