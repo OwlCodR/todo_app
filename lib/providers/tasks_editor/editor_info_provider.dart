@@ -14,7 +14,7 @@ final editorTaskInfoProvider =
   return TaskModel(
     id: editingModel?.id ?? const Uuid().v4(),
     isDone: editingModel?.isDone ?? false,
-    title: ref.watch(editorTitleProvider(editingModel?.title)) ?? '',
+    title: ref.watch(editorTitleProvider(editingModel?.title)),
     importance: ref.watch(importanceProvider(editingModel?.importance)),
     deadlineTime: ref
         .watch(dateTimeProvider(editingModel?.deadlineTime))

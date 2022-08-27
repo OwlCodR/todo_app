@@ -27,10 +27,10 @@ class TasksEditorCardTextInput extends ConsumerWidget {
             alignment: Alignment.topLeft,
             child: TextField(
               maxLines: null,
-              onChanged: (title) {
+              onChanged: (newTitle) {
                 ref
                     .read(editorTitleProvider(title).notifier)
-                    .update((state) => title);
+                    .update((state) => newTitle);
               },
               controller: TextEditingController(
                 text: ref.read(editorTitleProvider(title)),

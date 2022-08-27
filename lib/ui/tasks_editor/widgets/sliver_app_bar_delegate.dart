@@ -38,14 +38,14 @@ class TasksEditorSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
               Icons.close,
               color: Theme.of(context).textTheme.bodyLarge!.color,
             ),
-            onPressed: () => onBackPressed(),
+            onPressed: onBackPressed,
           ),
         ),
         Positioned(
           top: 4,
           right: 16,
           child: TextButton(
-            onPressed: () => onSavePressed(),
+            onPressed: onSavePressed,
             style: TextButton.styleFrom(
               padding: EdgeInsets.zero,
             ),

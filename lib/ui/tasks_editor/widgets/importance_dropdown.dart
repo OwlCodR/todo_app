@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app/models/domain/importance_locale_args.dart';
 
 import '../../../providers/tasks_editor/editor_importance_locale_provider.dart';
 import '../../../providers/tasks_editor/editor_importance_provider.dart';
@@ -50,10 +51,12 @@ class TasksEditorImportanceDropdown extends ConsumerWidget {
                   ),
                   Text(
                     ref.watch(
-                      importanceLocaleProvider([
-                        AppLocalizations.of(context),
-                        ref.watch(importanceProvider(importance))
-                      ]),
+                      importanceLocaleProvider(
+                        ImportanceLocaleArgs(
+                          appLocalizations: AppLocalizations.of(context),
+                          importance: ref.watch(importanceProvider(importance)),
+                        ),
+                      ),
                     ),
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
