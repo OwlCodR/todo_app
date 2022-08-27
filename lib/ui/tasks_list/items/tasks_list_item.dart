@@ -24,6 +24,9 @@ class TasksListItem extends ConsumerWidget {
         child: Slidable(
           key: UniqueKey(),
           startActionPane: ActionPane(
+            extentRatio: 0.2,
+            openThreshold: 0.9,
+            closeThreshold: 0.9,
             dismissible: DismissiblePane(
               onDismissed: () {
                 ref.read(tasksListControllerProvider.notifier).updateTask(
@@ -35,11 +38,16 @@ class TasksListItem extends ConsumerWidget {
             children: const [StartActionPaneContent()],
           ),
           endActionPane: ActionPane(
-            dismissible: DismissiblePane(onDismissed: () {
-              ref
-                  .read(tasksListControllerProvider.notifier)
-                  .removeTask(task.id);
-            }),
+            extentRatio: 0.2,
+            openThreshold: 0.9,
+            closeThreshold: 0.9,
+            dismissible: DismissiblePane(
+              onDismissed: () {
+                ref
+                    .read(tasksListControllerProvider.notifier)
+                    .removeTask(task.id);
+              },
+            ),
             motion: const ScrollMotion(),
             children: const [EndActionPaneContent()],
           ),
