@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/utils/importance_enum.dart';
 import 'package:todo_app/utils/status_enum.dart';
 import 'package:uuid/uuid.dart';
 
+import '../constants/app_metrics.dart';
 import '../models/domain/task_model.dart';
 import '../repositories/tasks_repository.dart';
 import '../utils/logger.dart';
@@ -69,6 +71,12 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
     }
 
     state = [...state, task];
+    FirebaseAnalytics.instance.logEvent(
+      name: AppMetrics.taskAdded,
+      parameters: {
+        'task_id': task.id,
+      },
+    );
   }
 
   Future<void> removeTask(String id) async {
@@ -92,6 +100,13 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
       for (final task in state)
         if (task.id != id) task,
     ];
+
+    FirebaseAnalytics.instance.logEvent(
+      name: AppMetrics.taskRemoved,
+      parameters: {
+        'task_id': id,
+      },
+    );
   }
 
   Future<void> updateTask(TaskModel newTask) async {
@@ -109,6 +124,17 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
       );
     } catch (e) {
       _doNothing(error: e.toString());
+    }
+
+    for (var task in state) {
+      if (task.id == newTask.id && !task.isDone && newTask.isDone) {
+        FirebaseAnalytics.instance.logEvent(
+          name: AppMetrics.taskCompleted,
+          parameters: {
+            'task_id': task.id,
+          },
+        );
+      }
     }
 
     state = [
