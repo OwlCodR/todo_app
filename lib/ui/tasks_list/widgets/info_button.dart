@@ -30,7 +30,7 @@ class InfoButton extends StatelessWidget {
       },
       icon: SvgPicture.asset(
         AppPaths.info,
-        color: Theme.of(context).disabledColor,
+        color: Theme.of(context).iconTheme.color,
       ),
     );
   }

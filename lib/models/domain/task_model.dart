@@ -55,9 +55,11 @@ class TaskModel with _$TaskModel {
 }
 
 extension TaskModelExtesion on TaskModel {
-  String? get prefixPath {
+  String? prefixPath(bool isDarkMode) {
     if (!isDone && importance == Importance.important) {
-      return AppPaths.prefixImportnantPriority;
+      return isDarkMode
+          ? AppPaths.prefixImportnantPriorityDark
+          : AppPaths.prefixImportnantPriority;
     }
 
     if (!isDone && importance == Importance.low) {
@@ -67,13 +69,15 @@ extension TaskModelExtesion on TaskModel {
     return null;
   }
 
-  String get checkboxPath {
+  String checkboxPath(bool isDarkMode) {
     if (isDone) {
-      return AppPaths.checked;
+      return isDarkMode ? AppPaths.checkedDark : AppPaths.checked;
     } else if (importance == Importance.important) {
-      return AppPaths.uncheckedImportant;
+      return isDarkMode
+          ? AppPaths.uncheckedImportantDark
+          : AppPaths.uncheckedImportant;
     }
 
-    return AppPaths.unchecked;
+    return isDarkMode ? AppPaths.uncheckedDark : AppPaths.unchecked;
   }
 }

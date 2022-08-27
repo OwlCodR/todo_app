@@ -9,6 +9,8 @@ class CommonFab extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO Use Navigator 2.0
     return FloatingActionButton(
+      backgroundColor:
+          Theme.of(context).floatingActionButtonTheme.backgroundColor,
       onPressed: () => Navigator.push(
         context,
         MaterialPageRoute(
@@ -17,7 +19,7 @@ class CommonFab extends StatelessWidget {
       ),
       child: Icon(
         Icons.add,
-        color: Theme.of(context).cardColor,
+        color: Theme.of(context).floatingActionButtonTheme.foregroundColor,
       ),
     );
   }

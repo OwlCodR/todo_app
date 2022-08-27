@@ -23,6 +23,20 @@ class _AppTheme {
   }) {
     return parent.copyWith(
       focusColor: colors.blue,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: colors.blue,
+        foregroundColor: colors.white,
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith((states) =>
+            states.contains(MaterialState.selected)
+                ? colors.blue
+                : colors.backElevated),
+        trackColor: MaterialStateProperty.resolveWith((states) =>
+            states.contains(MaterialState.selected)
+                ? colors.blue.withOpacity(0.30)
+                : colors.overlay),
+      ),
       primaryColorLight: colors.green,
       primaryColor: colors.backPrimary,
       primaryColorDark: colors.separator,
@@ -34,7 +48,7 @@ class _AppTheme {
       primaryIconTheme: IconThemeData(color: colors.blue),
       indicatorColor: colors.blue,
       iconTheme: IconThemeData(color: colors.labelTertiary),
-      cardTheme: CardTheme(color: colors.white),
+      cardTheme: CardTheme(color: colors.backSecondary),
       textTheme: textTheme,
     );
   }

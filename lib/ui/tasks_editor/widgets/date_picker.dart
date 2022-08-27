@@ -44,6 +44,8 @@ class TasksEditorDatePicker extends ConsumerWidget {
           ],
         ),
         Switch(
+          thumbColor: Theme.of(context).switchTheme.thumbColor,
+          trackColor: Theme.of(context).switchTheme.trackColor,
           value: ref.watch(switchStateProvider(isSwitchedInitValue)),
           onChanged: (value) async {
             ref

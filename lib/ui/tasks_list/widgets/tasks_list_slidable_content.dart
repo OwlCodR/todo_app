@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../models/domain/task_model.dart';
+import '../../../providers/is_dark_mode_provider.dart';
 import 'deadline_text.dart';
 import 'info_button.dart';
 import 'prefix_priority_icon.dart';
 import 'title_text.dart';
 
-class TasksListSlidableContent extends StatelessWidget {
+class TasksListSlidableContent extends ConsumerWidget {
   const TasksListSlidableContent({
     Key? key,
     required this.task,
@@ -16,7 +18,7 @@ class TasksListSlidableContent extends StatelessWidget {
   final TaskModel task;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ConstrainedBox(
       constraints: const BoxConstraints(minHeight: 48, maxHeight: 108),
       child: Padding(
@@ -26,7 +28,11 @@ class TasksListSlidableContent extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SvgPicture.asset(task.checkboxPath),
+                SvgPicture.asset(
+                  task.checkboxPath(
+                    ref.watch(isDarkModeProvider),
+                  ),
+                ),
                 const SizedBox(width: 12),
                 PrefixPriorityIcon(task: task),
                 Expanded(
