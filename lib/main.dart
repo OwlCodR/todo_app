@@ -14,8 +14,8 @@ import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
 import 'package:shake/shake.dart';
-import 'package:todo_app/providers/is_dark_mode_provider.dart';
 import 'package:todo_app/constants/app_paths.dart';
+import 'package:todo_app/providers/is_dark_mode_provider.dart';
 import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
 
 import 'datasources/tasks_local_datasource.dart';
