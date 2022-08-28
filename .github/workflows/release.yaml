@@ -6,7 +6,7 @@ on:
     types:
       - completed
   push:
-    branches: [master]
+    branches: [ dev ]
 
 jobs:
   build:
