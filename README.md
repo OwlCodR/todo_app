@@ -7,7 +7,9 @@
 - [freezed](https://pub.dev/packages/freezed)
 - [riverpod](https://pub.dev/packages/riverpod)
 - [firebase_core](https://pub.dev/packages/firebase_core)
+- [firebase_analytics](https://pub.dev/packages/firebase_analytics)
 - [firebase_crashlytics](https://pub.dev/packages/firebase_crashlytics)
+- [firebase_remote_config](https://pub.dev/packages/firebase_remote_config)
 - [dio](https://pub.dev/packages/dio)
 - [hive](https://pub.dev/packages/hive)
 - [logger](https://pub.dev/packages/logger)
@@ -16,7 +18,9 @@
 - [flutter_slidable](https://pub.dev/packages/flutter_slidable)
 - [sliver_tools](https://pub.dev/packages/sliver_tools)
 - [platform_device_id](https://pub.dev/packages/platform_device_id)
+- [dropdown_button2](https://pub.dev/packages/dropdown_button2)
 - [flutter_dotenv](https://pub.dev/packages/flutter_dotenv)
+- [shake](https://pub.dev/packages/shake)
 
 ## :sparkles: Feature list
 **I phase:**
@@ -43,21 +47,34 @@
 - :bangbang: Up-to-date README.md
 - Added and works `flutter_lints`, there are no unreasonable rule ignores in the code
 - Code formatting is present
-- The code is divided into layers (layer-first)
+- [new] The code is divided into layers (layer-first)
 > Receiving and storing data
 - Implemented handling of server and other errors where they can often shoot
 - The application works properly without the Internet
 - :sparkles: Offline-first: work without the Internet is fully possible, at the next start it will send what could not leave in the previous session due to errors / lack of network
 > Navigation, UI, animations
+- Navigation is encapsulated in a separate entity, there are no explicit Navigator.push transitions directly in callbacks
 - The text of long notes is cut to fit the layout
+- Dark theme support
+- Implemented animations for tasks disappearing and screen transitions 
 - Implemented support for landscape orientation
 - Implemented support for large screens (tablets)
 > Architecture
 - Working with data is organized in a separate entity, a repository, encapsulating in one place the receipt and updating / adding of data to disk
 - State-management is implemented using `Riverpod`
-- DI using `Riverpod`
+- [new] DI using `Riverpod`
+> Deeplinks
+- Supported deep link that opens the screen for adding a new case `adb shell 'am start -W -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "https://deeplink.yandex-todo-app.com/new"'`
+- Deeplink opens even if the app was killed
+- Navigation layer rewritten to `Navigator 2.0`
+> Build & Release
+- 2 flavors are supported: dev and prod. In the debug version, a debug label is added in the corner of the application and the suffix [DEV] is added
+- Set up CI on GitHub using `Github Actions`
+- :sparkles: There is distribution through some service like Firebase App Distribution (Implemented using Github Actions, but crashes with 403 due to problems with the Russia region)
 > Additionally
 - Using `freezed` for data-models
+- Added analytics tool using `firebase_analytics`. Event analytics is collected: `app_open`, `first_open`, `TASK_COMPLETED`, `TASK_ADDED`, `TASK_DELETED`
+- :sparkles: Added theme changing on shaking using `shake`
 
 ## :video_game: Screenshots
 ![Screen1](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/1.jpg?raw=true)
