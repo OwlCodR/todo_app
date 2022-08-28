@@ -23,12 +23,11 @@ jobs:
       - run: flutter format --set-exit-if-changed .
 
       - run: flutter analyze .
+        continue-on-error: true
 
       - run: flutter test
-        continue-on-error: true
 
       - run: flutter build apk --release
-        continue-on-error: true
 
       - uses: actions/upload-artifact@v1
         with:
