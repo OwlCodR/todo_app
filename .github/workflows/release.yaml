@@ -35,9 +35,9 @@ jobs:
       - name: Fetch credential file
         uses: timheuer/base64-to-file@v1.1
         with:
-          secret: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-          filename: credential_file.json
-          destination-path: $GITHUB_WORKSPACE/Firebase-Distribution-Github-Action/
+          encodedString: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          fileName: credential_file.json
+          fileDir: $GITHUB_WORKSPACE/Firebase-Distribution-Github-Action/
 
       - name: Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
