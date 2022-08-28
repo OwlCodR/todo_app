@@ -77,11 +77,15 @@
 - :sparkles: Added theme changing on shaking using `shake`
 
 ## :video_game: Screenshots
-![Screen1](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/1.jpg?raw=true)
-![Screen2](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/2.jpg?raw=true)
+![Screen3](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/3.jpg?raw=true)
+![Screen4](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/4.jpg?raw=true)
+![Screen5](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/5.jpg?raw=true)
+![Screen6](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/6.jpg?raw=true)
+![Screen7](https://github.com/OwlCodR/todo_app/blob/feature/readme/screenshots/7.jpg?raw=true)
 
 ## :link: Download
-https://disk.yandex.ru/d/QxJBJpDqMR2ILw
+> [DEV] https://disk.yandex.ru/d/k1vRWSUt41q7ww
+> [PROD] https://disk.yandex.ru/d/7gRjvnXp1BG6_A
 
 ### :memo: Other
 > Freezed

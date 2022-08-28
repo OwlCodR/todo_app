@@ -17,7 +17,7 @@ class TasksScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Theme.of(context).primaryColor,
+        statusBarColor: Theme.of(context).primaryColor.withOpacity(.20),
         statusBarIconBrightness: ref.watch(isDarkModeProvider)
             ? Brightness.light
             : Brightness.dark, // For Android (dark icons)

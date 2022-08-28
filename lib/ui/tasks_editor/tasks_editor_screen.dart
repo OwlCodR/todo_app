@@ -54,7 +54,7 @@ class _TasksEditorScreenState extends ConsumerState<TasksEditorScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Theme.of(context).primaryColor,
+        statusBarColor: Theme.of(context).primaryColor.withOpacity(.20),
         statusBarIconBrightness: ref.watch(isDarkModeProvider)
             ? Brightness.light
             : Brightness.dark, // For Android (dark icons)
