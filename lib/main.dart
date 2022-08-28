@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -14,14 +15,18 @@ import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
 import 'package:shake/shake.dart';
+import 'package:todo_app/constants/app_config.dart';
 import 'package:todo_app/constants/app_paths.dart';
 import 'package:todo_app/providers/is_dark_mode_provider.dart';
+import 'package:todo_app/providers/theme/dark_colors_provider.dart';
+import 'package:todo_app/providers/theme/light_colors_provider.dart';
 import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
 
 import 'datasources/tasks_local_datasource.dart';
 import 'firebase_options.dart';
 import 'models/data/local/task_hive.dart';
-import 'themes/themes.dart';
+import 'providers/theme/dark_theme_provider.dart';
+import 'providers/theme/light_theme_provider.dart';
 import 'utils/logger.dart';
 
 void main() {
@@ -40,6 +45,7 @@ void main() {
 
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    await initRemoteConfigSettings();
 
     runApp(const ProviderScope(child: MyApp()));
   },
@@ -48,11 +54,7 @@ void main() {
 }
 
 Future<void> initSvgPitcures() {
-  return Future.wait(getPreCacheFutures());
-}
-
-List<Future> getPreCacheFutures() {
-  return [
+  return Future.wait([
     for (final appPath in AppPaths.values)
       precachePicture(
         ExactAssetPicture(
@@ -61,13 +63,22 @@ List<Future> getPreCacheFutures() {
         ),
         null,
       )
-  ];
+  ]);
 }
 
 Future<void> initHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskHiveAdapter());
   await Hive.openBox<TaskHive>(TasksLocalDatasource.tasksAppBox);
+}
+
+Future<void> initRemoteConfigSettings() {
+  return FirebaseRemoteConfig.instance.setConfigSettings(
+    RemoteConfigSettings(
+      fetchTimeout: const Duration(minutes: 1),
+      minimumFetchInterval: Duration.zero,
+    ),
+  );
 }
 
 class MyApp extends ConsumerStatefulWidget {
@@ -78,6 +89,27 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
+  Future<void> initDefaultRemoteConfig() async {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.fetchAndActivate();
+
+    final importanceColor = Color(
+      int.parse(
+        remoteConfig.getString(AppConfig.importanceColor),
+      ),
+    );
+
+    log.d(
+        'Loaded ${remoteConfig.getString(AppConfig.importanceColor)} status: ${remoteConfig.lastFetchStatus}');
+    log.d('Loaded $importanceColor status: ${remoteConfig.lastFetchStatus}');
+    ref
+        .read(darkColorsProvider.notifier)
+        .update((state) => state.copyWith(red: importanceColor));
+    ref
+        .read(lightColorsProvider.notifier)
+        .update((state) => state.copyWith(red: importanceColor));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -89,6 +121,9 @@ class _MyAppState extends ConsumerState<MyApp> {
         HapticFeedback.mediumImpact();
       },
     );
+
+    initDefaultRemoteConfig();
+
     FirebaseAnalytics.instance.logAppOpen();
   }
 
@@ -96,8 +131,8 @@ class _MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
-      theme: AppThemes.light,
-      darkTheme: AppThemes.dark,
+      theme: ref.watch(lightThemeProvider),
+      darkTheme: ref.watch(darkThemeProvider),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

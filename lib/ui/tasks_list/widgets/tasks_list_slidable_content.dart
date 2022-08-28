@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../models/domain/task_model.dart';
-import '../../../providers/is_dark_mode_provider.dart';
+import '../../../utils/importance_enum.dart';
 import 'deadline_text.dart';
 import 'info_button.dart';
 import 'prefix_priority_icon.dart';
@@ -28,9 +27,31 @@ class TasksListSlidableContent extends ConsumerWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SvgPicture.asset(
-                  task.checkboxPath(
-                    ref.watch(isDarkModeProvider),
+                // SvgPicture.asset(
+                //   task.checkboxPath(
+                //     ref.watch(isDarkModeProvider),
+                //   ),
+                // ),
+                Container(
+                  width: 18,
+                  height: 18,
+                  decoration: BoxDecoration(
+                    color: task.importance == Importance.important
+                        ? Theme.of(context).errorColor.withOpacity(0.16)
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                  child: Checkbox(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                    checkColor: Theme.of(context).backgroundColor,
+                    fillColor:
+                        task.importance == Importance.important && !task.isDone
+                            ? Theme.of(context).checkboxTheme.checkColor
+                            : Theme.of(context).checkboxTheme.fillColor,
+                    value: task.isDone,
+                    onChanged: (state) {},
                   ),
                 ),
                 const SizedBox(width: 12),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:todo_app/providers/is_dark_mode_provider.dart';
+import 'package:todo_app/utils/importance_enum.dart';
 
 import '../../../models/domain/task_model.dart';
 
@@ -20,7 +21,12 @@ class PrefixPriorityIcon extends ConsumerWidget {
         padding: const EdgeInsets.all(2.0),
         child: prefixPath == null
             ? const SizedBox.shrink()
-            : SvgPicture.asset(prefixPath),
+            : SvgPicture.asset(
+                prefixPath,
+                color: task.importance == Importance.important
+                    ? Theme.of(context).errorColor
+                    : Theme.of(context).iconTheme.color,
+              ),
       ),
     );
   }
