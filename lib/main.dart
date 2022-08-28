@@ -103,8 +103,6 @@ class _MyAppState extends ConsumerState<MyApp> {
 
     log.d('Loaded $color status: ${remoteConfig.lastFetchStatus}');
 
-    if (color == null) return;
-
     final importanceColor = Color(int.parse(color));
     log.d('Loaded $importanceColor status: ${remoteConfig.lastFetchStatus}');
     ref
