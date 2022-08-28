@@ -1,36 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_app/constants/app_paths.dart';
 import 'package:todo_app/models/domain/task_model.dart';
-import 'package:todo_app/ui/tasks_editor/tasks_editor_screen.dart';
 
-class InfoButton extends StatelessWidget {
+import '../../../constants/app_routes.dart';
+import '../../../providers/navigation/navigation_controller_provider.dart';
+
+class InfoButton extends ConsumerWidget {
   const InfoButton({
     Key? key,
-    required this.editingTask,
+    required this.editableTask,
   }) : super(key: key);
 
-  final TaskModel editingTask;
+  final TaskModel editableTask;
 
   @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      padding: EdgeInsets.zero,
-      constraints: const BoxConstraints(),
-      onPressed: () {
-        // TODO Use Navigator 2.0
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TasksEditorScreen(
-              task: editingTask,
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ClipOval(
+      child: Material(
+        color: Colors.transparent,
+        child: IconTheme(
+          data: Theme.of(context).primaryIconTheme,
+          child: IconButton(
+            constraints: const BoxConstraints(),
+            padding: EdgeInsets.zero,
+            icon: SvgPicture.asset(
+              AppPaths.info.path,
+              color: Theme.of(context).iconTheme.color,
             ),
+            onPressed: () {
+              ref
+                  .read(
+                    navigationControllerProvider,
+                  )
+                  .navigateTo(
+                    route: AppRoutes.taskEditorRoute,
+                    taskId: editableTask.id,
+                  );
+            },
           ),
-        );
-      },
-      icon: SvgPicture.asset(
-        AppPaths.info.path,
-        color: Theme.of(context).iconTheme.color,
+        ),
       ),
     );
   }

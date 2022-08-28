@@ -12,6 +12,8 @@
   "delete": "Удалить",
   "goToEditor": "Переход в экран редактирования",
   "emptyTitle": "Заголовок не может быть пустым!",
+  "errorLoadingEditor": "Ошибка при загрузке редактора!",
+  "errorConnection": "Ошибка! Проверьте подключение к сети.",
   "completedTasksCounter": "Выполнено — {completed_tasks_count}",
   "@completedTasksCounter": {
     "placeholders": {

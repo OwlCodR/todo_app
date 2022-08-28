@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app/controllers/navigation_controller.dart';
 import 'package:todo_app/utils/importance_enum.dart';
 import 'package:todo_app/utils/status_enum.dart';
 import 'package:uuid/uuid.dart';
@@ -14,19 +15,40 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
   TasksListController({
     required this.repository,
     required this.deviceId,
+    required this.navigationController,
   }) : super([]) {
     loadList();
   }
 
-  TasksRepository repository;
-  String? deviceId;
+  final TasksRepository repository;
+  final String? deviceId;
+  final NavigationController navigationController;
+
+  void _setStateWithTask(TaskModel currentTask) {
+    state = [
+      for (final task in state)
+        if (task.id == currentTask.id)
+          task.copyWith(
+            isDone: currentTask.isDone,
+            title: currentTask.title,
+            importance: currentTask.importance,
+            createdAt: currentTask.createdAt,
+            changedAt: currentTask.changedAt,
+            lastUpdatedBy: currentTask.lastUpdatedBy,
+            deadlineTime: currentTask.deadlineTime,
+            color: currentTask.color,
+          )
+        else
+          task
+    ];
+  }
 
   void loadList() async {
     log.d('[$runtimeType] loadList()');
 
     try {
-      state = repository.getLocalTasks();
-      state = await repository.getActualTasks(localTasks: state);
+      state = await repository.getTasks(synchronize: false);
+      state = await repository.getTasks(synchronize: true);
     } on DioError catch (e) {
       _handleDioError(
         error: e,
@@ -40,14 +62,15 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
   }
 
   void addDefaultTask(String title) {
+    final now = DateTime.now().millisecondsSinceEpoch;
     addTask(
       TaskModel(
         id: const Uuid().v4(),
         isDone: false,
         title: title,
         importance: Importance.basic,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        changedAt: DateTime.now().millisecondsSinceEpoch,
+        createdAt: now,
+        changedAt: now,
         lastUpdatedBy: deviceId ?? const Uuid().v4(),
       ),
     );
@@ -77,6 +100,26 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
         'task_id': task.id,
       },
     );
+  }
+
+  Future<TaskModel?> getTask(String id) async {
+    log.d('[$runtimeType] getTask($id)');
+
+    try {
+      return repository.getTask(id: id, synchronize: false);
+    } on DioError catch (e) {
+      _handleDioError(
+        error: e,
+        onUnsynchronized: _synchronizeTasks,
+        onConnectionError: () {
+          // TODO Show message
+        },
+      );
+    } catch (e) {
+      _doNothing(error: e.toString());
+    }
+
+    return Future.value(null);
   }
 
   Future<void> removeTask(String id) async {
@@ -137,22 +180,7 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
       }
     }
 
-    state = [
-      for (final task in state)
-        if (task.id == newTask.id)
-          task.copyWith(
-            isDone: newTask.isDone,
-            title: newTask.title,
-            importance: newTask.importance,
-            createdAt: newTask.createdAt,
-            changedAt: newTask.changedAt,
-            lastUpdatedBy: newTask.lastUpdatedBy,
-            deadlineTime: newTask.deadlineTime,
-            color: newTask.color,
-          )
-        else
-          task
-    ];
+    _setStateWithTask(newTask);
   }
 
   Future<void> _synchronizeTasks() async {

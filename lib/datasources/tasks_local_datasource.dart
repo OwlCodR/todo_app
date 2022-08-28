@@ -37,10 +37,10 @@ class TasksLocalDatasource {
     if (task != null) _box.put(task.key, newTask);
   }
 
-  void setTasks(List<TaskHive> tasks) {
-    log.d('[$runtimeType] updateList($tasks)');
-    _box.clear();
-    _box.addAll(tasks);
+  Future<void> setTasks(List<TaskHive> tasks) async {
+    log.d('[$runtimeType] updateList(${tasks.length} : $tasks)');
+    await _box.clear();
+    await _box.addAll(tasks);
   }
 
   TaskHive? _getTaskById(String id) {

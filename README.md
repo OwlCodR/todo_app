@@ -69,3 +69,5 @@ https://disk.yandex.ru/d/QxJBJpDqMR2ILw
 ### :memo: Other
 > Freezed
 `flutter pub run build_runner build`
+> Deeplinks
+`adb shell 'am start -W -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "https://deeplink.yandex-todo-app.com/new"'`

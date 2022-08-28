@@ -38,17 +38,18 @@ class TasksRepository {
     await _remoteTasks.deleteTask(id, revision);
   }
 
-  List<TaskModel> getLocalTasks() {
-    log.d('[$runtimeType] getLocalTasks()');
-    return _localTasks.getTasks().map(TaskModel.fromHive).toList();
-  }
-
   // Returns tasks from remote or local depends on revision
   // If remote is newer - updates local
-  Future<List<TaskModel>> getActualTasks({
-    required List<TaskModel> localTasks,
+  Future<List<TaskModel>> getTasks({
+    required bool synchronize,
   }) async {
     log.d('[$runtimeType] getActualTasks()');
+
+    final localTasks = _localTasks.getTasks().map(TaskModel.fromHive).toList();
+
+    if (!synchronize) {
+      return localTasks;
+    }
 
     final response = await _remoteTasks.getTasks();
     if (response.status != Status.ok.string) {
@@ -69,10 +70,18 @@ class TasksRepository {
     }
   }
 
-  Future<TaskModel> getTask(String id) async {
+  Future<TaskModel> getTask({
+    required String id,
+    required bool synchronize,
+  }) async {
     log.d('[$runtimeType] getTask($id)');
 
     final localTask = TaskModel.fromHive(_localTasks.getTask(id));
+
+    if (!synchronize) {
+      return localTask;
+    }
+
     final remoteTaskResponse = await _remoteTasks.getTask(id);
 
     log.d('[$runtimeType] Loaded remoteTaskResponse:');
@@ -118,7 +127,7 @@ class TasksRepository {
     log.d('[$runtimeType] Loaded mergedTasksResponse:');
     log.d(prettyString(mergedTasksResponse));
 
-    _updateLocalTasks(mergedTasks, mergedTasksResponse.revision);
+    await _updateLocalTasks(mergedTasks, mergedTasksResponse.revision);
     return mergedTasks;
   }
 
@@ -131,10 +140,13 @@ class TasksRepository {
     await _remoteTasks.setTask(newTask, revision);
   }
 
-  void _updateLocalTasks(List<TaskModel> tasks, int revision) {
+  Future<void> _updateLocalTasks(List<TaskModel> tasks, int revision) async {
     log.d(
-        '[$runtimeType] _updateLocalTasks(tasks: $tasks, revision: $revision)');
-    _localTasks.setTasks(tasks.map(TaskHive.fromModel).toList());
+      '[$runtimeType] '
+      '_updateLocalTasks(tasks: ${tasks.length}:$tasks, '
+      'revision: $revision)',
+    );
+    await _localTasks.setTasks(tasks.map(TaskHive.fromModel).toList());
     _localRevision.setRevision(revision);
   }
 

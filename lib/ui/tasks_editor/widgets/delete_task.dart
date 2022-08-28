@@ -3,6 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/providers/tasks_list/tasks_list_provider.dart';
 
+import '../../../providers/navigation/navigation_controller_provider.dart';
+
 class TasksEditorDeleteTask extends ConsumerWidget {
   const TasksEditorDeleteTask({
     Key? key,
@@ -26,8 +28,7 @@ class TasksEditorDeleteTask extends ConsumerWidget {
           ref
               .read(tasksListControllerProvider.notifier)
               .removeTask(taskId.toString());
-          // TODO Use Navigator 2.0
-          Navigator.pop(context);
+          ref.read(navigationControllerProvider).pop();
         }
       },
       child: Padding(

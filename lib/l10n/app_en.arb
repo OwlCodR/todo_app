@@ -12,6 +12,8 @@
   "delete": "Delete",
   "goToEditor": "Go to editor screen",
   "emptyTitle": "Title should not be empty!",
+  "errorLoadingEditor": "Loading editor error!",
+  "errorConnection": "Error! Check your internet connection.",
   "completedTasksCounter": "Done — {completed_tasks_count}",
   "@completedTasksCounter": {
     "placeholders": {
