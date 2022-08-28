@@ -31,6 +31,21 @@ class TaskHive extends HiveObject {
     );
   }
 
+  @override
+  String toString() {
+    return 'TaskHive('
+        'id: $id, '
+        'isDone: $isDone, '
+        'title: $title, '
+        'importance: $importance, '
+        'createdAt: $createdAt, '
+        'changedAt: $changedAt, '
+        'lastUpdatedBy: $lastUpdatedBy, '
+        'deadlineTime: $deadlineTime, '
+        'color: $color'
+        ')';
+  }
+
   @HiveField(0)
   String id;
 

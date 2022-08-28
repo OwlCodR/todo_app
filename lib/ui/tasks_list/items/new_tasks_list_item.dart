@@ -5,7 +5,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/providers/tasks_list/tasks_list_provider.dart';
-import 'package:todo_app/ui/common/snackbar.dart';
+
+import '../../../providers/navigation/navigation_controller_provider.dart';
 
 class NewTasksListItem extends ConsumerStatefulWidget {
   const NewTasksListItem({Key? key}) : super(key: key);
@@ -27,10 +28,9 @@ class _NewTasksListItemState extends ConsumerState<NewTasksListItem> {
         return;
       }
 
-      showCommonSnackbar(
-        context,
-        AppLocalizations.of(context).emptyTitle,
-      );
+      ref.read(navigationControllerProvider).showSnackbar(
+            text: AppLocalizations.of(context).emptyTitle,
+          );
     }
   }
 

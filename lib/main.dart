@@ -15,12 +15,14 @@ import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
 import 'package:shake/shake.dart';
 import 'package:todo_app/constants/app_paths.dart';
+import 'package:todo_app/navigation/tasks_route_information_parser.dart';
 import 'package:todo_app/providers/is_dark_mode_provider.dart';
-import 'package:todo_app/ui/tasks_list/tasks_screen.dart';
+import 'package:todo_app/providers/navigation/router_delegate_provider.dart';
 
 import 'datasources/tasks_local_datasource.dart';
 import 'firebase_options.dart';
 import 'models/data/local/task_hive.dart';
+import 'providers/scaffold_messenger_key_provider.dart';
 import 'themes/themes.dart';
 import 'utils/logger.dart';
 
@@ -28,6 +30,7 @@ void main() {
   runZonedGuarded<Future<void>>(() async {
     Logger.level = loggerLevel;
     Intl.systemLocale = await findSystemLocale();
+
     await dotenv.load();
     await initHive();
     await initSvgPitcures();
@@ -78,6 +81,9 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
+  late final routerDelegate = ref.read(routerDelegateProvider);
+  final routerParser = TasksRouterInformationParser();
+
   @override
   void initState() {
     super.initState();
@@ -94,7 +100,10 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
+      routerDelegate: routerDelegate,
+      routeInformationParser: routerParser,
       onGenerateTitle: (context) => AppLocalizations.of(context).appName,
       theme: AppThemes.light,
       darkTheme: AppThemes.dark,
@@ -103,7 +112,6 @@ class _MyAppState extends ConsumerState<MyApp> {
       supportedLocales: AppLocalizations.supportedLocales,
       themeMode:
           ref.watch(isDarkModeProvider) ? ThemeMode.dark : ThemeMode.light,
-      home: const TasksScreen(),
     );
   }
 }

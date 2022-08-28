@@ -44,7 +44,7 @@ class TasksListSlidableContent extends ConsumerWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                InfoButton(editingTask: task),
+                InfoButton(editableTask: task),
               ],
             ),
           ],
