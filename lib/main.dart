@@ -19,16 +19,16 @@ import 'package:todo_app/constants/app_config.dart';
 import 'package:todo_app/constants/app_paths.dart';
 import 'package:todo_app/navigation/tasks_route_information_parser.dart';
 import 'package:todo_app/providers/is_dark_mode_provider.dart';
+import 'package:todo_app/providers/navigation/router_delegate_provider.dart';
 import 'package:todo_app/providers/theme/dark_colors_provider.dart';
 import 'package:todo_app/providers/theme/light_colors_provider.dart';
-import 'package:todo_app/providers/navigation/router_delegate_provider.dart';
 
 import 'datasources/tasks_local_datasource.dart';
 import 'firebase_options.dart';
 import 'models/data/local/task_hive.dart';
+import 'providers/scaffold_messenger_key_provider.dart';
 import 'providers/theme/dark_theme_provider.dart';
 import 'providers/theme/light_theme_provider.dart';
-import 'providers/scaffold_messenger_key_provider.dart';
 import 'utils/logger.dart';
 
 void main() {
@@ -99,14 +99,13 @@ class _MyAppState extends ConsumerState<MyApp> {
     final remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.fetchAndActivate();
 
-    final importanceColor = Color(
-      int.parse(
-        remoteConfig.getString(AppConfig.importanceColor),
-      ),
-    );
+    final color = remoteConfig.getString(AppConfig.importanceColor);
 
-    log.d(
-        'Loaded ${remoteConfig.getString(AppConfig.importanceColor)} status: ${remoteConfig.lastFetchStatus}');
+    log.d('Loaded $color status: ${remoteConfig.lastFetchStatus}');
+
+    if (color == null) return;
+
+    final importanceColor = Color(int.parse(color));
     log.d('Loaded $importanceColor status: ${remoteConfig.lastFetchStatus}');
     ref
         .read(darkColorsProvider.notifier)
