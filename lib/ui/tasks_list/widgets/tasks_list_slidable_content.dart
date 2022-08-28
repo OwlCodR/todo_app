@@ -19,19 +19,20 @@ class TasksListSlidableContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 48, maxHeight: 108),
+      constraints: const BoxConstraints(
+        minHeight: 48,
+        maxHeight: 108,
+      ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: const EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 16,
+        ),
         child: Wrap(
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // SvgPicture.asset(
-                //   task.checkboxPath(
-                //     ref.watch(isDarkModeProvider),
-                //   ),
-                // ),
                 Container(
                   width: 18,
                   height: 18,

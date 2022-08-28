@@ -4,6 +4,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -99,8 +100,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     final remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.fetchAndActivate();
 
-    final color = remoteConfig.getString(AppConfig.importanceColor);
-
+    String? color = remoteConfig.getString(AppConfig.importanceColor);
     log.d('Loaded $color status: ${remoteConfig.lastFetchStatus}');
 
     final importanceColor = Color(int.parse(color));
@@ -136,10 +136,12 @@ class _MyAppState extends ConsumerState<MyApp> {
       scaffoldMessengerKey: ref.watch(scaffoldMessengerKeyProvider),
       routerDelegate: routerDelegate,
       routeInformationParser: routerParser,
-      onGenerateTitle: (context) => AppLocalizations.of(context).appName,
+      onGenerateTitle: (context) => kDebugMode
+          ? '[Dev] ${AppLocalizations.of(context).appName}'
+          : AppLocalizations.of(context).appName,
       theme: ref.watch(lightThemeProvider),
       darkTheme: ref.watch(darkThemeProvider),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: kDebugMode,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       themeMode:
