@@ -1,4 +1,4 @@
-name: Todo App CI
+name: Build
 
 on:
   pull_request:
@@ -26,10 +26,3 @@ jobs:
         continue-on-error: true
 
       - run: flutter test
-
-      - run: flutter build apk --release
-
-      - uses: actions/upload-artifact@v1
-        with:
-          name: release-apk
-          path: build/app/outputs/apk/release/app-release.apk
