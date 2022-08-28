@@ -1,4 +1,4 @@
-name: Todo App CI
+name: Build
 
 on:
   pull_request:
