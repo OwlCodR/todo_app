@@ -5,8 +5,9 @@ import 'package:sliver_tools/sliver_tools.dart';
 import 'package:todo_app/ui/common/fab.dart';
 import 'package:todo_app/ui/tasks_list/widgets/sliver_list_tasks.dart';
 
+import '../../providers/is_dark_mode_provider.dart';
 import '../common/no_glow_scroll_behavior.dart';
-import 'widgets/sliver_appbar.dart';
+import 'widgets/sliver_app_bar.dart';
 import 'widgets/sliver_background_card.dart';
 
 class TasksScreen extends ConsumerWidget {
@@ -16,9 +17,13 @@ class TasksScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Theme.of(context).primaryColor,
-        statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
-        statusBarBrightness: Brightness.light, // For iOS (dark icons)
+        statusBarColor: Theme.of(context).primaryColor.withOpacity(.20),
+        statusBarIconBrightness: ref.watch(isDarkModeProvider)
+            ? Brightness.light
+            : Brightness.dark, // For Android (dark icons)
+        statusBarBrightness: ref.watch(isDarkModeProvider)
+            ? Brightness.dark
+            : Brightness.light, // For iOS (dark icons)
       ),
     );
 
@@ -28,12 +33,15 @@ class TasksScreen extends ConsumerWidget {
         child: CustomScrollView(
           scrollBehavior: NoGlowScrollBehavior(),
           slivers: <Widget>[
-            CustomSliverAppbar(ref: ref),
-            SliverStack(
-              children: [
-                const SliverBackgroundCard(),
-                SliverListTasks(ref: ref),
-              ],
+            const TasksSliverAppBar(),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              sliver: SliverStack(
+                children: const [
+                  SliverBackgroundCard(),
+                  SliverListTasks(),
+                ],
+              ),
             ),
           ],
         ),

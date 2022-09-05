@@ -1,43 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/constants/colors.dart';
+import 'package:todo_app/constants/app_colors.dart';
 
-class AppThemes {
-  static ThemeData light = _AppTheme.getTheme(
-    parent: ThemeData.light(),
-    textTheme: _AppTextTheme.getTheme(colors: AppColors.light),
-    colors: AppColors.light,
-  );
-
-  static ThemeData dark = _AppTheme.getTheme(
-    parent: ThemeData.dark(),
-    textTheme: _AppTextTheme.getTheme(colors: AppColors.dark),
-    colors: AppColors.dark,
-  );
-}
-
-class _AppTheme {
+class AppTheme {
   static ThemeData getTheme({
     required ThemeData parent,
     required TextTheme textTheme,
     required AppColorsTheme colors,
   }) {
     return parent.copyWith(
+      focusColor: colors.blue,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: colors.blue,
+        foregroundColor: colors.white,
+      ),
+      switchTheme: SwitchThemeData(
+        thumbColor: MaterialStateProperty.resolveWith(
+          (states) => states.contains(MaterialState.selected)
+              ? colors.blue
+              : colors.backElevated,
+        ),
+        trackColor: MaterialStateProperty.resolveWith(
+          (states) => states.contains(MaterialState.selected)
+              ? colors.blue.withOpacity(0.30)
+              : colors.overlay,
+        ),
+      ),
+      checkboxTheme: CheckboxThemeData(
+        fillColor: MaterialStateProperty.resolveWith(
+          (states) => states.contains(MaterialState.selected)
+              ? colors.green
+              : colors.separator,
+        ),
+        checkColor: MaterialStateProperty.resolveWith(
+          (states) => colors.red,
+        ),
+      ),
       primaryColorLight: colors.green,
       primaryColor: colors.backPrimary,
+      primaryColorDark: colors.separator,
       cardColor: colors.white,
       backgroundColor: colors.backPrimary,
       scaffoldBackgroundColor: colors.backPrimary,
       disabledColor: colors.labelDisable,
       errorColor: colors.red,
       primaryIconTheme: IconThemeData(color: colors.blue),
+      indicatorColor: colors.blue,
       iconTheme: IconThemeData(color: colors.labelTertiary),
-      cardTheme: CardTheme(color: colors.white),
+      cardTheme: CardTheme(color: colors.backSecondary),
       textTheme: textTheme,
     );
   }
 }
 
-class _AppTextTheme {
+class AppTextTheme {
   static TextTheme getTheme({required AppColorsTheme colors}) {
     return TextTheme(
       headlineLarge: TextStyle(

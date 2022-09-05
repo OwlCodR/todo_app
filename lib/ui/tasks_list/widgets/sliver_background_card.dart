@@ -7,14 +7,11 @@ class SliverBackgroundCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverPositioned.fill(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          margin: EdgeInsets.zero,
-          color: Theme.of(context).cardTheme.color,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
+      child: Card(
+        margin: EdgeInsets.zero,
+        color: Theme.of(context).cardTheme.color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
         ),
       ),
     );

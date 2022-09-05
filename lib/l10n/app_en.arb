@@ -2,7 +2,18 @@
   "appName": "Done",
   "myTasks": "My tasks",
   "newTask": "New",
+  "save": "SAVE",
+  "task": "Task",
+  "importance": "Importance",
+  "important": "Important",
+  "basic": "Basic",
+  "low": "Low",
+  "doBefore": "Do before",
+  "delete": "Delete",
   "goToEditor": "Go to editor screen",
+  "emptyTitle": "Title should not be empty!",
+  "errorLoadingEditor": "Loading editor error!",
+  "errorConnection": "Error! Check your internet connection.",
   "completedTasksCounter": "Done — {completed_tasks_count}",
   "@completedTasksCounter": {
     "placeholders": {

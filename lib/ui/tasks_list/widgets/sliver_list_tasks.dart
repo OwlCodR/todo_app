@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../providers/visible_tasks_list_provider.dart';
+import '../../../providers/tasks_list/visible_tasks_list_provider.dart';
 import '../items/new_tasks_list_item.dart';
 import '../items/tasks_list_item.dart';
 
-class SliverListTasks extends StatelessWidget {
-  const SliverListTasks({Key? key, required this.ref}) : super(key: key);
-
-  final WidgetRef ref;
+class SliverListTasks extends ConsumerWidget {
+  const SliverListTasks({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final tasks = ref.watch(visibleTasksListProvider);
     final elementsCount = tasks.length + 3;
 
     return SliverList(
       delegate: SliverChildBuilderDelegate(
+        childCount: elementsCount,
         (context, index) {
           if (index == 0 || index == elementsCount - 1) {
             return const SizedBox(height: 8);
@@ -28,7 +27,6 @@ class SliverListTasks extends StatelessWidget {
 
           return TasksListItem(task: tasks.elementAt(index - 1));
         },
-        childCount: elementsCount,
       ),
     );
   }

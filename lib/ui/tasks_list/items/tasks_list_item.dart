@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:todo_app/providers/tasks_list_provider.dart';
-import 'package:todo_app/ui/tasks_list/widgets/deadline_text.dart';
-import 'package:todo_app/ui/tasks_list/widgets/info_button.dart';
-import 'package:todo_app/ui/tasks_list/widgets/prefix_priority_icon.dart';
-import 'package:todo_app/ui/tasks_list/widgets/title_text.dart';
+import 'package:todo_app/providers/tasks_list/tasks_list_provider.dart';
 
-import '../../../models/task_model.dart';
-import '../../../providers/visible_tasks_list_provider.dart';
+import '../../../models/domain/task_model.dart';
+import '../widgets/end_action_pane_content.dart';
+import '../widgets/start_action_pane_content.dart';
+import '../widgets/tasks_list_slidable_content.dart';
 
 class TasksListItem extends ConsumerWidget {
   const TasksListItem({
@@ -21,109 +18,39 @@ class TasksListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Widget checkboxIcon = SvgPicture.asset('assets/images/unchecked.svg');
-
-    if (task.isDone) {
-      checkboxIcon = SvgPicture.asset('assets/images/checked.svg');
-    } else if (task.priority == TaskModel.importantPriority) {
-      checkboxIcon = SvgPicture.asset('assets/images/unchecked_important.svg');
-    }
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: ClipRect(
-        child: Slidable(
-          key: UniqueKey(),
-          startActionPane: _startActionPane(context, ref),
-          endActionPane: _endActionPane(context, ref),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 48, maxHeight: 108),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-              child: Wrap(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      checkboxIcon,
-                      const SizedBox(width: 12),
-                      PrefixPriorityIcon(task: task),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            TitleText(title: task.title, isDone: task.isDone),
-                            DeadlineText(deadline: task.deadlineTime),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      const InfoButton(),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+    return ClipRect(
+      child: Slidable(
+        key: UniqueKey(),
+        startActionPane: ActionPane(
+          extentRatio: 0.2,
+          openThreshold: 0.9,
+          closeThreshold: 0.9,
+          dismissible: DismissiblePane(
+            onDismissed: () {
+              ref.read(tasksListControllerProvider.notifier).updateTask(
+                    task.copyWith(isDone: !task.isDone),
+                  );
+            },
           ),
+          motion: const ScrollMotion(),
+          children: const [StartActionPaneContent()],
         ),
+        endActionPane: ActionPane(
+          extentRatio: 0.2,
+          openThreshold: 0.9,
+          closeThreshold: 0.9,
+          dismissible: DismissiblePane(
+            onDismissed: () {
+              ref
+                  .read(tasksListControllerProvider.notifier)
+                  .removeTask(task.id);
+            },
+          ),
+          motion: const ScrollMotion(),
+          children: const [EndActionPaneContent()],
+        ),
+        child: TasksListSlidableContent(task: task),
       ),
-    );
-  }
-
-  ActionPane _startActionPane(BuildContext context, WidgetRef ref) {
-    return ActionPane(
-      dismissible: DismissiblePane(
-        onDismissed: () {
-          ref.read(tasksListProvider.notifier).updateTask(
-                task.copyWith(isDone: !task.isDone),
-              );
-          ref.refresh(visibleTasksListProvider.notifier);
-        },
-      ),
-      motion: const ScrollMotion(),
-      children: [
-        Expanded(
-          child: Container(
-            color: Theme.of(context).primaryColorLight,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 24.0),
-                child: Icon(
-                  Icons.check,
-                  color: Theme.of(context).cardColor,
-                  size: 24,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  ActionPane _endActionPane(BuildContext context, WidgetRef ref) {
-    return ActionPane(
-      dismissible: DismissiblePane(onDismissed: () {
-        ref.read(tasksListProvider.notifier).removeTask(task.id);
-      }),
-      motion: const ScrollMotion(),
-      children: [
-        Expanded(
-          child: Container(
-            color: Theme.of(context).errorColor,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24.0),
-                child: Icon(
-                  Icons.delete,
-                  color: Theme.of(context).cardColor,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
