@@ -15,10 +15,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:logger/logger.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:shake/shake.dart';
 import 'package:todo_app/constants/app_config.dart';
 import 'package:todo_app/constants/app_paths.dart';
 import 'package:todo_app/navigation/tasks_route_information_parser.dart';
+import 'package:todo_app/providers/device_id_provider.dart';
 import 'package:todo_app/providers/is_dark_mode_provider.dart';
 import 'package:todo_app/providers/navigation/router_delegate_provider.dart';
 import 'package:todo_app/providers/theme/dark_colors_provider.dart';
@@ -113,6 +115,11 @@ class _MyAppState extends ConsumerState<MyApp> {
         .update((state) => state.copyWith(red: importanceColor));
   }
 
+  Future<void> initDeviceId() async {
+    final deviceId = await PlatformDeviceId.getDeviceId;
+    ref.read(deviceIdProvider.notifier).update((state) => deviceId);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -126,6 +133,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     );
 
     initDefaultRemoteConfig();
+    initDeviceId();
 
     FirebaseAnalytics.instance.logAppOpen();
   }

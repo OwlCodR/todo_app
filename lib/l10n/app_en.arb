@@ -14,6 +14,9 @@
   "emptyTitle": "Title should not be empty!",
   "errorLoadingEditor": "Loading editor error!",
   "errorConnection": "Error! Check your internet connection.",
+  "errorToken": "Error! Token has been expired.",
+  "errorServer": "Error! Unexpected server error.",
+  "errorUnsynchronized": "Error! Data are not synchronized.",
   "completedTasksCounter": "Done — {completed_tasks_count}",
   "@completedTasksCounter": {
     "placeholders": {

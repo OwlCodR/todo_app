@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final scaffoldMessengerKeyProvider =
-    Provider((ref) => GlobalKey<ScaffoldMessengerState>());
+final scaffoldMessengerKeyProvider = Provider(
+  (ref) => GlobalKey<ScaffoldMessengerState>(),
+);

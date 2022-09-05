@@ -13,6 +13,10 @@ class AppTheme {
         backgroundColor: colors.blue,
         foregroundColor: colors.white,
       ),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: colors.backSecondary,
+        contentTextStyle: TextStyle(color: colors.white),
+      ),
       switchTheme: SwitchThemeData(
         thumbColor: MaterialStateProperty.resolveWith(
           (states) => states.contains(MaterialState.selected)

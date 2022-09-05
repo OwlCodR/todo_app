@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../models/domain/task_model.dart';
 import '../../../providers/tasks_editor/editor_title_provider.dart';
 
 class TasksEditorCardTextInput extends ConsumerWidget {
   const TasksEditorCardTextInput({
     Key? key,
-    this.title,
+    this.editableTask,
   }) : super(key: key);
 
-  final String? title;
+  final TaskModel? editableTask;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,11 +31,11 @@ class TasksEditorCardTextInput extends ConsumerWidget {
               maxLines: null,
               onChanged: (newTitle) {
                 ref
-                    .read(editorTitleProvider(title).notifier)
+                    .read(editorTitleProvider(editableTask).notifier)
                     .update((state) => newTitle);
               },
               controller: TextEditingController(
-                text: ref.read(editorTitleProvider(title)),
+                text: ref.read(editorTitleProvider(editableTask)),
               ),
               style: Theme.of(context).textTheme.bodyLarge,
               decoration: InputDecoration(

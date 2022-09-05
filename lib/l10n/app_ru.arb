@@ -14,6 +14,9 @@
   "emptyTitle": "Заголовок не может быть пустым!",
   "errorLoadingEditor": "Ошибка при загрузке редактора!",
   "errorConnection": "Ошибка! Проверьте подключение к сети.",
+  "errorToken": "Ошибка! Срок действия токена истёк.",
+  "errorServer": "Ошибка! Неожиданная ошибка сервера.",
+  "errorUnsynchronized": "Ошибка! Данные не синхронизированы.",
   "completedTasksCounter": "Выполнено — {completed_tasks_count}",
   "@completedTasksCounter": {
     "placeholders": {

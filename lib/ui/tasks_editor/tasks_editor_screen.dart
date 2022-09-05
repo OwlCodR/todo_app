@@ -31,7 +31,7 @@ class _TasksEditorScreenState extends ConsumerState<TasksEditorScreen> {
   TaskModel? editableTask;
 
   void _onSavePressed() {
-    if (ref.read(editorTitleProvider(editableTask?.title)).isEmpty) {
+    if (ref.read(editorTitleProvider(editableTask)).isEmpty) {
       ref.read(navigationControllerProvider).showSnackbar(
             text: AppLocalizations.of(context).emptyTitle,
           );
@@ -39,7 +39,8 @@ class _TasksEditorScreenState extends ConsumerState<TasksEditorScreen> {
     }
 
     final currentTask = ref.read(editorTaskInfoProvider(editableTask));
-    log.d('[$runtimeType] initState currentTask: $currentTask');
+
+    log.d('[$runtimeType] _onSavePressed() currentTask: $currentTask');
 
     if (editableTask != null) {
       ref.read(tasksListControllerProvider.notifier).updateTask(currentTask);
@@ -82,16 +83,16 @@ class _TasksEditorScreenState extends ConsumerState<TasksEditorScreen> {
                         return TasksEditorSliverList(
                           editableTask: editableTask,
                         );
-                      } else {
-                        if (snapshot.hasError) {
-                          ref.read(navigationControllerProvider).showSnackbar(
-                                text: AppLocalizations.of(context)
-                                    .errorLoadingEditor,
-                              );
-                          ref.read(navigationControllerProvider).pop();
-                        }
-                        return const TasksEditorSliverSircularProgressBar();
                       }
+
+                      if (snapshot.hasError) {
+                        ref.read(navigationControllerProvider).showSnackbar(
+                              text: AppLocalizations.of(context)
+                                  .errorLoadingEditor,
+                            );
+                        ref.read(navigationControllerProvider).pop();
+                      }
+                      return const TasksEditorSliverSircularProgressBar();
                     },
                   ),
           ],

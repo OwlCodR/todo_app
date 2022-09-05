@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/providers/navigation/navigation_controller_provider.dart';
 import 'package:todo_app/ui/tasks_editor/widgets/sliver_app_bar_delegate.dart';
 
+import '../../../providers/tasks_editor/editor_title_provider.dart';
+
 class TasksEditorSliverAppBar extends ConsumerWidget {
   const TasksEditorSliverAppBar({
     Key? key,

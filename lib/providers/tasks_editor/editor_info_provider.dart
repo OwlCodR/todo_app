@@ -12,11 +12,12 @@ final editorTaskInfoProvider =
     Provider.autoDispose.family<TaskModel, TaskModel?>((ref, editingModel) {
   final now = DateTime.now().millisecondsSinceEpoch;
   final isDeadline = editingModel?.deadlineTime != null;
+  final deviceId = ref.watch(deviceIdProvider);
 
   return TaskModel(
     id: editingModel?.id ?? const Uuid().v4(),
     isDone: editingModel?.isDone ?? false,
-    title: ref.watch(editorTitleProvider(editingModel?.title)),
+    title: ref.watch(editorTitleProvider(editingModel)),
     importance: ref.watch(importanceProvider(editingModel?.importance)),
     deadlineTime: ref.watch(switchStateProvider(isDeadline))
         ? ref
@@ -25,6 +26,6 @@ final editorTaskInfoProvider =
         : null,
     createdAt: editingModel?.createdAt ?? now,
     changedAt: now,
-    lastUpdatedBy: ref.watch(deviceIdProvider),
+    lastUpdatedBy: editingModel?.lastUpdatedBy ?? deviceId ?? const Uuid().v4(),
   );
 });

@@ -22,7 +22,7 @@ class TasksEditorSliverList extends StatelessWidget {
       delegate: SliverChildListDelegate(
         <Widget>[
           TasksEditorCardTextInput(
-            title: editableTask?.title,
+            editableTask: editableTask,
           ),
           const SizedBox(height: 12),
           Padding(

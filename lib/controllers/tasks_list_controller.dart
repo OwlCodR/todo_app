@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:todo_app/controllers/navigation_controller.dart';
 import 'package:todo_app/utils/importance_enum.dart';
 import 'package:todo_app/utils/status_enum.dart';
@@ -14,15 +16,15 @@ import '../utils/logger.dart';
 class TasksListController extends StateNotifier<List<TaskModel>> {
   TasksListController({
     required this.repository,
-    required this.deviceId,
     required this.navigationController,
+    required this.appLocalizations,
   }) : super([]) {
     loadList();
   }
 
   final TasksRepository repository;
-  final String? deviceId;
   final NavigationController navigationController;
+  final AppLocalizations appLocalizations;
 
   void _setStateWithTask(TaskModel currentTask) {
     state = [
@@ -52,17 +54,19 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
     } on DioError catch (e) {
       _handleDioError(
         error: e,
-        onConnectionError: () {
-          // TODO Show message
-        },
+        onUnsynchronized: showonOnUnsynchronizedSnackbar,
+        onConnectionError: showConnectionErrorSnackbar,
+        onServerError: showServerErrorSnackbar,
+        onWrongToken: showWrongTokenErrorSnackbar,
       );
     } catch (e) {
       _doNothing(error: e.toString());
     }
   }
 
-  void addDefaultTask(String title) {
+  Future<void> addDefaultTask(String title) async {
     final now = DateTime.now().millisecondsSinceEpoch;
+    final deviceId = await PlatformDeviceId.getDeviceId;
     addTask(
       TaskModel(
         id: const Uuid().v4(),
@@ -84,10 +88,13 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
     } on DioError catch (e) {
       _handleDioError(
         error: e,
-        onUnsynchronized: _synchronizeTasks,
-        onConnectionError: () {
-          // TODO Show message
+        onUnsynchronized: () {
+          _synchronizeTasks();
+          showonOnUnsynchronizedSnackbar();
         },
+        onConnectionError: showConnectionErrorSnackbar,
+        onServerError: showServerErrorSnackbar,
+        onWrongToken: showWrongTokenErrorSnackbar,
       );
     } catch (e) {
       _doNothing(error: e.toString());
@@ -110,10 +117,13 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
     } on DioError catch (e) {
       _handleDioError(
         error: e,
-        onUnsynchronized: _synchronizeTasks,
-        onConnectionError: () {
-          // TODO Show message
+        onUnsynchronized: () {
+          _synchronizeTasks();
+          showonOnUnsynchronizedSnackbar();
         },
+        onConnectionError: showConnectionErrorSnackbar,
+        onServerError: showServerErrorSnackbar,
+        onWrongToken: showWrongTokenErrorSnackbar,
       );
     } catch (e) {
       _doNothing(error: e.toString());
@@ -130,10 +140,13 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
     } on DioError catch (e) {
       _handleDioError(
         error: e,
-        onUnsynchronized: _synchronizeTasks,
-        onConnectionError: () {
-          // TODO Show message
+        onUnsynchronized: () {
+          _synchronizeTasks();
+          showonOnUnsynchronizedSnackbar();
         },
+        onConnectionError: showConnectionErrorSnackbar,
+        onServerError: showServerErrorSnackbar,
+        onWrongToken: showWrongTokenErrorSnackbar,
       );
     } catch (e) {
       _doNothing(error: e.toString());
@@ -160,10 +173,13 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
     } on DioError catch (e) {
       _handleDioError(
         error: e,
-        onUnsynchronized: _synchronizeTasks,
-        onConnectionError: () {
-          // TODO Show message
+        onUnsynchronized: () {
+          _synchronizeTasks();
+          showonOnUnsynchronizedSnackbar();
         },
+        onConnectionError: showConnectionErrorSnackbar,
+        onServerError: showServerErrorSnackbar,
+        onWrongToken: showWrongTokenErrorSnackbar,
       );
     } catch (e) {
       _doNothing(error: e.toString());
@@ -189,17 +205,47 @@ class TasksListController extends StateNotifier<List<TaskModel>> {
     } on DioError catch (e) {
       _handleDioError(
         error: e,
-        onConnectionError: () {
-          // TODO Show message
-        },
+        onUnsynchronized: showonOnUnsynchronizedSnackbar,
+        onConnectionError: showConnectionErrorSnackbar,
+        onServerError: showServerErrorSnackbar,
+        onWrongToken: showWrongTokenErrorSnackbar,
       );
     } catch (e) {
       _doNothing(error: e.toString());
     }
   }
 
+  void showConnectionErrorSnackbar() {
+    log.d('[$runtimeType] showConnectionErrorSnackbar()');
+    navigationController.showSnackbar(
+      text: appLocalizations.errorConnection,
+    );
+  }
+
+  void showWrongTokenErrorSnackbar() {
+    log.d('[$runtimeType] showWrongTokenErrorSnackbar()');
+    navigationController.showSnackbar(
+      text: appLocalizations.errorToken,
+    );
+  }
+
+  void showServerErrorSnackbar() {
+    log.d('[$runtimeType] showServerErrorSnackbar()');
+    navigationController.showSnackbar(
+      text: appLocalizations.errorServer,
+    );
+  }
+
+  void showonOnUnsynchronizedSnackbar() {
+    log.d('[$runtimeType] showServerErrorSnackbar()');
+    navigationController.showSnackbar(
+      text: appLocalizations.errorUnsynchronized,
+    );
+  }
+
   static void _doNothing({String? error}) {
-    log.w('[TasksListController] Unhandled exception: $error');
+    log.w(
+        '[TasksListController] _doNothing() Default method was called without handling error: $error');
   }
 
   void _handleDioError({

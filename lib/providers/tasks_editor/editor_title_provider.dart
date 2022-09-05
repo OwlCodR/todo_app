@@ -1,4 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final editorTitleProvider =
-    StateProvider.family<String, String?>((ref, title) => title ?? '');
+import '../../models/domain/task_model.dart';
+
+final editorTitleProvider = StateProvider.family<String, TaskModel?>(
+  (ref, task) => task?.title ?? '',
+);
