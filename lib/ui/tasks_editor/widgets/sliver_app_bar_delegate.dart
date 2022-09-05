@@ -9,8 +9,8 @@ class TasksEditorSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   });
 
   final double height;
-  final Function() onBackPressed;
-  final Function() onSavePressed;
+  final VoidCallback onBackPressed;
+  final VoidCallback onSavePressed;
 
   @override
   Widget build(

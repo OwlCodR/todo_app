@@ -9,7 +9,7 @@ class TasksEditorSliverAppBar extends ConsumerWidget {
     required this.onSavePressed,
   }) : super(key: key);
 
-  final Function() onSavePressed;
+  final VoidCallback onSavePressed;
   final _appBarHeight = 56.0;
 
   @override

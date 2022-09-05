@@ -13,7 +13,7 @@ class TasksSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final double maxHeight;
   final double minHeight;
   final bool areCompletedTasksVisible;
-  final Function() onVisibilityButtonPressed;
+  final VoidCallback onVisibilityButtonPressed;
   final int completedTasksCount;
 
   var currentShrinkOffset = 0.0;
