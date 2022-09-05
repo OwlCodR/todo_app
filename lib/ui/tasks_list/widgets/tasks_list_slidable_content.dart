@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/domain/task_model.dart';
+import '../../../providers/tasks_list/tasks_list_provider.dart';
 import '../../../utils/importance_enum.dart';
 import 'deadline_text.dart';
 import 'info_button.dart';
@@ -52,7 +53,11 @@ class TasksListSlidableContent extends ConsumerWidget {
                             ? Theme.of(context).checkboxTheme.checkColor
                             : Theme.of(context).checkboxTheme.fillColor,
                     value: task.isDone,
-                    onChanged: (state) {},
+                    onChanged: (state) {
+                      ref.read(tasksListControllerProvider.notifier).updateTask(
+                            task.copyWith(isDone: state ?? task.isDone),
+                          );
+                    },
                   ),
                 ),
                 const SizedBox(width: 12),
