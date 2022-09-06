@@ -77,11 +77,9 @@
 - :sparkles: Added theme changing on shaking using `shake`
 
 ## :video_game: Screenshots
-![Screen3](https://github.com/OwlCodR/todo_app/blob/phase/2/screenshots/3.jpg?raw=true)
-![Screen4](https://github.com/OwlCodR/todo_app/blob/phase/2/screenshots/4.jpg?raw=true)
-![Screen5](https://github.com/OwlCodR/todo_app/blob/phase/2/screenshots/5.jpg?raw=true)
-![Screen6](https://github.com/OwlCodR/todo_app/blob/phase/2/screenshots/6.jpg?raw=true)
-![Screen7](https://github.com/OwlCodR/todo_app/blob/phase/2/screenshots/7.jpg?raw=true)
+<img src="https://github.com/OwlCodR/todo_app/blob/phase/2/screenshots/3.jpg" width="250"><img src="https://github.com/OwlCodR/todo_app/blob/phase/2/screenshots/4.jpg" width="250"><img src="https://github.com/OwlCodR/todo_app/blob/phase/2/screenshots/6.jpg" width="250"><img src="https://github.com/OwlCodR/todo_app/blob/phase/2/screenshots/7.jpg" width="250">
+
+<img src="https://github.com/OwlCodR/todo_app/blob/phase/2/screenshots/5.jpg" width="700">
 
 ## :link: Download
 > [DEV] https://disk.yandex.ru/d/k1vRWSUt41q7ww
